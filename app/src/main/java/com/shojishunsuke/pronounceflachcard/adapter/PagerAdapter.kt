@@ -11,6 +11,8 @@ import com.shojishunsuke.pronounceflachcard.Fragment.TestFragment
 class PagerAdapter(fragmentManager: FragmentManager) :FragmentPagerAdapter(fragmentManager) {
 
 
+
+
     override fun getItem(position: Int): Fragment {
         when (position) {
             0 ->

@@ -11,7 +11,6 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var tabLayout: TabLayout
     lateinit var viewPager: ViewPager
-    var pagerAdapter: PagerAdapter? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,9 +23,10 @@ class MainActivity : AppCompatActivity() {
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_add_word))
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_check_meaning))
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_test))
+        tabLayout.tabGravity
 
 
-        pagerAdapter = object :PagerAdapter(supportFragmentManager)
+        viewPager.adapter = object : PagerAdapter(supportFragmentManager)
 
     }
 }
