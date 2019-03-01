@@ -2,31 +2,34 @@ package com.shojishunsuke.pronounceflachcard.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.viewpager.widget.PagerAdapter
+import androidx.fragment.app.FragmentActivity
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.shojishunsuke.pronounceflachcard.R
+import com.shojishunsuke.pronounceflachcard.adapter.MyPagerAdapter
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var tabLayout: TabLayout
-    lateinit var viewPager: ViewPager
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        tabLayout = findViewById(R.id.tablayout)
-        viewPager = findViewById(R.id.pager)
+        val tabLayout : TabLayout = this.findViewById(R.id.tablayout)
+        val viewPager : ViewPager = this.findViewById(R.id.pager)
 
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_add_word))
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_check_meaning))
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_test))
-        tabLayout.tabGravity
 
 
-        viewPager.adapter = object : PagerAdapter(supportFragmentManager)
+        val fragmentAdapter  = MyPagerAdapter(supportFragmentManager)
+        viewPager.adapter = fragmentAdapter
+        tabLayout.setupWithViewPager(viewPager)
+
+
 
     }
 }

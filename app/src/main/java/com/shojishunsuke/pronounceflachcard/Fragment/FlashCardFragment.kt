@@ -12,15 +12,10 @@ class FlashCardFragment : Fragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val layout  = inflater?.inflate(R.layout.fragment_flash_card_tab,container,false)
+        val layout  = inflater!!.inflate(R.layout.fragment_flash_card_tab,container,false)
 
         return layout
     }
-    companion object {
-        fun newInstance (): FlashCardFragment {
-            val fragment = FlashCardFragment()
-            return fragment
-        }
-    }
+
 
 }

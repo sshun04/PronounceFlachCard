@@ -8,7 +8,7 @@ import com.shojishunsuke.pronounceflachcard.Fragment.FlashCardFragment
 import com.shojishunsuke.pronounceflachcard.Fragment.TestFragment
 
 
-class PagerAdapter(fragmentManager: FragmentManager) :FragmentPagerAdapter(fragmentManager) {
+class MyPagerAdapter(fragmentManager: FragmentManager) :FragmentPagerAdapter(fragmentManager) {
 
 
 
@@ -16,17 +16,15 @@ class PagerAdapter(fragmentManager: FragmentManager) :FragmentPagerAdapter(fragm
     override fun getItem(position: Int): Fragment {
         when (position) {
             0 ->
-                return AddWordFragment.newInstance()
+            {return AddWordFragment()}
 
             1 ->
-                return FlashCardFragment.newInstance()
-
-
+            { return FlashCardFragment()}
             2
             ->
-                return TestFragment.newInstance()
+            { return TestFragment()}
 
-            else -> return FlashCardFragment.newInstance()
+            else -> {return AddWordFragment()}
         }
 
 
