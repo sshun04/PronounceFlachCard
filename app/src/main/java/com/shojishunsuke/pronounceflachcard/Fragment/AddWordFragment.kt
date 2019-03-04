@@ -14,37 +14,59 @@ import java.util.*
 
 lateinit var realm: Realm
 lateinit var addButton: Button
-lateinit var worEditText: EditText
+lateinit var wordEditText: EditText
 lateinit var meaningEditText: EditText
+lateinit var deleteButton: Button
 
 class AddWordFragment:Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val layout = inflater.inflate(R.layout.fragment_add_word_tab,container,false)
 
         addButton = layout.findViewById(R.id.addButton)
-        worEditText = layout.findViewById(R.id.wordEditText)
+        wordEditText = layout.findViewById(R.id.wordEditText)
         meaningEditText = layout.findViewById(R.id.meaningEditText)
+        deleteButton  = layout.findViewById(R.id.deleteButton)
+
 
         realm = Realm.getDefaultInstance()
 
         addButton.setOnClickListener(View.OnClickListener {
-            addWord(worEditText.toString(), meaningEditText.toString())
+            addWord(wordEditText.text.toString(), meaningEditText.text.toString())
 
+        })
+
+        deleteButton.setOnClickListener(View.OnClickListener {
+            deleteWord()
         })
 
         return layout
     }
 
+    override fun onDestroy() {
+        realm.close()
+        super.onDestroy()
+    }
+
     fun addWord(word:String, meaning:String){
 
         realm.executeTransaction{
-            var newWord = realm.createObject(WordObject::class.java, word)
-            newWord.word = word
-            newWord.meaning= meaning
+            var wordCard = realm.createObject(WordObject::class.java, UUID.randomUUID().toString())
+            wordCard.word = word
+            wordCard.meaning= meaning
 
-            realm.copyToRealm(newWord)
+            realm.copyToRealm(wordCard)
         }
 
+    }
+
+    fun deleteWord(){
+        realm.executeTransaction{
+
+            var wordCard = realm.where(WordObject::class.java).equalTo("id","あ").findAll()
+
+            wordCard.deleteAllFromRealm()
+
+        }
 
     }
 

@@ -23,7 +23,7 @@
                 app:layout_constraintEnd_toStartOf="@id/likeButton"
                 android:layout_marginVertical="4dp"
                 android:gravity="center"
-                android:textSize="28dp"
+                android:textSize="24dp"
                 android:text="Word"
         />
 
