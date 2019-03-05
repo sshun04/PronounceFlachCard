@@ -13,12 +13,14 @@ import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.WordObject
 import com.shojishunsuke.pronounceflachcard.adapter.CardRecyclerViewAdapter
 import io.realm.Realm
+import io.realm.RealmList
 import io.realm.RealmResults
+import io.realm.kotlin.oneOf
 import kotlinx.android.synthetic.main.fragment_flash_card_tab.*
 
 class FlashCardFragment : Fragment() {
 
-    lateinit var realm: Realm
+    var realm: Realm = Realm.getDefaultInstance()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -27,7 +29,9 @@ class FlashCardFragment : Fragment() {
         val recyclerview = layout.findViewById<RecyclerView>(R.id.recyclerview)
         val addButton    = layout.findViewById<FloatingActionButton>(R.id.addwordbutton)
 
-        realm = Realm.getDefaultInstance()
+
+
+
 
         recyclerview.adapter = CardRecyclerViewAdapter(context,read())
         recyclerview.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
@@ -43,6 +47,8 @@ class FlashCardFragment : Fragment() {
     fun read():RealmResults<WordObject>
     {
         return realm.where(WordObject::class.java).findAll()
+
+
 
 
     }

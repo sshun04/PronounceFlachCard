@@ -9,16 +9,21 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.WordObject
+import io.realm.OrderedRealmCollection
 import io.realm.RealmResults
 
-class CardRecyclerViewAdapter(private val context: Context?,val realmResults:RealmResults<WordObject>) :
+class CardRecyclerViewAdapter(private val context: Context?,val realmResults:OrderedRealmCollection<WordObject>) :
     RecyclerView.Adapter<CardRecyclerViewAdapter.RecyclerViewHolder>() {
 
     lateinit var viewHolder:RecyclerViewHolder
+    var wordString: String? =""
+    var meaningString : String? =""
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
 
-
+        var wordCard = realmResults.get(position)
+        wordString = wordCard.word
+        meaningString = wordCard.meaning
 
 
     }
@@ -35,15 +40,7 @@ class CardRecyclerViewAdapter(private val context: Context?,val realmResults:Rea
 
         val viewHolder = RecyclerViewHolder(mView)
 
-
-
-        realmResults.forEach{
-            viewHolder.cardWord.setText(it.word+"/"+it.meaning)
-        }
-
-
-
-
+        viewHolder.cardWord.setText(wordString +"/"+ meaningString)
 
 
 

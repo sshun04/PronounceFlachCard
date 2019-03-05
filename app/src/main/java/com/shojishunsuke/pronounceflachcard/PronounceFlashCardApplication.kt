@@ -6,12 +6,17 @@ import io.realm.RealmConfiguration
 
 class PronounceFlashCardApplication:Application() {
     override fun onCreate() {
+        super.onCreate()
+
 
         Realm.init(this)
-        val config = RealmConfiguration.Builder().deleteRealmIfMigrationNeeded().build()
+        val config = RealmConfiguration.Builder().build()
         Realm.setDefaultConfiguration(config)
 
 
-        super.onCreate()
+
+
+
+
     }
 }

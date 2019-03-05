@@ -7,9 +7,11 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.adapter.MyPagerAdapter
+import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
 
 
 
@@ -32,4 +34,6 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
+
 }

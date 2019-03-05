@@ -12,11 +12,13 @@ import com.shojishunsuke.pronounceflachcard.WordObject
 import io.realm.Realm
 import java.util.*
 
-lateinit var realm: Realm
+val realm: Realm = Realm.getDefaultInstance()
 lateinit var addButton: Button
 lateinit var wordEditText: EditText
 lateinit var meaningEditText: EditText
 lateinit var deleteButton: Button
+
+
 
 class AddWordFragment:Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -28,7 +30,7 @@ class AddWordFragment:Fragment() {
         deleteButton  = layout.findViewById(R.id.deleteButton)
 
 
-        realm = Realm.getDefaultInstance()
+
 
         addButton.setOnClickListener(View.OnClickListener {
             addWord(wordEditText.text.toString(), meaningEditText.text.toString())
@@ -36,7 +38,7 @@ class AddWordFragment:Fragment() {
         })
 
         deleteButton.setOnClickListener(View.OnClickListener {
-            deleteWord()
+
         })
 
         return layout
@@ -49,25 +51,23 @@ class AddWordFragment:Fragment() {
 
     fun addWord(word:String, meaning:String){
 
-        realm.executeTransaction{
-            var wordCard = realm.createObject(WordObject::class.java, UUID.randomUUID().toString())
-            wordCard.word = word
-            wordCard.meaning= meaning
+        realm.executeTransaction {
 
-            realm.copyToRealm(wordCard)
-        }
 
-    }
+          var cardWord =  realm.createObject(WordObject::class.java,word+"key")
+            cardWord.word = word
+            cardWord.meaning = meaning
 
-    fun deleteWord(){
-        realm.executeTransaction{
 
-            var wordCard = realm.where(WordObject::class.java).equalTo("id","あ").findAll()
 
-            wordCard.deleteAllFromRealm()
+            it.copyToRealm(cardWord)
 
         }
 
+
     }
+
+    fun deleteWord(){}
+
 
 }
