@@ -9,27 +9,26 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.WordObject
-import io.realm.OrderedRealmCollection
 import io.realm.RealmResults
 
-class CardRecyclerViewAdapter(private val context: Context?,val realmResults:OrderedRealmCollection<WordObject>) :
+class CardRecyclerViewAdapter(private val context: Context?, val realmResults: RealmResults<WordObject>) :
     RecyclerView.Adapter<CardRecyclerViewAdapter.RecyclerViewHolder>() {
 
-    lateinit var viewHolder:RecyclerViewHolder
-    var wordString: String? =""
-    var meaningString : String? =""
+    lateinit var viewHolder: RecyclerViewHolder
+    var wordString: String = ""
+    var meaningString: String = ""
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
 
         var wordCard = realmResults.get(position)
-        wordString = wordCard.word
+        wordString = wordCard!!.word
         meaningString = wordCard.meaning
 
 
     }
 
     override fun getItemCount(): Int {
-        return realmResults.size
+        return realmResults.count()
         //To change body of created functions use File | Settings | File Templates.
     }
 
@@ -40,14 +39,10 @@ class CardRecyclerViewAdapter(private val context: Context?,val realmResults:Ord
 
         val viewHolder = RecyclerViewHolder(mView)
 
-        viewHolder.cardWord.setText(wordString +"/"+ meaningString)
-
-
+        viewHolder.cardWord.setText(wordString + " : " + meaningString)
 
         return RecyclerViewHolder(mView)
     }
-
-
 
 
     class RecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {

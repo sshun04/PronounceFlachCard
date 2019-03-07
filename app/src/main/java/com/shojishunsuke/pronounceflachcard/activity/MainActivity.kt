@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
         val tabLayout : TabLayout = this.findViewById(R.id.tablayout)
         val viewPager : ViewPager = this.findViewById(R.id.pager)
 
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_add_word))
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_check_meaning))
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_test))
 

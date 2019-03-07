@@ -16,12 +16,9 @@ class MyPagerAdapter(fragmentManager: FragmentManager) :FragmentPagerAdapter(fra
     override fun getItem(position: Int): Fragment {
         when (position) {
             0 ->
-            {return AddWordFragment()}
+            {return FlashCardFragment()}
 
             1 ->
-            { return FlashCardFragment()}
-            2
-            ->
             { return TestFragment()}
 
             else -> {return AddWordFragment()}
@@ -31,7 +28,7 @@ class MyPagerAdapter(fragmentManager: FragmentManager) :FragmentPagerAdapter(fra
     }
 
     override fun getCount(): Int {
-        return 3
+        return 2
 
     }
 
@@ -39,9 +36,9 @@ class MyPagerAdapter(fragmentManager: FragmentManager) :FragmentPagerAdapter(fra
     override fun getPageTitle(position: Int): CharSequence? {
         when (position) {
 
-            0 -> return "AddWord"
-            1 -> return "FlashCard"
-            2 -> return "Test"
+
+            0 -> return "FlashCard"
+            1 -> return "Test"
             else -> return null
 
         }
