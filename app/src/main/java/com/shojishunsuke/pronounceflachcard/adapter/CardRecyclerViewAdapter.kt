@@ -23,14 +23,20 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
         var wordCard = realmResults.get(position)
         wordString = wordCard!!.word
         meaningString = wordCard.meaning
+        holder.cardWord.setText(wordString + " : "+meaningString)
+
+        holder.cardWord.setTag(wordCard)
 
 
     }
+
 
     override fun getItemCount(): Int {
         return realmResults.count()
         //To change body of created functions use File | Settings | File Templates.
     }
+
+
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
@@ -39,7 +45,7 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
 
         val viewHolder = RecyclerViewHolder(mView)
 
-        viewHolder.cardWord.setText(wordString + " : " + meaningString)
+        viewHolder.cardWord.setText(wordString + " : "+ meaningString)
 
         return RecyclerViewHolder(mView)
     }

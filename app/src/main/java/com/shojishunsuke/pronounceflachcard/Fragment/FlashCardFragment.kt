@@ -19,6 +19,7 @@ class FlashCardFragment : Fragment() {
     var realm: Realm = Realm.getDefaultInstance()
 
 
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val layout = inflater.inflate(R.layout.fragment_flash_card_tab, container, false)
 
@@ -44,6 +45,7 @@ class FlashCardFragment : Fragment() {
 
         return layout
     }
+
 
     fun read(): RealmResults<WordObject> {
         return realm.where(WordObject::class.java).findAll()
