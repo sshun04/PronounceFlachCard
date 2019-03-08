@@ -37,8 +37,8 @@ class MyPagerAdapter(fragmentManager: FragmentManager) :FragmentPagerAdapter(fra
         when (position) {
 
 
-            0 -> return "FlashCard"
-            1 -> return "Test"
+            0 -> return "単語帳"
+            1 -> return "テスト"
             else -> return null
 
         }

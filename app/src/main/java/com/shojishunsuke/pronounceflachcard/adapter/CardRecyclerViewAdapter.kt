@@ -7,14 +7,15 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.shojishunsuke.pronounceflachcard.Fragment.realm
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.WordObject
+import io.realm.Realm
 import io.realm.RealmResults
 
 class CardRecyclerViewAdapter(private val context: Context?, val realmResults: RealmResults<WordObject>) :
     RecyclerView.Adapter<CardRecyclerViewAdapter.RecyclerViewHolder>() {
 
-    lateinit var viewHolder: RecyclerViewHolder
     var wordString: String = ""
     var meaningString: String = ""
 
@@ -23,9 +24,13 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
         var wordCard = realmResults.get(position)
         wordString = wordCard!!.word
         meaningString = wordCard.meaning
-        holder.cardWord.setText(wordString + " : "+meaningString)
 
-        holder.cardWord.setTag(wordCard)
+        holder.wordTextView.setText(wordString)
+        holder.wordTextView.setTag(wordCard)
+
+        holder.meaningTextView.setText(meaningString)
+        holder.meaningTextView.setTag(wordCard)
+
 
 
     }
@@ -45,7 +50,10 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
 
         val viewHolder = RecyclerViewHolder(mView)
 
-        viewHolder.cardWord.setText(wordString + " : "+ meaningString)
+        viewHolder.wordTextView.setText(wordString)
+        viewHolder.meaningTextView.setText(meaningString)
+
+
 
         return RecyclerViewHolder(mView)
     }
@@ -53,7 +61,10 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
 
     class RecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        val cardWord = view.findViewById<TextView>(R.id.WordTextView)
+
+        val wordTextView = view.findViewById<TextView>(R.id.wordTextView)
+        val meaningTextView = view.findViewById<TextView>(R.id.meaningTextView)
+
         val likeButton = view.findViewById<ImageView>(R.id.likeButton)
 
     }
