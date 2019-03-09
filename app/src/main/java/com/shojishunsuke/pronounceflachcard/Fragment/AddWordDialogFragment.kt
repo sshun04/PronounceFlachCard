@@ -70,7 +70,7 @@ class AddWordDialogFragment : DialogFragment() {
 
         realm.executeTransaction {
 
-            wordCard = it.createObject(WordObject::class.java)
+            var wordCard = it.createObject(WordObject::class.java)
 
             wordCard.word = editWord
             wordCard.meaning = editMeaning

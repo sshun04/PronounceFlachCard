@@ -3,32 +3,38 @@ package com.shojishunsuke.pronounceflachcard.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.shojishunsuke.pronounceflachcard.Fragment.AddWordFragment
 import com.shojishunsuke.pronounceflachcard.Fragment.FlashCardFragment
+import com.shojishunsuke.pronounceflachcard.Fragment.MemorizeWordFragment
 import com.shojishunsuke.pronounceflachcard.Fragment.TestFragment
 
 
-class MyPagerAdapter(fragmentManager: FragmentManager) :FragmentPagerAdapter(fragmentManager) {
-
-
+class MyPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
 
 
     override fun getItem(position: Int): Fragment {
         when (position) {
-            0 ->
-            {return FlashCardFragment()}
+            0 -> {
+                return FlashCardFragment()
+            }
 
-            1 ->
-            { return TestFragment()}
+            1 -> {
+                return MemorizeWordFragment()
+            }
 
-            else -> {return AddWordFragment()}
+            2 -> {
+                return TestFragment()
+            }
+
+            else -> {
+                return FlashCardFragment()
+            }
         }
 
 
     }
 
     override fun getCount(): Int {
-        return 2
+        return 3
 
     }
 
@@ -38,7 +44,8 @@ class MyPagerAdapter(fragmentManager: FragmentManager) :FragmentPagerAdapter(fra
 
 
             0 -> return "単語帳"
-            1 -> return "テスト"
+            1 -> return "覚える"
+            2 -> return "テスト"
             else -> return null
 
         }

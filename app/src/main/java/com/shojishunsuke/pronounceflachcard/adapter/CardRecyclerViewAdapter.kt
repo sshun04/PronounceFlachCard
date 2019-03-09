@@ -1,6 +1,7 @@
 package com.shojishunsuke.pronounceflachcard.adapter
 
 import android.content.Context
+import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,7 +53,6 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
 
         viewHolder.wordTextView.setText(wordString)
         viewHolder.meaningTextView.setText(meaningString)
-
 
 
         return RecyclerViewHolder(mView)

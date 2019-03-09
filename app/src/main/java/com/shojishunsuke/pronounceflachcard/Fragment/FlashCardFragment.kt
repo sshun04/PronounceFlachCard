@@ -41,6 +41,7 @@ class FlashCardFragment : Fragment() {
         var adapter = CardRecyclerViewAdapter(context,read())
         recyclerview.adapter = adapter
 
+
         recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
 

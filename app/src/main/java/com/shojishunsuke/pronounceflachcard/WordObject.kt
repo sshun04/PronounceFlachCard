@@ -8,6 +8,8 @@ import java.util.*
 @RealmClass
 open class WordObject(
                       @Required open var word :String = "word",
-                      @Required open var meaning : String = "meaning"):RealmObject() {
+                      @Required open var meaning : String = "meaning",
+                       open var isDone: Boolean = false
+):RealmObject() {
 
 }
