@@ -1,14 +1,14 @@
 package com.shojishunsuke.pronounceflachcard.adapter
 
+import android.app.AlertDialog
 import android.content.Context
-import android.opengl.Visibility
+import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.shojishunsuke.pronounceflachcard.Fragment.realm
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.WordObject
 import io.realm.Realm
@@ -19,6 +19,8 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
 
     var wordString: String = ""
     var meaningString: String = ""
+    val realm = Realm.getDefaultInstance()
+
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
 
@@ -32,17 +34,49 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
         holder.meaningTextView.setText(meaningString)
         holder.meaningTextView.setTag(wordCard)
 
+        holder.editButton.setTag(wordCard)
 
+
+        holder.editButton.setOnClickListener {
+
+
+            var items = arrayOf("編集", "削除")
+            AlertDialog.Builder(context)
+                .setItems(items, DialogInterface.OnClickListener { dialogInterface, i ->
+                    when (i) {
+                        0 -> {
+
+
+
+                        }
+                        1 -> {
+                            AlertDialog.Builder(context)
+                                .setTitle(realmResults.get(position)?.word)
+                                .setMessage("本当に削除しますか？")
+                                .setPositiveButton("OK", DialogInterface.OnClickListener { dialogInterface, i ->
+
+                                    deleteWord(position)
+
+                                }
+                                ).setNegativeButton("CANCEL", null)
+                                .show()
+                        }
+
+                    }
+                }
+
+                ).show()
+
+        }
 
     }
 
 
     override fun getItemCount(): Int {
+
         return realmResults.count()
-        //To change body of created functions use File | Settings | File Templates.
+
     }
-
-
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
@@ -53,6 +87,11 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
 
         viewHolder.wordTextView.setText(wordString)
         viewHolder.meaningTextView.setText(meaningString)
+        viewHolder.editButton.setImageResource(R.drawable.outline_more_vert_black_24)
+
+       realm.addChangeListener {
+           notifyDataSetChanged()
+       }
 
 
         return RecyclerViewHolder(mView)
@@ -64,8 +103,19 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
 
         val wordTextView = view.findViewById<TextView>(R.id.wordTextView)
         val meaningTextView = view.findViewById<TextView>(R.id.meaningTextView)
+        val editButton = view.findViewById<ImageView>(R.id.editButton)
 
-        val likeButton = view.findViewById<ImageView>(R.id.likeButton)
+    }
+
+    fun deleteWord(position: Int) {
+
+        realm.executeTransaction {
+            realmResults.get(position)!!.deleteFromRealm()
+
+        }
+
+        notifyItemRemoved(position)
+
 
     }
 }

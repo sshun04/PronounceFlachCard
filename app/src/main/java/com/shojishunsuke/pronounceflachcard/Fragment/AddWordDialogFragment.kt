@@ -27,7 +27,6 @@ class AddWordDialogFragment : DialogFragment() {
 
         var dialog = Dialog(activity)
 
-
         dialog.window!!.requestFeature(Window.FEATURE_NO_TITLE)
         dialog.window!!.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN)
 
@@ -51,22 +50,19 @@ class AddWordDialogFragment : DialogFragment() {
            addWord(wordEditText.text.toString(),meaningEditText.text.toString())
             dismiss()
 
-
         })
 
         dialog.findViewById<Button>(R.id.negativeButton).setOnClickListener(View.OnClickListener {
 
             dismiss()
+
         })
 
         return dialog
 
-
-
     }
 
     fun addWord(editWord: String, editMeaning: String) {
-
 
         realm.executeTransaction {
 

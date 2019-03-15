@@ -1,6 +1,8 @@
 package com.shojishunsuke.pronounceflachcard.activity
 
+import android.graphics.Color
 import android.os.Bundle
+import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager.widget.ViewPager
@@ -21,6 +23,9 @@ class MainActivity : AppCompatActivity() {
 
         val tabLayout : TabLayout = this.findViewById(R.id.tablayout)
         val viewPager : ViewPager = this.findViewById(R.id.pager)
+        val toolBar : androidx.appcompat.widget.Toolbar = this.findViewById(R.id.toolBar)
+        toolBar.setTitleTextColor(Color.WHITE)
+        setSupportActionBar(toolBar)
 
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_word_list))
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_memorization))

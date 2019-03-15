@@ -1,69 +1,69 @@
 package com.shojishunsuke.pronounceflachcard.adapter
 
 import android.content.Context
+import android.speech.tts.TextToSpeech
+import android.speech.tts.TextToSpeechService
+import android.speech.tts.Voice
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.shojishunsuke.pronounceflachcard.Fragment.realm
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.WordObject
-import io.realm.Realm
-import io.realm.RealmResults
+import io.realm.*
+import java.util.*
+import java.util.function.LongFunction
 
 class MemorizeRecyclerViewAdapter(private val context: Context?, val realmResults: RealmResults<WordObject>) :
-    RecyclerView.Adapter<MemorizeRecyclerViewAdapter.MemorizeRecyclerViewHolder>() {
+    RecyclerView.Adapter<MemorizeRecyclerViewAdapter.MemorizeRecyclerViewHolder>(), TextToSpeech.OnInitListener {
 
     var wordString: String = ""
     var meaningString: String = ""
+    val textToSpeach = TextToSpeech(context,this)
+
     override fun onBindViewHolder(holder: MemorizeRecyclerViewHolder, position: Int) {
-        var wordCard = realmResults.get(position)
+        val wordCard = realmResults.get(position)
         wordString = wordCard!!.word
         meaningString = wordCard.meaning
 
         holder.wordTextView.setText(wordString)
-        holder.wordTextView.setTag(wordCard)
-
         holder.meaningTextView.setText(meaningString)
-        holder.meaningTextView.setTag(wordCard)
-        when (wordCard.isDone) {
-            true -> {
-                holder.checkBox.setImageResource(R.drawable.outline_check_box_black_48)
-            }
-            false -> {
-                holder.checkBox.setImageResource(R.drawable.outline_check_box_outline_blank_black_48)
+
+        if (wordCard.isDone){
+            holder.checkBox.isChecked = true
+        }else{
+            holder.checkBox.isChecked = false
+        }
+
+
+        holder.checkBox.setOnClickListener{
+            realm.executeTransaction{
+                wordCard.isDone = holder.checkBox.isChecked
+                realm.copyToRealm(wordCard)
             }
         }
-        holder.checkBox.setOnClickListener(View.OnClickListener {
-            when (wordCard.isDone) {
-                true -> {
-                    holder.checkBox.setImageResource(R.drawable.outline_check_box_outline_blank_black_48)
-                    Realm.getDefaultInstance().use { realm ->
-                        realm.executeTransaction {
-                            wordCard.isDone = false
-                            realm.copyToRealm(wordCard)
-                        }
-                    }
-
-                }
-                false -> {
-                    holder.checkBox.setImageResource(R.drawable.outline_check_box_black_48)
-                    Realm.getDefaultInstance().use { realm ->
-                        realm.executeTransaction {
-                            wordCard.isDone = true
-                            realm.copyToRealm(wordCard)
-                        }
-                    }
-                }
-            }
-        })
 
 
+        holder.pronounceButton.setOnClickListener {
+            textToSpeach.speak(wordCard.word,TextToSpeech.QUEUE_FLUSH,null,null)
+        }
+
+        holder.wordTextView.setTag(wordCard)
+        holder.meaningTextView.setTag(wordCard)
+        holder.pronounceButton.setTag(wordCard)
         holder.checkBox.setTag(wordCard)
 
 
+
+
     }
+
 
     override fun getItemCount(): Int {
 
@@ -78,12 +78,8 @@ class MemorizeRecyclerViewAdapter(private val context: Context?, val realmResult
 
         val viewHolder = MemorizeRecyclerViewHolder(mView)
 
-        viewHolder.wordTextView.setText(wordString)
-        viewHolder.meaningTextView.setText(meaningString)
 
-
-
-
+        viewHolder.pronounceButton.setImageResource(R.drawable.outline_volume_up_black_36dp)
 
 
 
@@ -121,17 +117,41 @@ class MemorizeRecyclerViewAdapter(private val context: Context?, val realmResult
         })
 
 
+
         return MemorizeRecyclerViewHolder(mView)
 
 
     }
 
+    override fun onInit(p0: Int) {
+        if (p0 == TextToSpeech.SUCCESS){
+            if (textToSpeach.isLanguageAvailable(Locale.ENGLISH)>= TextToSpeech.LANG_AVAILABLE) {
+                textToSpeach.setSpeechRate(1.0f)
+                textToSpeach.setPitch(1.0f)
+
+
+
+            }else{
+                Toast.makeText(context,"language not supported",Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    }
+
+
     class MemorizeRecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         val wordTextView = view.findViewById<TextView>(R.id.wordMemoTextView)
         val meaningTextView = view.findViewById<TextView>(R.id.meaningMemoTextView)
-        val checkBox = view.findViewById<ImageView>(R.id.checkBox)
+        val checkBox = view.findViewById<CheckBox>(R.id.checkBox)
+        val pronounceButton = view.findViewById<ImageView>(R.id.pronounceButton)
 
     }
+
+
+//    fun changeLister():OrderedRealmCollectionChangeListener<RealmResults<WordObject>>{
+//        notifyDataSetChanged()
+//    }
+
 
 }

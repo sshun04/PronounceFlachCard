@@ -1,6 +1,8 @@
 package com.shojishunsuke.pronounceflachcard.Fragment
 
+import android.app.Activity
 import android.os.Bundle
+import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,24 +27,25 @@ class MemorizeWordFragment : Fragment() {
 
         val recyclerView = layout.findViewById<RecyclerView>(R.id.memorizeRecyclerView)
 
-        recyclerView.adapter = MemorizeRecyclerViewAdapter(context, read())
+        val adapter = MemorizeRecyclerViewAdapter(context, read())
 
+        realm.addChangeListener {
 
+            adapter.notifyDataSetChanged()
 
+        }
 
-
-
+        recyclerView.adapter = adapter
 
         recyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
-
 
 
         return layout
     }
 
     fun read(): RealmResults<WordObject> {
-        return realm.where(WordObject::class.java).findAll()
 
+        return realm.where(WordObject::class.java).findAll()
 
     }
 
