@@ -8,7 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
+import com.shojishunsuke.pronounceflachcard.Fragment.WordDetailDialogFragment
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.WordObject
 import io.realm.Realm
@@ -47,6 +49,7 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
                         0 -> {
 
 
+//                        TODO    action when 編集 button pressed
 
                         }
                         1 -> {
@@ -61,7 +64,6 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
                                 ).setNegativeButton("CANCEL", null)
                                 .show()
                         }
-
                     }
                 }
 
@@ -89,9 +91,18 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
         viewHolder.meaningTextView.setText(meaningString)
         viewHolder.editButton.setImageResource(R.drawable.outline_more_vert_black_24)
 
-       realm.addChangeListener {
-           notifyDataSetChanged()
-       }
+        realm.addChangeListener {
+            notifyDataSetChanged()
+        }
+
+        mView.setOnClickListener {
+            AlertDialog.Builder(context)
+                .setTitle("Word")
+                .setMessage(wordString)
+                .setTitle("Meaning")
+                .setMessage(meaningString)
+                .show()
+        }
 
 
         return RecyclerViewHolder(mView)

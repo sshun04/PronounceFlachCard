@@ -14,6 +14,7 @@ class MyPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fr
     override fun getItem(position: Int): Fragment {
         when (position) {
             0 -> {
+
                 return FlashCardFragment()
             }
 
@@ -37,7 +38,6 @@ class MyPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fr
         return 3
 
     }
-
 
     override fun getPageTitle(position: Int): CharSequence? {
         when (position) {

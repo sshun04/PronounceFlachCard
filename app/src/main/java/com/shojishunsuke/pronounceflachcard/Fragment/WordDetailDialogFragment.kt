@@ -7,18 +7,19 @@ import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
 import android.widget.EditText
+import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.shojishunsuke.pronounceflachcard.R
 import io.realm.Realm
-import kotlinx.android.synthetic.main.dialog_fragment_edit_word.*
 import java.lang.Exception
 
-class EditWordDialogFragment:DialogFragment() {
+class WordDetailDialogFragment:DialogFragment() {
 
     val realm:Realm = Realm.getDefaultInstance()
+    lateinit var detailWordTextView: TextView
+    lateinit var detailMeaningTextView: TextView
 
-    lateinit var  wordEditText: EditText
-    lateinit var  meaningEditText: EditText
+
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
@@ -27,16 +28,20 @@ class EditWordDialogFragment:DialogFragment() {
         dialog.window!!.requestFeature(Window.FEATURE_NO_TITLE)
         dialog.window!!.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN)
 
+
         try {
-            dialog.setContentView(R.layout.dialog_fragment_edit_word)
+            dialog.setContentView(R.layout.dialog_fragment_word_detail)
         }catch (e:Exception){
             e.stackTrace
         }
 
+
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        wordEditText = dialog.findViewById(R.id.wordEditText)
-        meaningEditText = dialog.findViewById(R.id.meaningEditText)
+
+        detailWordTextView = dialog.findViewById(R.id.wordDetailText)
+        detailMeaningTextView = dialog.findViewById(R.id.meaningDetailText)
+
 
 
         return super.onCreateDialog(savedInstanceState)
