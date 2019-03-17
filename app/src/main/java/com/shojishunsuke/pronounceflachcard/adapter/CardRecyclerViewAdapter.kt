@@ -3,14 +3,16 @@ package com.shojishunsuke.pronounceflachcard.adapter
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.PopupMenu
+import android.widget.PopupWindow
 import android.widget.TextView
-import androidx.fragment.app.DialogFragment
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.shojishunsuke.pronounceflachcard.Fragment.WordDetailDialogFragment
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.WordObject
 import io.realm.Realm
@@ -22,6 +24,7 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
     var wordString: String = ""
     var meaningString: String = ""
     val realm = Realm.getDefaultInstance()
+    lateinit var popupWindow: PopupWindow
 
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
@@ -39,37 +42,107 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
         holder.editButton.setTag(wordCard)
 
 
+
+
         holder.editButton.setOnClickListener {
 
-
-            var items = arrayOf("編集", "削除")
-            AlertDialog.Builder(context)
-                .setItems(items, DialogInterface.OnClickListener { dialogInterface, i ->
-                    when (i) {
-                        0 -> {
+            popupWindow = PopupWindow(context)
+            var popupView = LayoutInflater.from(context).inflate(R.layout.menu, null)
 
 
-//                        TODO    action when 編集 button pressed
+            popupView.findViewById<TextView>(R.id.editButton).setOnClickListener {
 
-                        }
-                        1 -> {
-                            AlertDialog.Builder(context)
-                                .setTitle(realmResults.get(position)?.word)
-                                .setMessage("本当に削除しますか？")
-                                .setPositiveButton("OK", DialogInterface.OnClickListener { dialogInterface, i ->
 
-                                    deleteWord(position)
+            }
 
-                                }
-                                ).setNegativeButton("CANCEL", null)
-                                .show()
-                        }
+            popupView.findViewById<TextView>(R.id.deleteButton).setOnClickListener {
+
+                popupWindow.dismiss()
+
+                AlertDialog.Builder(context)
+                    .setTitle(realmResults.get(position)?.word)
+                    .setMessage("本当に削除しますか？")
+                    .setPositiveButton("OK", DialogInterface.OnClickListener { dialogInterface, i ->
+
+                        deleteWord(position)
+
                     }
-                }
+                    ).setNegativeButton("CANCEL", null)
+                    .show()
 
-                ).show()
+            }
 
+            popupWindow.contentView = popupView
+            popupWindow.isOutsideTouchable = true
+            popupWindow.isFocusable = true
+            popupWindow.isTouchable = true
+            popupWindow.setBackgroundDrawable(ColorDrawable(context!!.resources.getColor(android.R.color.white)))
+            popupWindow.elevation = 4f
+
+
+
+            popupWindow.showAsDropDown(holder.editButton, holder.editButton.width, -holder.editButton.height)
         }
+
+        holder.wordBox.setOnClickListener {
+
+
+            val detailDialog  = AlertDialog.Builder(context)
+                .setPositiveButton("OK",DialogInterface.OnClickListener{
+                    dialogInterface, i -> dialogInterface.dismiss()
+                })
+                .setNegativeButton("Cancel",
+                    DialogInterface.OnClickListener { dialogInterface, i -> dialogInterface.dismiss() })
+                .create()
+
+            val parentView = detailDialog.getLayoutInflater().inflate(R.layout.dialog_fragment_word_detail,null)
+
+            val detailWord = parentView.findViewById<TextView>(R.id.wordDetailText)
+            detailWord.setText(realmResults.get(position)?.word)
+
+            val detailMeaning = parentView.findViewById<TextView>(R.id.meaningDetailText)
+            detailMeaning.setText(realmResults.get(position)?.meaning)
+
+            detailDialog.setView(parentView)
+            detailDialog.show()
+        }
+
+//
+
+//
+//        holder.editButton.setOnClickListener {
+//
+//
+//                        var items = arrayOf("編集", "削除")
+//            AlertDialog.Builder(context)
+//                .setItems(items, DialogInterface.OnClickListener { dialogInterface, i ->
+//                    when (i) {
+//                        0 -> {
+//
+//
+////                        TODO    action when 編集 button pressed
+//
+//                        }
+//                        1 -> {
+//                            AlertDialog.Builder(context)
+//                                .setTitle(realmResults.get(position)?.word)
+//                                .setMessage("本当に削除しますか？")
+//                                .setPositiveButton("OK", DialogInterface.OnClickListener { dialogInterface, i ->
+//
+//                                    deleteWord(position)
+//
+//                                }
+//                                ).setNegativeButton("CANCEL", null)
+//                                .show()
+//                        }
+//                    }
+//                }
+//
+//                ).show()
+//
+//
+//
+//        }
 
     }
 
@@ -95,28 +168,22 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
             notifyDataSetChanged()
         }
 
-        mView.setOnClickListener {
-            AlertDialog.Builder(context)
-                .setTitle("Word")
-                .setMessage(wordString)
-                .setTitle("Meaning")
-                .setMessage(meaningString)
-                .show()
-        }
-
 
         return RecyclerViewHolder(mView)
     }
 
-
-    class RecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
-
-        val wordTextView = view.findViewById<TextView>(R.id.wordTextView)
-        val meaningTextView = view.findViewById<TextView>(R.id.meaningTextView)
-        val editButton = view.findViewById<ImageView>(R.id.editButton)
-
-    }
+//    override fun onClick(p0: View?) {
+//
+//        if (p0 != null) {
+//            popupWindow.elevation = 4f
+//            popupWindow.showAsDropDown(p0, p0.width, -p0.height)
+//        }
+//        else{
+//
+//        }
+//
+//
+//    }
 
     fun deleteWord(position: Int) {
 
@@ -129,4 +196,18 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
 
 
     }
+
+
+    class RecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+
+        val wordTextView = view.findViewById<TextView>(R.id.wordTextView)
+        val meaningTextView = view.findViewById<TextView>(R.id.meaningTextView)
+        val editButton = view.findViewById<ImageView>(R.id.editButton)
+        val wordBox = view.findViewById<ConstraintLayout>(R.id.wordBox)
+
+
+    }
+
+
 }

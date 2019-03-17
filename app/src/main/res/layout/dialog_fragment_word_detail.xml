@@ -18,8 +18,11 @@
                 android:layout_width="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_height="32dp"
+                android:textSize="16dp"
         />
         <TextView
+                android:textSize="24dp"
+                android:text="detailWord"
                 android:id="@+id/wordDetailText"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -33,12 +36,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:text="Meaning"
+                android:textSize="16dp"
                 android:gravity="center|left"
                 android:layout_width="0dp"
                 android:layout_height="32dp"/>
 
         <TextView
                 android:id="@+id/meaningDetailText"
+                android:textSize="24dp"
+                android:text="detail"
                 app:layout_constraintTop_toBottomOf="@id/titleMeaning"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
