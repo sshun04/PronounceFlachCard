@@ -1,4 +1,4 @@
-package com.shojishunsuke.pronounceflachcard.fragment
+package com.shojishunsuke.pronounceflachcard.testFragment
 
 import android.os.Bundle
 import android.util.Log

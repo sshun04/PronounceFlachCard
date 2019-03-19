@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.shojishunsuke.pronounceflachcard.fragment.FlashCardFragment
 import com.shojishunsuke.pronounceflachcard.fragment.MemorizeWordFragment
-import com.shojishunsuke.pronounceflachcard.fragment.TestFragment
+import com.shojishunsuke.pronounceflachcard.testFragment.TestFragment
 
 
 class MyPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {

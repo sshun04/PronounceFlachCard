@@ -1,5 +1,6 @@
-package com.shojishunsuke.pronounceflachcard.fragment
+package com.shojishunsuke.pronounceflachcard.testFragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.WordObject
+import com.shojishunsuke.pronounceflachcard.activity.TestMeaningActivity
 import io.realm.Realm
 import io.realm.RealmResults
 
@@ -96,10 +98,10 @@ class TestFragment : Fragment() {
 
             false->{
 
-                var fragmentTransaction = fragmentManager!!.beginTransaction()
-                fragmentTransaction.replace(R.id.testFragmentBackground,createTestFragment())
+               val intent = Intent(context,TestMeaningActivity::class.java)
+                intent.putExtra(resources.getString(R.string.key_is_checked_Only),isCheckedWords)
 
-                fragmentTransaction.commit()
+                context!!.startActivity(intent)
 
             }
         }
@@ -130,7 +132,7 @@ class TestFragment : Fragment() {
 
         }else{
 
-            val testMeaningFragment = TestMeaningFragment()
+            val testMeaningFragment = TestMeaningShowWordFragment()
             testMeaningFragment.arguments = bundle
 
             return testMeaningFragment
