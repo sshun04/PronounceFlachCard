@@ -1,7 +1,6 @@
 package com.shojishunsuke.pronounceflachcard
 
 import android.app.Application
-import com.shojishunsuke.pronounceflachcard.Fragment.realm
 import io.realm.Realm
 import io.realm.RealmConfiguration
 

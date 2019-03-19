@@ -4,9 +4,11 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.graphics.drawable.ColorDrawable
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.PopupWindow
@@ -71,6 +73,9 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
                     .show()
 
             }
+            var width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,100f,context!!.resources!!.displayMetrics)
+            popupWindow.setWindowLayoutMode(width.toInt(),WindowManager.LayoutParams.WRAP_CONTENT)
+            popupWindow.width =width.toInt()
 
             popupWindow.contentView = popupView
             popupWindow.isOutsideTouchable = true

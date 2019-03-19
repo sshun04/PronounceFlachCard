@@ -1,4 +1,4 @@
-package com.shojishunsuke.pronounceflachcard.Fragment
+package com.shojishunsuke.pronounceflachcard.fragment
 
 import android.app.Dialog
 import android.graphics.Color
@@ -6,7 +6,6 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
-import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.shojishunsuke.pronounceflachcard.R

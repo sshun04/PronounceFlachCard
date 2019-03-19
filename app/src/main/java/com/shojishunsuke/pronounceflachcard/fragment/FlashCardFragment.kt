@@ -1,6 +1,5 @@
-package com.shojishunsuke.pronounceflachcard.Fragment
+package com.shojishunsuke.pronounceflachcard.fragment
 
-import android.graphics.drawable.Icon
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,7 +24,7 @@ class FlashCardFragment : Fragment() {
         val recyclerview = layout.findViewById<RecyclerView>(R.id.recyclerview)
         val addButton = layout.findViewById<FloatingActionButton>(R.id.addwordbutton)
 
-        addButton.setImageResource(R.drawable.baseline_add_black_18dp)
+        addButton.setImageResource(R.drawable.baseline_add_white_18)
         addButton.setOnClickListener(View.OnClickListener {
             val addDialog = AddWordDialogFragment()
             addDialog.show(childFragmentManager,"add_dialog")

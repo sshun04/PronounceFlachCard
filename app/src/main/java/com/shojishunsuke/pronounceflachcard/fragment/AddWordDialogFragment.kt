@@ -1,4 +1,4 @@
-package com.shojishunsuke.pronounceflachcard.Fragment
+package com.shojishunsuke.pronounceflachcard.fragment
 
 import android.app.Dialog
 import android.graphics.Color
@@ -10,11 +10,9 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
-import com.google.android.material.button.MaterialButton
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.WordObject
 import io.realm.Realm
-import kotlinx.android.synthetic.main.dialog_fragment_add_word.*
 import java.lang.Exception
 
 class AddWordDialogFragment : DialogFragment() {
