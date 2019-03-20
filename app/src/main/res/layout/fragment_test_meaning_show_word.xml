@@ -13,7 +13,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:textSize="32dp"
+            android:textSize="48dp"
+            android:text="Word"
     />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

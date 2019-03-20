@@ -1,7 +1,7 @@
-package com.shojishunsuke.pronounceflachcard.fragment
+package com.shojishunsuke.pronounceflachcard.testFragment
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.WordObject
+import com.shojishunsuke.pronounceflachcard.activity.TestMeaningActivity
 import io.realm.Realm
 import io.realm.RealmResults
 
@@ -35,8 +36,14 @@ class TestFragment : Fragment() {
 
         testPronounceButton.setOnClickListener {
             isPronounce = true
-            hideFirstButtons()
-            showSecondButtons()
+
+//      発音テストはまだ実装してないので仮のフラグメントに遷移
+
+            val fragmentTransaction = fragmentManager!!.beginTransaction()
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.replace(R.id.testFragmentBackground, createTestPronounceFragment())
+            fragmentTransaction.commit()
+
         }
 
         testMeaningButton.setOnClickListener {
@@ -48,7 +55,7 @@ class TestFragment : Fragment() {
         checkedWordsButton.setOnClickListener {
             isCheckedWords = true
             openTestFragment()
-            Log.d("words", isCheckedWords.toString() + ":" + isPronounce.toString())
+
         }
 
 
@@ -56,7 +63,6 @@ class TestFragment : Fragment() {
             isCheckedWords = false
 
             openTestFragment()
-            Log.d("words", isCheckedWords.toString() + ":" + isPronounce.toString())
 
         }
 
@@ -64,11 +70,19 @@ class TestFragment : Fragment() {
 
             checkedWords = realm.where(WordObject::class.java).equalTo("isDone", true).findAll()
 
-            Log.d("a", checkedWords.count().toString())
-
         }
 
         return layout
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        testPronounceButton.visibility = View.VISIBLE
+        testMeaningButton.visibility = View.VISIBLE
+
+        checkedWordsButton.visibility = View.GONE
+        allWordsButton.visibility = View.GONE
     }
 
     fun hideFirstButtons() {
@@ -84,7 +98,7 @@ class TestFragment : Fragment() {
     }
 
     fun openTestFragment() {
-        when (isPronounce ) {
+        when (isPronounce) {
             true -> {
 
                 var fragmentTransAction: FragmentTransaction = fragmentManager!!.beginTransaction()
@@ -94,12 +108,12 @@ class TestFragment : Fragment() {
 
             }
 
-            false->{
+            false -> {
 
-                var fragmentTransaction = fragmentManager!!.beginTransaction()
-                fragmentTransaction.replace(R.id.testFragmentBackground,createTestFragment())
+                val intent = Intent(context, TestMeaningActivity::class.java)
+                intent.putExtra(resources.getString(R.string.key_is_checked_Only), isCheckedWords)
 
-                fragmentTransaction.commit()
+                context!!.startActivity(intent)
 
             }
         }
@@ -115,29 +129,28 @@ class TestFragment : Fragment() {
         return testPronounceFragment
     }
 
-    fun createTestFragment():Fragment{
+    fun createTestFragment(): Fragment {
 
         var bundle = Bundle()
         bundle.putBoolean("isChecked", isCheckedWords)
 
 
-        if (isPronounce){
+        if (isPronounce) {
 
             val testPronounceFragment = TestPronounceFragment()
             testPronounceFragment.arguments = bundle
 
             return testPronounceFragment
 
-        }else{
+        } else {
 
-            val testMeaningFragment = TestMeaningFragment()
+            val testMeaningFragment = TestMeaningShowWordFragment()
             testMeaningFragment.arguments = bundle
 
             return testMeaningFragment
 
 
         }
-
 
 
     }

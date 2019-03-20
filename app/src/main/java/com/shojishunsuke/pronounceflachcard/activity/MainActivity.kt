@@ -31,12 +31,13 @@ class MainActivity : AppCompatActivity() {
         viewPager.adapter = fragmentAdapter
 
 
+
         tabLayout.setupWithViewPager(viewPager)
 
         viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
 
-//                Log.d("page",state.toString())
+
             }
 
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {

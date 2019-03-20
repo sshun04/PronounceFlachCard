@@ -3,4 +3,8 @@
     <string name="tab_test">Test</string>
     <string name="tab_word_list">List_Words</string>
     <string name="tab_memorization">Memorize_Word</string>
+    <string name="key_is_checked_Only">IsCheckedOnly</string>
+    <string name="key_question_number">QuestionNumber</string>
+    <string name="key_true_numbers">TrueQuestionNumbers</string>
+    <string name="key_false_numbers">FalseQuestionNumbers</string>
 </resources>

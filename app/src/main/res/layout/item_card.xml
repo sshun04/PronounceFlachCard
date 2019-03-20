@@ -24,6 +24,7 @@
                 app:layout_constraintEnd_toStartOf="@id/editButton">
 
             <TextView
+                    android:layout_marginLeft="12dp"
                     app:layout_constraintStart_toStartOf="parent"
                     android:textColor="@android:color/black"
                     android:id="@+id/wordTextView"
@@ -37,6 +38,7 @@
                     android:textSize="24dp"
                     android:text="Word"
                     android:layout_marginRight="12dp"
+                    android:singleLine="true"
 
             />
             <TextView

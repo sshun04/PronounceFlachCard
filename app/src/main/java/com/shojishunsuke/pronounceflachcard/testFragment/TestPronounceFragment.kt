@@ -1,4 +1,4 @@
-package com.shojishunsuke.pronounceflachcard.fragment
+package com.shojishunsuke.pronounceflachcard.testFragment
 
 import android.os.Bundle
 import android.util.Log
@@ -18,10 +18,14 @@ class TestPronounceFragment : Fragment() {
 
         if (arguments != null) {
 
-            textView.setText("Pronounce" +":"+ arguments!!.getBoolean("isChecked").toString())
+            textView.setText( "まだ実装してません。画面をタップして戻ってください")
 
         } else {
-            Log.d("Log", "null")
+           Log.d("TestPronounceFragment","null")
+        }
+
+        textView.setOnClickListener {
+            fragmentManager!!.beginTransaction().remove(this).commit()
         }
         return layout
     }
