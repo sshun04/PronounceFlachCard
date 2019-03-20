@@ -38,8 +38,8 @@ class WordDetailDialogFragment:DialogFragment() {
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
 
-        detailWordTextView = dialog.findViewById(R.id.wordDetailText)
-        detailMeaningTextView = dialog.findViewById(R.id.meaningDetailText)
+        detailWordTextView = dialog.findViewById(R.id.wordEditText)
+        detailMeaningTextView = dialog.findViewById(R.id.meaningEditText)
 
 
 

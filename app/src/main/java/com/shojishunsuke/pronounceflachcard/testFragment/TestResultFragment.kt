@@ -30,7 +30,7 @@ class TestResultFragment:Fragment() {
         falseNumbersList = arguments!!.getIntegerArrayList(key_false_numbers)
 
 
-        textView.setText(trueNumbersList.size.toString()+ "/" + falseNumbersList.size.toString())
+        textView.setText(trueNumbersList.size.toString()+ "問正解")
 
         endButton.setOnClickListener {
 

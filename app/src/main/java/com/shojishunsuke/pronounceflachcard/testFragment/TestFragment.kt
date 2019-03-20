@@ -37,8 +37,14 @@ class TestFragment : Fragment() {
 
         testPronounceButton.setOnClickListener {
             isPronounce = true
-            hideFirstButtons()
-            showSecondButtons()
+//            hideFirstButtons()
+//            showSecondButtons()
+
+            val fragmentTransaction = fragmentManager!!.beginTransaction()
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.replace(R.id.testFragmentBackground,createTestPronounceFragment())
+            fragmentTransaction.commit()
+
         }
 
         testMeaningButton.setOnClickListener {
@@ -50,7 +56,7 @@ class TestFragment : Fragment() {
         checkedWordsButton.setOnClickListener {
             isCheckedWords = true
             openTestFragment()
-            Log.d("words", isCheckedWords.toString() + ":" + isPronounce.toString())
+
         }
 
 
@@ -58,7 +64,6 @@ class TestFragment : Fragment() {
             isCheckedWords = false
 
             openTestFragment()
-            Log.d("words", isCheckedWords.toString() + ":" + isPronounce.toString())
 
         }
 
@@ -66,11 +71,19 @@ class TestFragment : Fragment() {
 
             checkedWords = realm.where(WordObject::class.java).equalTo("isDone", true).findAll()
 
-            Log.d("a", checkedWords.count().toString())
-
         }
 
         return layout
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        testPronounceButton.visibility =View.VISIBLE
+        testMeaningButton.visibility =View.VISIBLE
+
+        checkedWordsButton.visibility = View.GONE
+        allWordsButton.visibility    =View.GONE
     }
 
     fun hideFirstButtons() {

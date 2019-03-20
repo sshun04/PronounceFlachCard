@@ -60,7 +60,7 @@ class TestMeaningShowAnswerFragment : Fragment() {
 
         }
 
-        textView.setText(showingMeaning + "/" + questionNumber.toString())
+        textView.setText(showingMeaning)
 
         trueButton.setOnClickListener {
 
@@ -94,17 +94,12 @@ class TestMeaningShowAnswerFragment : Fragment() {
 
         }
 
-
-
-
-
         return layout
     }
 
     fun moveToResultFragment() {
 
         val fragmentTransAction = fragmentManager!!.beginTransaction()
-//        fragmentTransAction.addToBackStack(null)
 
         val showResultFragment = TestResultFragment()
         var bundle = Bundle()
@@ -121,7 +116,6 @@ class TestMeaningShowAnswerFragment : Fragment() {
     fun showWordFragment() {
 
         val fragmentTransAction = fragmentManager!!.beginTransaction()
-//        fragmentTransAction.addToBackStack(null)
 
         var bundle = Bundle()
         questionNumber++

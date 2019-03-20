@@ -33,7 +33,7 @@ class TestMeaningShowWordFragment:Fragment() {
         val key_true_numbers =  resources.getString(R.string.key_true_numbers)
         val key_false_numbers =resources.getString(R.string.key_false_numbers)
 
-        var questionNumber = arguments!!.getInt(key_question_number)
+        val questionNumber = arguments!!.getInt(key_question_number)
         val isCheckedOnly =  arguments!!.getBoolean(key_checked)
         trueNumbersList = arguments!!.getIntegerArrayList(key_true_numbers)
         falseNumbersList = arguments!!.getIntegerArrayList(key_false_numbers)
@@ -46,7 +46,7 @@ class TestMeaningShowWordFragment:Fragment() {
             showingWord = showingCards.get(questionNumber)!!.word
         }
 
-        textView.setText(showingWord+"/"+ questionNumber.toString())
+        textView.setText(showingWord)
 
         var bundle = Bundle()
         bundle.putInt(key_question_number,questionNumber)
@@ -61,7 +61,6 @@ class TestMeaningShowWordFragment:Fragment() {
             showAnswerFragment.arguments = bundle
 
             val fragmentTransAction = fragmentManager!!.beginTransaction()
-//            fragmentTransAction.addToBackStack(null)
             fragmentTransAction.replace(R.id.testMeaningBackGround,showAnswerFragment)
             fragmentTransAction.commit()
 

@@ -18,9 +18,10 @@
             android:layout_height="0dp"/>
 
     <Button
+            style="@style/Base.Widget.AppCompat.Button.Colored"
             android:id="@+id/endButton"
             android:layout_width="140dp"
-            android:layout_height="56dp"
+            android:layout_height="60dp"
             android:layout_margin="16dp"
             android:text="終了"
             app:layout_constraintEnd_toEndOf="parent"
