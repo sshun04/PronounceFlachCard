@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
         val fragmentAdapter = MyPagerAdapter(supportFragmentManager)
         viewPager.adapter = fragmentAdapter
 
-        var string:String = resources.getString(R.string.key_is_checked_Only)
 
 
         tabLayout.setupWithViewPager(viewPager)
@@ -38,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
 
-//                Log.d("page",state.toString())
+
             }
 
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {

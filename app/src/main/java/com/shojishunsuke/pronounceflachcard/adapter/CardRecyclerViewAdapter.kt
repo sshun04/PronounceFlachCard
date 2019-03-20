@@ -163,7 +163,6 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
         }
 
 
-
     }
 
 

@@ -2,7 +2,6 @@ package com.shojishunsuke.pronounceflachcard.testFragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,12 +36,12 @@ class TestFragment : Fragment() {
 
         testPronounceButton.setOnClickListener {
             isPronounce = true
-//            hideFirstButtons()
-//            showSecondButtons()
+
+//      発音テストはまだ実装してないので仮のフラグメントに遷移
 
             val fragmentTransaction = fragmentManager!!.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.replace(R.id.testFragmentBackground,createTestPronounceFragment())
+            fragmentTransaction.replace(R.id.testFragmentBackground, createTestPronounceFragment())
             fragmentTransaction.commit()
 
         }
@@ -79,11 +78,11 @@ class TestFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        testPronounceButton.visibility =View.VISIBLE
-        testMeaningButton.visibility =View.VISIBLE
+        testPronounceButton.visibility = View.VISIBLE
+        testMeaningButton.visibility = View.VISIBLE
 
         checkedWordsButton.visibility = View.GONE
-        allWordsButton.visibility    =View.GONE
+        allWordsButton.visibility = View.GONE
     }
 
     fun hideFirstButtons() {
@@ -99,7 +98,7 @@ class TestFragment : Fragment() {
     }
 
     fun openTestFragment() {
-        when (isPronounce ) {
+        when (isPronounce) {
             true -> {
 
                 var fragmentTransAction: FragmentTransaction = fragmentManager!!.beginTransaction()
@@ -109,10 +108,10 @@ class TestFragment : Fragment() {
 
             }
 
-            false->{
+            false -> {
 
-               val intent = Intent(context,TestMeaningActivity::class.java)
-                intent.putExtra(resources.getString(R.string.key_is_checked_Only),isCheckedWords)
+                val intent = Intent(context, TestMeaningActivity::class.java)
+                intent.putExtra(resources.getString(R.string.key_is_checked_Only), isCheckedWords)
 
                 context!!.startActivity(intent)
 
@@ -130,20 +129,20 @@ class TestFragment : Fragment() {
         return testPronounceFragment
     }
 
-    fun createTestFragment():Fragment{
+    fun createTestFragment(): Fragment {
 
         var bundle = Bundle()
         bundle.putBoolean("isChecked", isCheckedWords)
 
 
-        if (isPronounce){
+        if (isPronounce) {
 
             val testPronounceFragment = TestPronounceFragment()
             testPronounceFragment.arguments = bundle
 
             return testPronounceFragment
 
-        }else{
+        } else {
 
             val testMeaningFragment = TestMeaningShowWordFragment()
             testMeaningFragment.arguments = bundle
@@ -152,7 +151,6 @@ class TestFragment : Fragment() {
 
 
         }
-
 
 
     }

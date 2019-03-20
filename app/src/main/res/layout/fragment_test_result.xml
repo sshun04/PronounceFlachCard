@@ -13,7 +13,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="0dp"
-            android:textSize="32dp"
+            android:textSize="48dp"
             android:text="result"
             android:layout_height="0dp"/>
 
