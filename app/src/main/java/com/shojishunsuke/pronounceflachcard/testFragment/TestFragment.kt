@@ -1,5 +1,6 @@
 package com.shojishunsuke.pronounceflachcard.testFragment
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -52,17 +53,34 @@ class TestFragment : Fragment() {
             showSecondButtons()
         }
 
+
+
         checkedWordsButton.setOnClickListener {
-            isCheckedWords = true
-            openTestFragment()
+
+
+            if (realm.where(WordObject::class.java).equalTo("isDone", true).findAll().isEmpty()) {
+//               チェックされた単語が０個ならダイアログ表示
+
+                showSimpleAlertDialog("テストを開始するには単語にチェックをつけてください。")
+
+            } else {
+                isCheckedWords = true
+                openWordTestFragment()
+            }
 
         }
 
-
         allWordsButton.setOnClickListener {
-            isCheckedWords = false
 
-            openTestFragment()
+            if (realm.where(WordObject::class.java).findAll().isEmpty()) {
+//                単語が０個ならダイアログ表示
+
+                showSimpleAlertDialog("テストを開始するには単語を追加してください。")
+
+            } else {
+                isCheckedWords = false
+                openWordTestFragment()
+            }
 
         }
 
@@ -85,9 +103,20 @@ class TestFragment : Fragment() {
         allWordsButton.visibility = View.GONE
     }
 
+    fun showSimpleAlertDialog(message:String){
+
+        AlertDialog.Builder(context)
+            .setMessage(message)
+            .setPositiveButton("OK",null)
+            .show()
+
+    }
+
     fun hideFirstButtons() {
+
         testPronounceButton.visibility = View.GONE
         testMeaningButton.visibility = View.GONE
+
     }
 
     fun showSecondButtons() {
@@ -97,7 +126,7 @@ class TestFragment : Fragment() {
 
     }
 
-    fun openTestFragment() {
+    fun openWordTestFragment() {
         when (isPronounce) {
             true -> {
 
@@ -151,8 +180,6 @@ class TestFragment : Fragment() {
 
 
         }
-
-
     }
 
 }
