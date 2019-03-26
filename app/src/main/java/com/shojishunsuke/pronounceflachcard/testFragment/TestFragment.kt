@@ -8,16 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.WordObject
 import com.shojishunsuke.pronounceflachcard.activity.TestMeaningActivity
+import com.shojishunsuke.pronounceflachcard.activity.TestPronounceActivity
+import com.shojishunsuke.pronounceflachcard.activity.realm
 import io.realm.Realm
 import io.realm.RealmResults
 
 class TestFragment : Fragment() {
 
-    val realm = Realm.getDefaultInstance()
     lateinit var checkedWords: RealmResults<WordObject>
     lateinit var testPronounceButton: Button
     lateinit var testMeaningButton: Button
@@ -36,14 +36,10 @@ class TestFragment : Fragment() {
         allWordsButton = layout.findViewById(R.id.allWordsButton)
 
         testPronounceButton.setOnClickListener {
+
             isPronounce = true
-
-//      発音テストはまだ実装してないので仮のフラグメントに遷移
-
-            val fragmentTransaction = fragmentManager!!.beginTransaction()
-            fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.replace(R.id.testFragmentBackground, createTestPronounceFragment())
-            fragmentTransaction.commit()
+            hideFirstButtons()
+            showSecondButtons()
 
         }
 
@@ -103,37 +99,37 @@ class TestFragment : Fragment() {
         allWordsButton.visibility = View.GONE
     }
 
-    fun showSimpleAlertDialog(message:String){
+    private fun showSimpleAlertDialog(message: String) {
 
         AlertDialog.Builder(context)
             .setMessage(message)
-            .setPositiveButton("OK",null)
+            .setPositiveButton("OK", null)
             .show()
 
     }
 
-    fun hideFirstButtons() {
+    private fun hideFirstButtons() {
 
         testPronounceButton.visibility = View.GONE
         testMeaningButton.visibility = View.GONE
 
     }
 
-    fun showSecondButtons() {
+    private fun showSecondButtons() {
 
         checkedWordsButton.visibility = View.VISIBLE
         allWordsButton.visibility = View.VISIBLE
 
     }
 
-    fun openWordTestFragment() {
+    private fun openWordTestFragment() {
         when (isPronounce) {
             true -> {
 
-                var fragmentTransAction: FragmentTransaction = fragmentManager!!.beginTransaction()
-                fragmentTransAction.replace(R.id.testFragmentBackground, createTestFragment())
+                val intent = Intent(context, TestPronounceActivity::class.java)
+                intent.putExtra(resources.getString(R.string.key_is_checked_Only), isCheckedWords)
 
-                fragmentTransAction.commit()
+                context!!.startActivity(intent)
 
             }
 
@@ -148,38 +144,5 @@ class TestFragment : Fragment() {
         }
     }
 
-    fun createTestPronounceFragment(): TestPronounceFragment {
-        var bundle = Bundle()
-        bundle.putBoolean("isChecked", isCheckedWords)
-
-        val testPronounceFragment = TestPronounceFragment()
-        testPronounceFragment.arguments = bundle
-
-        return testPronounceFragment
-    }
-
-    fun createTestFragment(): Fragment {
-
-        var bundle = Bundle()
-        bundle.putBoolean("isChecked", isCheckedWords)
-
-
-        if (isPronounce) {
-
-            val testPronounceFragment = TestPronounceFragment()
-            testPronounceFragment.arguments = bundle
-
-            return testPronounceFragment
-
-        } else {
-
-            val testMeaningFragment = TestMeaningShowWordFragment()
-            testMeaningFragment.arguments = bundle
-
-            return testMeaningFragment
-
-
-        }
-    }
 
 }

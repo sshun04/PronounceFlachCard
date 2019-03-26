@@ -10,11 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.testFragment.TestMeaningShowWordFragment
-import io.realm.Realm
+
 
 class TestMeaningActivity : AppCompatActivity() {
 
-    val realm = Realm.getDefaultInstance()
     var isCheckedOnly = true
     var questionNumber = 0
     var trueNumbersList = arrayListOf<Int>()
@@ -68,10 +67,10 @@ class TestMeaningActivity : AppCompatActivity() {
         {
             AlertDialog.Builder(this)
                 .setMessage("テストを終了しますか？")
-                .setPositiveButton("終了",DialogInterface.OnClickListener { dialogInterface, i ->
+                .setPositiveButton("終了",DialogInterface.OnClickListener { _, _ ->
                     finish()
                 })
-                .setNegativeButton("キャンセル",DialogInterface.OnClickListener { dialogInterface, i ->
+                .setNegativeButton("キャンセル",DialogInterface.OnClickListener { dialogInterface, _ ->
                     dialogInterface.dismiss()
                 })
                 .show()

@@ -9,12 +9,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.WordObject
+import com.shojishunsuke.pronounceflachcard.activity.realm
 import com.shojishunsuke.pronounceflachcard.adapter.MemorizeRecyclerViewAdapter
 import io.realm.Realm
 import io.realm.RealmResults
 
 
-val realm: Realm = Realm.getDefaultInstance()
 
 
 class MemorizeWordFragment : Fragment() {
@@ -33,7 +33,7 @@ class MemorizeWordFragment : Fragment() {
 
         recyclerView.adapter = adapter
 
-        recyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+        recyclerView.layoutManager = LinearLayoutManager(context,RecyclerView.VERTICAL,false)
 
 
         return layout

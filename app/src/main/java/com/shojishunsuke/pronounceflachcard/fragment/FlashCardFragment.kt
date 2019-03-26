@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.WordObject
+import com.shojishunsuke.pronounceflachcard.activity.realm
 import com.shojishunsuke.pronounceflachcard.adapter.CardRecyclerViewAdapter
 import io.realm.Realm
 import io.realm.RealmResults
 
 class FlashCardFragment : Fragment() {
 
-    var realm: Realm = Realm.getDefaultInstance()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val layout = inflater.inflate(R.layout.fragment_flash_card_tab, container, false)
@@ -34,7 +34,7 @@ class FlashCardFragment : Fragment() {
         recyclerview.adapter = CardRecyclerViewAdapter(context,getData)
 
 
-        recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        recyclerview.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
 
         return layout

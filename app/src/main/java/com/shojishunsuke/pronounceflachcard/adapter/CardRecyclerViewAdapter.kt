@@ -17,6 +17,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.WordObject
+import com.shojishunsuke.pronounceflachcard.activity.realm
 import io.realm.Realm
 import io.realm.RealmResults
 
@@ -25,7 +26,6 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
 
     var wordString: String = ""
     var meaningString: String = ""
-    val realm = Realm.getDefaultInstance()
     lateinit var popupWindow: PopupWindow
 
 
@@ -63,23 +63,18 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
 
                 val detailDialog  = AlertDialog.Builder(context)
                     .setPositiveButton("保存",DialogInterface.OnClickListener{
-                            dialogInterface, i ->
+                            _, _ ->
 
                         realm.executeTransaction {
 
 
-                            wordCard!!.word =  wordEditText.text.toString()
-                           wordCard!!.meaning = meaningEditText.text.toString()
+                            wordCard.word =  wordEditText.text.toString()
+                           wordCard.meaning = meaningEditText.text.toString()
 
                             it.copyToRealm(wordCard)
 
 
                         }
-
-
-
-
-
 
                     })
                     .setNegativeButton("キャンセル",
@@ -112,14 +107,14 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
                 AlertDialog.Builder(context)
                     .setTitle(realmResults.get(position)?.word)
                     .setMessage("本当に削除しますか？")
-                    .setPositiveButton("OK", DialogInterface.OnClickListener { dialogInterface, i ->
+                    .setPositiveButton("OK", DialogInterface.OnClickListener { _, _ ->
 
                         deleteWord(position)
 
 
 
                     }
-                    ).setNegativeButton("CANCEL", DialogInterface.OnClickListener { dialogInterface, i ->  })
+                    ).setNegativeButton("CANCEL", null)
                     .show()
 
             }
@@ -131,7 +126,7 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
             popupWindow.isOutsideTouchable = true
             popupWindow.isFocusable = true
             popupWindow.isTouchable = true
-            popupWindow.setBackgroundDrawable(ColorDrawable(context!!.resources.getColor(android.R.color.white)))
+            popupWindow.setBackgroundDrawable(ColorDrawable(context.resources.getColor(android.R.color.white)))
             popupWindow.elevation = 4f
 
 
@@ -144,7 +139,7 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
 
             val detailDialog  = AlertDialog.Builder(context)
                 .setPositiveButton("OK",DialogInterface.OnClickListener{
-                    dialogInterface, i -> dialogInterface.dismiss()
+                    dialogInterface, _ -> dialogInterface.dismiss()
                 })
                 .setNegativeButton("Cancel",
                     DialogInterface.OnClickListener { dialogInterface, i -> dialogInterface.dismiss() })

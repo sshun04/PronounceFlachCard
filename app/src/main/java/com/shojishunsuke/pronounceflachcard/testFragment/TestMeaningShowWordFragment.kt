@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.WordObject
+import com.shojishunsuke.pronounceflachcard.activity.realm
 import io.realm.Realm
 import io.realm.RealmResults
 
@@ -16,7 +17,6 @@ class TestMeaningShowWordFragment:Fragment() {
 
     lateinit var showingCards :RealmResults<WordObject>
     lateinit var showingWord : String
-    val realm =Realm.getDefaultInstance()
 
     var trueNumbersList = arrayListOf<Int>()
     var falseNumbersList = arrayListOf<Int>()

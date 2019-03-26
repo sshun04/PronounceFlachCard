@@ -14,7 +14,6 @@ import java.lang.Exception
 
 class WordDetailDialogFragment:DialogFragment() {
 
-    val realm:Realm = Realm.getDefaultInstance()
     lateinit var detailWordTextView: TextView
     lateinit var detailMeaningTextView: TextView
 
