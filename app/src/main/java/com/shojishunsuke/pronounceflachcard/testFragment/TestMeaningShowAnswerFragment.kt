@@ -103,9 +103,15 @@ class TestMeaningShowAnswerFragment : Fragment() {
         val fragmentTransAction = fragmentManager!!.beginTransaction()
 
         val showResultFragment = TestResultFragment()
+        val isPronunce = false
+
         var bundle = Bundle()
         bundle.putIntegerArrayList(key_true_numbers, trueNumbersList)
         bundle.putIntegerArrayList(key_false_numbers, falseNumbersList)
+        bundle.putBoolean(key_checked, isCheckedOnly)
+        bundle.putBoolean("isPronounce",isPronunce)
+
+
 
         showResultFragment.arguments = bundle
 

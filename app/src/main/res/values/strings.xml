@@ -7,4 +7,5 @@
     <string name="key_question_number">QuestionNumber</string>
     <string name="key_true_numbers">TrueQuestionNumbers</string>
     <string name="key_false_numbers">FalseQuestionNumbers</string>
+    <string name="key_recognized_words">RecognizedWords</string>
 </resources>

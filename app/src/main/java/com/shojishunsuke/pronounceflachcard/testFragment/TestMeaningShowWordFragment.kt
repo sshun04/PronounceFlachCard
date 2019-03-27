@@ -15,11 +15,11 @@ import io.realm.RealmResults
 
 class TestMeaningShowWordFragment:Fragment() {
 
-    lateinit var showingCards :RealmResults<WordObject>
-    lateinit var showingWord : String
+    private lateinit var showingCards :RealmResults<WordObject>
+    private lateinit var showingWord : String
 
-    var trueNumbersList = arrayListOf<Int>()
-    var falseNumbersList = arrayListOf<Int>()
+    private var trueNumbersList = arrayListOf<Int>()
+    private var falseNumbersList = arrayListOf<Int>()
 
 
 

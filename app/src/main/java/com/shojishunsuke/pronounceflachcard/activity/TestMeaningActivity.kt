@@ -50,7 +50,7 @@ class TestMeaningActivity : AppCompatActivity() {
             showWordFragment.arguments = bundle
 
 
-            var fragmentTransaction = supportFragmentManager.beginTransaction()
+            val fragmentTransaction = supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.replace(R.id.testMeaningBackGround,
                showWordFragment

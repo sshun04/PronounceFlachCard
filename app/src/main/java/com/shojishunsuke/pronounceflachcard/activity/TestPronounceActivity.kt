@@ -1,27 +1,21 @@
 package com.shojishunsuke.pronounceflachcard.activity
 
-import android.content.Intent
+import android.content.DialogInterface
+import android.graphics.Color
 import android.os.Bundle
 import android.speech.RecognitionListener
-import android.speech.RecognizerIntent
-import android.speech.SpeechRecognizer
-import android.util.Log
+import android.view.KeyEvent
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.shojishunsuke.pronounceflachcard.R
+import com.shojishunsuke.pronounceflachcard.testFragment.TestStartFragment
 
-lateinit var speechRecognizer: SpeechRecognizer
 
 class TestPronounceActivity : AppCompatActivity() {
 
-    private var speechText: String = ""
-    lateinit var textView: TextView
-    private lateinit var button: Button
-    private var i  = 0
-    private var isFirst = true
-    private lateinit var recognitionListener: RecognitionListener
 
 
 
@@ -29,88 +23,41 @@ class TestPronounceActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test_pronounce)
 
+        val key_checked = resources.getString(R.string.key_is_checked_Only)
 
-        textView = this.findViewById(R.id.resultTextView1)
-        button = this.findViewById(R.id.button1)
+        val toolbar = this.findViewById<Toolbar>(R.id.testPronounceToolBar)
+        toolbar.setTitle("発音テスト")
+        toolbar.setTitleTextColor(Color.WHITE)
+        setSupportActionBar(toolbar)
 
+        val isCheckedOnly = intent.getBooleanExtra(key_checked, true)
 
-        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-        intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, this.packageName)
+        val bundle = Bundle()
+        bundle.putBoolean(key_checked, isCheckedOnly)
 
-        button.setOnClickListener {
+        val testStartFragment = TestStartFragment()
+        testStartFragment.arguments = bundle
 
-            if (isFirst){
-                isFirst = false
-            }else{
-                i++
-            }
-            speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this)
-            speechRecognizer.setRecognitionListener(recognitionListener)
+        val fragmentTransAction = supportFragmentManager.beginTransaction()
+        fragmentTransAction.addToBackStack(null)
+        fragmentTransAction.replace(R.id.testPronounceBackground, testStartFragment)
+        fragmentTransAction.commit()
 
-            speechRecognizer.startListening(intent)
+    }
 
-        }
-
-        recognitionListener = object : RecognitionListener{
-
-            override fun onReadyForSpeech(p0: Bundle?) {
-
-                Log.d("PronounceActivity", "ready")
-
-            }
-
-            override fun onRmsChanged(p0: Float) {
-
-            }
-
-            override fun onBufferReceived(p0: ByteArray?) {
-
-            }
-
-            override fun onPartialResults(p0: Bundle?) {
-
-            }
-
-            override fun onEvent(p0: Int, p1: Bundle?) {
-
-            }
-
-            override fun onBeginningOfSpeech() {
-
-            }
-
-            override fun onEndOfSpeech() {
-
-                Log.d("PronounceActivity", "speech end")
-
-            }
-
-            override fun onError(p0: Int) {
-
-                Log.d("PronounceActivity","error")
-
-            }
-
-            override fun onResults(p0: Bundle?) {
-                Log.d("PronounceActivity", "onResult")
-
-                val key = SpeechRecognizer.RESULTS_RECOGNITION
-                val stringList = p0!!.getStringArrayList(key)
-                if (p0 != null) {
-                    speechText = stringList.get(i)
-                    textView.setText(speechText)
-
-                    speechRecognizer.destroy()
-
-                } else {
-
-                    Toast.makeText(applicationContext, "もっとちゃんと話して", Toast.LENGTH_SHORT).show()
-
-                }
-            }
+    override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
+        if (event!!.keyCode == KeyEvent.KEYCODE_BACK) {
+            AlertDialog.Builder(this)
+                .setMessage("テストを終了しますか？")
+                .setPositiveButton("終了", DialogInterface.OnClickListener { _, _ ->
+                    finish()
+                })
+                .setNegativeButton("キャンセル", DialogInterface.OnClickListener { dialogInterface, _ ->
+                    dialogInterface.dismiss()
+                })
+                .show()
 
         }
-
+        return super.dispatchKeyEvent(event)
     }
 }
