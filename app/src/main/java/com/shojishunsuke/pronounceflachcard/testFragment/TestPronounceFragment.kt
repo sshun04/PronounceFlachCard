@@ -13,19 +13,13 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.shojishunsuke.pronounceflachcard.Model.QuestionWord
+import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import com.shojishunsuke.pronounceflachcard.R
-import com.shojishunsuke.pronounceflachcard.WordObject
 import com.shojishunsuke.pronounceflachcard.activity.realm
 import io.realm.RealmResults
 
 class TestPronounceFragment : Fragment() {
-
-    var trueNumbersList = arrayListOf<Int>()
-    var falseNumbersList = arrayListOf<Int>()
-
-    var speechText = ""
-
-    var recognizedWordsList = arrayListOf<String>()
 
     private lateinit var showingCards: RealmResults<WordObject>
     private lateinit var showingWord: String
@@ -39,17 +33,12 @@ class TestPronounceFragment : Fragment() {
 
         val key_checked = resources.getString(R.string.key_is_checked_Only)
         val key_question_number = resources.getString(R.string.key_question_number)
-        val key_true_numbers = resources.getString(R.string.key_true_numbers)
-        val key_false_numbers = resources.getString(R.string.key_false_numbers)
-
-        val key_recognized_words = resources.getString(R.string.key_recognized_words)
+        val key_quesiton_words = resources.getString(R.string.key_question_words)
 
 
         var questionNumber = arguments!!.getInt(key_question_number)
         val isCheckedOnly = arguments!!.getBoolean(key_checked)
-        trueNumbersList = arguments!!.getIntegerArrayList(key_true_numbers)
-        falseNumbersList = arguments!!.getIntegerArrayList(key_false_numbers)
-
+        val questionWordsList = arguments!!.getSerializable(key_quesiton_words) as ArrayList<QuestionWord>
 
 
         if (isCheckedOnly) {
@@ -69,6 +58,7 @@ class TestPronounceFragment : Fragment() {
         speechIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, context!!.packageName)
 
         val bundle = Bundle()
+        val questionWord = QuestionWord()
 
         val speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context)
 
@@ -118,18 +108,28 @@ class TestPronounceFragment : Fragment() {
                 val key = SpeechRecognizer.RESULTS_RECOGNITION
                 val stringList = p0!!.getStringArrayList(key)
                 if (p0 != null) {
-                    speechText = stringList.get(questionNumber)
 
-                    if (showingWord == speechText) {
 
-                        trueNumbersList.add(questionNumber)
+                    questionWord.woord = showingWord
+                    questionWord.quetionNumber = questionNumber
+                    questionWord.isPronounce = true
+
+                    if (stringList.contains(showingWord)) {
+
+                        questionWord.isTrue = true
+                        questionWord.recognizedWord = showingWord
 
                     } else {
 
-                        falseNumbersList.add(questionNumber)
+                        questionWord.isTrue = false
+                        questionWord.recognizedWord = stringList.get(0)
+
                     }
 
-                    recognizedWordsList.add(speechText)
+
+
+
+
 
 
                     speechRecognizer.destroy()
@@ -138,6 +138,7 @@ class TestPronounceFragment : Fragment() {
 
 
                         resultButton.visibility = View.VISIBLE
+                        nextButton.visibility = View.GONE
 
 
                     } else {
@@ -145,13 +146,14 @@ class TestPronounceFragment : Fragment() {
                         questionNumber++
                         nextButton.visibility = View.VISIBLE
 
+
                     }
+
+                    questionWordsList.add(questionWord)
 
                     bundle.putInt(key_question_number, questionNumber)
                     bundle.putBoolean(key_checked, isCheckedOnly)
-                    bundle.putIntegerArrayList(key_true_numbers, trueNumbersList)
-                    bundle.putIntegerArrayList(key_false_numbers, falseNumbersList)
-                    bundle.putStringArrayList(key_recognized_words, recognizedWordsList)
+                    bundle.putSerializable(key_quesiton_words, questionWordsList)
 
 
                 } else {
@@ -159,22 +161,19 @@ class TestPronounceFragment : Fragment() {
                     Toast.makeText(context, "音声を認識できませんでした", Toast.LENGTH_SHORT).show()
 
                 }
+
             }
+
+
         })
 
-        speechRecognizer.startListening(speechIntent)
-
         resultButton.setOnClickListener {
-            val testResultFragment =TestResultFragment()
-
-            val isPronounce = true
-            bundle.putBoolean("isPronounce",isPronounce)
-
+            val testResultFragment = TestResultFragment()
             testResultFragment.arguments = bundle
 
             val fragmentTransAction = fragmentManager!!.beginTransaction()
             fragmentTransAction.addToBackStack(null)
-            fragmentTransAction.replace(R.id.testPronounceBackground,testResultFragment)
+            fragmentTransAction.replace(R.id.testPronounceBackground, testResultFragment)
             fragmentTransAction.commit()
         }
 
@@ -189,6 +188,8 @@ class TestPronounceFragment : Fragment() {
             fragmentTransAction.commit()
 
         }
+
+        speechRecognizer.startListening(speechIntent)
 
         return layout
     }

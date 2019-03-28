@@ -6,13 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import com.shojishunsuke.pronounceflachcard.Model.QuestionWord
 import com.shojishunsuke.pronounceflachcard.R
+import java.util.ArrayList
 
 class TestStartFragment:Fragment() {
 
     var questionNumber = 0
-    var trueNumbersList = arrayListOf<Int>()
-    var falseNumbersList = arrayListOf<Int>()
+    val wordsDetailList = ArrayList<QuestionWord>()
 
 
 
@@ -23,8 +24,7 @@ class TestStartFragment:Fragment() {
 
         val key_checked = resources.getString(R.string.key_is_checked_Only)
         val key_question_number = resources.getString(R.string.key_question_number)
-        val key_true_numbers =  resources.getString(R.string.key_true_numbers)
-        val key_false_numbers =resources.getString(R.string.key_false_numbers)
+        val key_quesiton_words = resources.getString(R.string.key_question_words)
 
         val isCheckedOnly = arguments!!.getBoolean(key_checked)
 
@@ -32,8 +32,7 @@ class TestStartFragment:Fragment() {
         val bundle = Bundle()
         bundle.putInt(key_question_number,questionNumber)
         bundle.putBoolean(key_checked,isCheckedOnly)
-        bundle.putIntegerArrayList(key_true_numbers,trueNumbersList)
-        bundle.putIntegerArrayList(key_false_numbers,falseNumbersList)
+        bundle.putSerializable(key_quesiton_words,wordsDetailList)
 
         startButton.setOnClickListener {
 

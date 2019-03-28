@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.shojishunsuke.pronounceflachcard.Model.QuestionWord
 import com.shojishunsuke.pronounceflachcard.R
-import com.shojishunsuke.pronounceflachcard.WordObject
+import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import com.shojishunsuke.pronounceflachcard.activity.realm
-import io.realm.Realm
 import io.realm.RealmResults
 
 
@@ -18,8 +18,6 @@ class TestMeaningShowWordFragment:Fragment() {
     private lateinit var showingCards :RealmResults<WordObject>
     private lateinit var showingWord : String
 
-    private var trueNumbersList = arrayListOf<Int>()
-    private var falseNumbersList = arrayListOf<Int>()
 
 
 
@@ -30,13 +28,12 @@ class TestMeaningShowWordFragment:Fragment() {
         val textView = layout.findViewById<TextView>(R.id.meaningTextView3)
         val key_checked = resources.getString(R.string.key_is_checked_Only)
         val key_question_number = resources.getString(R.string.key_question_number)
-        val key_true_numbers =  resources.getString(R.string.key_true_numbers)
-        val key_false_numbers =resources.getString(R.string.key_false_numbers)
+        val key_quesiton_words = resources.getString(R.string.key_question_words)
+
 
         val questionNumber = arguments!!.getInt(key_question_number)
         val isCheckedOnly =  arguments!!.getBoolean(key_checked)
-        trueNumbersList = arguments!!.getIntegerArrayList(key_true_numbers)
-        falseNumbersList = arguments!!.getIntegerArrayList(key_false_numbers)
+        val questionWordsList = arguments!!.getSerializable(key_quesiton_words)as ArrayList<QuestionWord>
 
         if (isCheckedOnly){
             showingCards = realm.where(WordObject::class.java).equalTo("isDone",true).findAll()
@@ -51,8 +48,7 @@ class TestMeaningShowWordFragment:Fragment() {
         var bundle = Bundle()
         bundle.putInt(key_question_number,questionNumber)
         bundle.putBoolean(key_checked,isCheckedOnly)
-        bundle.putIntegerArrayList(key_true_numbers,trueNumbersList)
-        bundle.putIntegerArrayList(key_false_numbers,falseNumbersList)
+        bundle.putSerializable(key_quesiton_words,questionWordsList)
 
 
 

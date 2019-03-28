@@ -15,6 +15,8 @@ val realm = Realm.getDefaultInstance()
 class MainActivity : AppCompatActivity() {
 
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -32,6 +34,8 @@ class MainActivity : AppCompatActivity() {
 
         val fragmentAdapter = MyPagerAdapter(supportFragmentManager)
         viewPager.adapter = fragmentAdapter
+
+//
 
 
 

@@ -11,9 +11,8 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import com.shojishunsuke.pronounceflachcard.R
-import com.shojishunsuke.pronounceflachcard.WordObject
+import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import com.shojishunsuke.pronounceflachcard.activity.realm
-import io.realm.Realm
 import java.lang.Exception
 
 class AddWordDialogFragment : DialogFragment() {

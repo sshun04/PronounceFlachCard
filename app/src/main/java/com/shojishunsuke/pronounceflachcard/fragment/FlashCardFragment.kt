@@ -9,10 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.shojishunsuke.pronounceflachcard.R
-import com.shojishunsuke.pronounceflachcard.WordObject
+import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import com.shojishunsuke.pronounceflachcard.activity.realm
 import com.shojishunsuke.pronounceflachcard.adapter.CardRecyclerViewAdapter
-import io.realm.Realm
 import io.realm.RealmResults
 
 class FlashCardFragment : Fragment() {

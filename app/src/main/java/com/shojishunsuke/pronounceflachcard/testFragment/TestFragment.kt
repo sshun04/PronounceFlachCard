@@ -9,11 +9,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.shojishunsuke.pronounceflachcard.R
-import com.shojishunsuke.pronounceflachcard.WordObject
+import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import com.shojishunsuke.pronounceflachcard.activity.TestMeaningActivity
 import com.shojishunsuke.pronounceflachcard.activity.TestPronounceActivity
 import com.shojishunsuke.pronounceflachcard.activity.realm
-import io.realm.Realm
 import io.realm.RealmResults
 
 class TestFragment : Fragment() {

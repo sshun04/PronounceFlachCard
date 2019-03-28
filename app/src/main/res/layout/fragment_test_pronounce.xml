@@ -39,7 +39,6 @@
     <Button
 
             android:id="@+id/resultButton"
-            style="@style/Base.Widget.AppCompat.Button.Colored"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

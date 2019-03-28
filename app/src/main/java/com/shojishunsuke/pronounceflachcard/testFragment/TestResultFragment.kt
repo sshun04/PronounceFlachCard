@@ -7,8 +7,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.shojishunsuke.pronounceflachcard.Model.QuestionWord
 import com.shojishunsuke.pronounceflachcard.R
+import com.shojishunsuke.pronounceflachcard.adapter.TestRecyclerViewAdapter
 
 class TestResultFragment : Fragment() {
 
@@ -18,36 +21,30 @@ class TestResultFragment : Fragment() {
 
         val textView = layout.findViewById<TextView>(R.id.resultTextView)
         val endButton = layout.findViewById<Button>(R.id.endButton)
-        val key_true_numbers = resources.getString(R.string.key_true_numbers)
-        val key_false_numbers = resources.getString(R.string.key_false_numbers)
-        val key_recognized_words = resources.getString(R.string.key_recognized_words)
+       val key_quesiton_words = resources.getString(R.string.key_question_words)
 
         val recyclerView = layout.findViewById<RecyclerView>(R.id.resultRecyclerView)
 
+        val resultWords = arguments!!.getSerializable(key_quesiton_words) as ArrayList<QuestionWord>
+
+        recyclerView.adapter = TestRecyclerViewAdapter(context, resultWords)
+        recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
 
 
+        var trueWordsNumber: Int = 0
 
+        resultWords.forEach {
+            if (it.isTrue) {
 
-        val trueNumbersList = arguments!!.getIntegerArrayList(key_true_numbers)
-        val falseNumbersList = arguments!!.getIntegerArrayList(key_false_numbers)
-        val isPronounce = arguments!!.getBoolean("isPronounce")
+                trueWordsNumber++
 
-
-
-        textView.setText(trueNumbersList.size.toString() + "問正解")
-
-        endButton.setOnClickListener {
-
-
-            activity!!.finish()
-
-
+            }
         }
 
 
 
-
+        textView.setText(trueWordsNumber.toString())
 
 
         return layout
