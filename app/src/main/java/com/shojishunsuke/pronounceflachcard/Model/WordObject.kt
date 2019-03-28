@@ -1,4 +1,4 @@
-package com.shojishunsuke.pronounceflachcard
+package com.shojishunsuke.pronounceflachcard.Model
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey

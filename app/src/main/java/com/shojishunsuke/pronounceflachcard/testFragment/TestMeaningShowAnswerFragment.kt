@@ -7,29 +7,31 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.shojishunsuke.pronounceflachcard.Model.QuestionWord
+import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import com.shojishunsuke.pronounceflachcard.R
-import com.shojishunsuke.pronounceflachcard.WordObject
-import io.realm.Realm
+import com.shojishunsuke.pronounceflachcard.activity.realm
 import io.realm.RealmResults
 
 class TestMeaningShowAnswerFragment : Fragment() {
 
-    val realm = Realm.getDefaultInstance()
+
     lateinit var showingCards: RealmResults<WordObject>
     lateinit var showingMeaning: String
+    lateinit var shownWord: String
     lateinit var textView: TextView
     lateinit var trueButton: Button
     lateinit var falseButton: Button
 
-    var key_checked = ""
-    var key_question_number = ""
-    var key_true_numbers = ""
-    var key_false_numbers = ""
+    lateinit var key_checked: String
+    lateinit var key_question_number: String
+    lateinit var key_quesiton_words: String
+
+    lateinit var questionWordsList: ArrayList<QuestionWord>
+
 
     var questionNumber = 0
     var isCheckedOnly = true
-    var trueNumbersList = arrayListOf<Int>()
-    var falseNumbersList = arrayListOf<Int>()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -41,52 +43,67 @@ class TestMeaningShowAnswerFragment : Fragment() {
 
         key_checked = resources.getString(R.string.key_is_checked_Only)
         key_question_number = resources.getString(R.string.key_question_number)
-        key_true_numbers = resources.getString(R.string.key_true_numbers)
-        key_false_numbers = resources.getString(R.string.key_false_numbers)
+        key_quesiton_words = resources.getString(R.string.key_question_words)
+
 
         questionNumber = arguments!!.getInt(key_question_number)
         isCheckedOnly = arguments!!.getBoolean(key_checked)
-        trueNumbersList = arguments!!.getIntegerArrayList(key_true_numbers)
-        falseNumbersList = arguments!!.getIntegerArrayList(key_false_numbers)
+
+        questionWordsList = arguments!!.getSerializable(key_quesiton_words) as ArrayList<QuestionWord>
 
         if (isCheckedOnly) {
 
             showingCards = realm.where(WordObject::class.java).equalTo("isDone", true).findAll()
-            showingMeaning = showingCards.get(questionNumber)!!.meaning
+
         } else {
 
             showingCards = realm.where(WordObject::class.java).findAll()
-            showingMeaning = showingCards.get(questionNumber)!!.meaning
 
         }
 
+        showingMeaning = showingCards.get(questionNumber)!!.meaning
+        shownWord = showingCards.get(questionNumber)!!.word
+
         textView.setText(showingMeaning)
+
+        val questionWord = QuestionWord()
+        questionWord.quetionNumber = questionNumber
+        questionWord.woord = shownWord
+        questionWord.isPronounce =false
 
         trueButton.setOnClickListener {
 
-         //正解した問題の番号を保存
-            trueNumbersList.add(questionNumber)
+            //正解した問題の番号を保存
+            questionWord.isTrue = true
+
 
 
             if (showingCards.count() == questionNumber + 1) {
 
-                moveToResultFragment()
+                questionWordsList.add(questionWord)
+
+                showResultFragment()
+
             } else {
-               showWordFragment()
+                questionWordsList.add(questionWord)
+
+                showWordFragment()
+
             }
-
-
         }
 
         falseButton.setOnClickListener {
 
-            falseNumbersList.add(questionNumber)
-
-
+            questionWord.isTrue = false
 
             if (showingCards.count() == questionNumber + 1) {
 
-                moveToResultFragment()
+
+                questionWordsList.add(questionWord)
+
+
+
+                showResultFragment()
 
             } else {
                 showWordFragment()
@@ -97,14 +114,16 @@ class TestMeaningShowAnswerFragment : Fragment() {
         return layout
     }
 
-    fun moveToResultFragment() {
+    private fun showResultFragment() {
 
         val fragmentTransAction = fragmentManager!!.beginTransaction()
 
         val showResultFragment = TestResultFragment()
+
         var bundle = Bundle()
-        bundle.putIntegerArrayList(key_true_numbers, trueNumbersList)
-        bundle.putIntegerArrayList(key_false_numbers, falseNumbersList)
+
+        bundle.putBoolean(key_checked, isCheckedOnly)
+        bundle.putSerializable(key_quesiton_words, questionWordsList)
 
         showResultFragment.arguments = bundle
 
@@ -113,16 +132,16 @@ class TestMeaningShowAnswerFragment : Fragment() {
 
     }
 
-    fun showWordFragment() {
+    private fun showWordFragment() {
 
         val fragmentTransAction = fragmentManager!!.beginTransaction()
 
         var bundle = Bundle()
         questionNumber++
+
         bundle.putInt(key_question_number, questionNumber)
         bundle.putBoolean(key_checked, isCheckedOnly)
-        bundle.putIntegerArrayList(key_true_numbers, trueNumbersList)
-        bundle.putIntegerArrayList(key_false_numbers, falseNumbersList)
+        bundle.putSerializable(key_quesiton_words, questionWordsList)
 
         val showWordFragment = TestMeaningShowWordFragment()
         showWordFragment.arguments = bundle

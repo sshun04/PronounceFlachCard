@@ -11,19 +11,19 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import com.shojishunsuke.pronounceflachcard.R
-import com.shojishunsuke.pronounceflachcard.WordObject
-import io.realm.Realm
+import com.shojishunsuke.pronounceflachcard.Model.WordObject
+import com.shojishunsuke.pronounceflachcard.activity.realm
 import java.lang.Exception
 
 class AddWordDialogFragment : DialogFragment() {
 
-    val realm: Realm = Realm.getDefaultInstance()
+
     lateinit var wordEditText: EditText
     lateinit var meaningEditText: EditText
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
-        var dialog = Dialog(activity)
+        var dialog = Dialog(context)
 
         dialog.window!!.requestFeature(Window.FEATURE_NO_TITLE)
         dialog.window!!.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN)
@@ -31,7 +31,6 @@ class AddWordDialogFragment : DialogFragment() {
         try {
 
             dialog.setContentView(R.layout.dialog_fragment_add_word)
-
 
         }catch (e :Exception){
             e.stackTrace
@@ -46,6 +45,7 @@ class AddWordDialogFragment : DialogFragment() {
         dialog.findViewById<Button>(R.id.positiveButton).setOnClickListener(View.OnClickListener {
 
            addWord(wordEditText.text.toString(),meaningEditText.text.toString())
+
             dismiss()
 
         })

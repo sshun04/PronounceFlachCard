@@ -10,9 +10,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.shojishunsuke.pronounceflachcard.fragment.realm
 import com.shojishunsuke.pronounceflachcard.R
-import com.shojishunsuke.pronounceflachcard.WordObject
+import com.shojishunsuke.pronounceflachcard.Model.WordObject
+import com.shojishunsuke.pronounceflachcard.activity.realm
 import io.realm.*
 import java.util.*
 
