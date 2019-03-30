@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import com.shojishunsuke.pronounceflachcard.Model.QuestionWord
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.Model.WordObject
-import com.shojishunsuke.pronounceflachcard.activity.realm
+import io.realm.Realm
 import io.realm.RealmResults
 
 
@@ -17,6 +17,8 @@ class TestMeaningShowWordFragment:Fragment() {
 
     private lateinit var showingCards :RealmResults<WordObject>
     private lateinit var showingWord : String
+
+    val realm = Realm.getDefaultInstance()
 
 
 

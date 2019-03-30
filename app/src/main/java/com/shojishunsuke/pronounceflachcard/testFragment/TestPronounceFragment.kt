@@ -16,10 +16,11 @@ import androidx.fragment.app.Fragment
 import com.shojishunsuke.pronounceflachcard.Model.QuestionWord
 import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import com.shojishunsuke.pronounceflachcard.R
-import com.shojishunsuke.pronounceflachcard.activity.realm
+import io.realm.Realm
 import io.realm.RealmResults
 
 class TestPronounceFragment : Fragment() {
+    val realm = Realm.getDefaultInstance()
 
     private lateinit var showingCards: RealmResults<WordObject>
     private lateinit var showingWord: String
@@ -30,6 +31,7 @@ class TestPronounceFragment : Fragment() {
         val textView = layout.findViewById<TextView>(R.id.wordTextView4)
         val nextButton = layout.findViewById<Button>(R.id.nextButton)
         val resultButton = layout.findViewById<Button>(R.id.resultButton)
+        val confirmTextView = layout.findViewById<TextView>(R.id.textView1)
 
         val key_checked = resources.getString(R.string.key_is_checked_Only)
         val key_question_number = resources.getString(R.string.key_question_number)
@@ -107,7 +109,6 @@ class TestPronounceFragment : Fragment() {
 
                 val key = SpeechRecognizer.RESULTS_RECOGNITION
                 val stringList = p0!!.getStringArrayList(key)
-                if (p0 != null) {
 
 
                     questionWord.woord = showingWord
@@ -126,19 +127,16 @@ class TestPronounceFragment : Fragment() {
 
                     }
 
-
-
-
-
-
-
                     speechRecognizer.destroy()
+
+                    confirmTextView.visibility = View.GONE
+
+
 
                     if (showingCards.count() == questionNumber + 1) {
 
 
                         resultButton.visibility = View.VISIBLE
-                        nextButton.visibility = View.GONE
 
 
                     } else {
@@ -156,11 +154,7 @@ class TestPronounceFragment : Fragment() {
                     bundle.putSerializable(key_quesiton_words, questionWordsList)
 
 
-                } else {
 
-                    Toast.makeText(context, "音声を認識できませんでした", Toast.LENGTH_SHORT).show()
-
-                }
 
             }
 

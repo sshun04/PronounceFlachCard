@@ -44,7 +44,7 @@ class TestResultFragment : Fragment() {
 
 
 
-        textView.setText(trueWordsNumber.toString())
+        textView.setText(trueWordsNumber.toString()+"問正解")
 
 
         return layout

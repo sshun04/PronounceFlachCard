@@ -8,7 +8,10 @@
         tools:context=".activity.TestPronounceActivity">
 
     <androidx.appcompat.widget.Toolbar
+
             android:id="@+id/testPronounceToolBar"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/Theme.AppCompat.Light"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -27,7 +30,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/testPronounceToolBar"
     >
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

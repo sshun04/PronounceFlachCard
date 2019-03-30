@@ -5,9 +5,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".activity.TestMeaningActivity">
+
     <androidx.appcompat.widget.Toolbar
             android:id="@+id/testMeaningToolBar"
             android:background="@color/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/Theme.AppCompat.Light"
             android:layout_width="0dp"
             android:layout_height="56dp"
             app:layout_constraintStart_toStartOf="parent"

@@ -10,10 +10,12 @@ import androidx.fragment.app.Fragment
 import com.shojishunsuke.pronounceflachcard.Model.QuestionWord
 import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import com.shojishunsuke.pronounceflachcard.R
-import com.shojishunsuke.pronounceflachcard.activity.realm
+import io.realm.Realm
 import io.realm.RealmResults
 
 class TestMeaningShowAnswerFragment : Fragment() {
+
+    val realm = Realm.getDefaultInstance()
 
 
     lateinit var showingCards: RealmResults<WordObject>
@@ -102,10 +104,11 @@ class TestMeaningShowAnswerFragment : Fragment() {
                 questionWordsList.add(questionWord)
 
 
-
                 showResultFragment()
 
             } else {
+                questionWordsList.add(questionWord)
+
                 showWordFragment()
             }
 

@@ -5,8 +5,10 @@ import android.graphics.Color
 import android.os.Bundle
 import android.speech.RecognitionListener
 import android.view.KeyEvent
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -26,9 +28,15 @@ class TestPronounceActivity : AppCompatActivity() {
         val key_checked = resources.getString(R.string.key_is_checked_Only)
 
         val toolbar = this.findViewById<Toolbar>(R.id.testPronounceToolBar)
-        toolbar.setTitle("発音テスト")
-        toolbar.setTitleTextColor(Color.WHITE)
         setSupportActionBar(toolbar)
+
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setDisplayShowHomeEnabled(true)
+        supportActionBar!!.setHomeButtonEnabled(true)
+        supportActionBar!!.setTitle("発音テスト")
+
+
+
 
         val isCheckedOnly = intent.getBooleanExtra(key_checked, true)
 
@@ -56,8 +64,27 @@ class TestPronounceActivity : AppCompatActivity() {
                     dialogInterface.dismiss()
                 })
                 .show()
-
         }
         return super.dispatchKeyEvent(event)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+       when(item?.itemId){
+           android.R.id.home ->{
+               AlertDialog.Builder(this)
+                   .setMessage("テストを終了しますか？")
+                   .setPositiveButton("終了", DialogInterface.OnClickListener { _, _ ->
+                       finish()
+                   })
+                   .setNegativeButton("キャンセル", DialogInterface.OnClickListener { dialogInterface, _ ->
+                       dialogInterface.dismiss()
+                   })
+                   .show()
+
+               return true
+           }
+       }
+
+        return false
     }
 }

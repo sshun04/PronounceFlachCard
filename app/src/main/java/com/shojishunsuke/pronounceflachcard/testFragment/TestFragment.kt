@@ -12,10 +12,12 @@ import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import com.shojishunsuke.pronounceflachcard.activity.TestMeaningActivity
 import com.shojishunsuke.pronounceflachcard.activity.TestPronounceActivity
-import com.shojishunsuke.pronounceflachcard.activity.realm
+import io.realm.Realm
 import io.realm.RealmResults
 
 class TestFragment : Fragment() {
+
+    val realm = Realm.getDefaultInstance()
 
     lateinit var checkedWords: RealmResults<WordObject>
     lateinit var testPronounceButton: Button

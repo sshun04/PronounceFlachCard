@@ -12,10 +12,11 @@ import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.Model.WordObject
-import com.shojishunsuke.pronounceflachcard.activity.realm
+import io.realm.Realm
 import java.lang.Exception
 
 class AddWordDialogFragment : DialogFragment() {
+    val realm = Realm.getDefaultInstance()
 
 
     lateinit var wordEditText: EditText
@@ -60,7 +61,7 @@ class AddWordDialogFragment : DialogFragment() {
 
     }
 
-    fun addWord(editWord: String, editMeaning: String) {
+    private fun addWord(editWord: String, editMeaning: String) {
 
         realm.executeTransaction {
 

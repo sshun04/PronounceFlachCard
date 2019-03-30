@@ -17,11 +17,13 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.Model.WordObject
-import com.shojishunsuke.pronounceflachcard.activity.realm
+import io.realm.Realm
 import io.realm.RealmResults
 
 class CardRecyclerViewAdapter(private val context: Context?, val realmResults: RealmResults<WordObject>) :
     RecyclerView.Adapter<CardRecyclerViewAdapter.RecyclerViewHolder>() {
+
+    val realm = Realm.getDefaultInstance()
 
     var wordString: String = ""
     var meaningString: String = ""
@@ -113,7 +115,7 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
             popupWindow.isOutsideTouchable = true
             popupWindow.isFocusable = true
             popupWindow.isTouchable = true
-            popupWindow.setBackgroundDrawable(ColorDrawable(context.resources.getColor(android.R.color.white)))
+            popupWindow.setBackgroundDrawable(ColorDrawable(context.resources.getColor(android.R.color.white,null)))
             popupWindow.elevation = 4f
 
             popupWindow.showAsDropDown(holder.optionButton, holder.optionButton.width, -holder.optionButton.height)

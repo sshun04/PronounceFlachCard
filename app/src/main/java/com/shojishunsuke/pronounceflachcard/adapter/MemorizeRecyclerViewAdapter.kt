@@ -12,12 +12,13 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.Model.WordObject
-import com.shojishunsuke.pronounceflachcard.activity.realm
 import io.realm.*
 import java.util.*
 
 class MemorizeRecyclerViewAdapter(private val context: Context?, val realmResults: RealmResults<WordObject>) :
     RecyclerView.Adapter<MemorizeRecyclerViewAdapter.MemorizeRecyclerViewHolder>(), TextToSpeech.OnInitListener {
+
+    val realm = Realm.getDefaultInstance()
 
     var wordString: String = ""
     var meaningString: String = ""
@@ -31,12 +32,7 @@ class MemorizeRecyclerViewAdapter(private val context: Context?, val realmResult
         holder.wordTextView.setText(wordString)
         holder.meaningTextView.setText(meaningString)
 
-        if (wordCard.isDone){
-            holder.checkBox.isChecked = true
-        }else{
-            holder.checkBox.isChecked = false
-        }
-
+        holder.checkBox.isChecked = wordCard.isDone
 
         holder.checkBox.setOnClickListener{
             realm.executeTransaction{
