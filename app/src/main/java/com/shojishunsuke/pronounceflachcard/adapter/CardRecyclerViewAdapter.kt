@@ -15,8 +15,8 @@ import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.Model.WordObject
+import com.shojishunsuke.pronounceflachcard.R
 import io.realm.Realm
 import io.realm.RealmResults
 
@@ -41,6 +41,8 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
         holder.meaningTextView.setText(meaningString)
         holder.meaningTextView.setTag(wordCard)
 
+        holder.optionButton.setImageResource(R.drawable.outline_more_vert_black_24)
+
         holder.optionButton.setTag(wordCard)
 
         holder.optionButton.setOnClickListener {
@@ -54,18 +56,17 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
 
             popupView.findViewById<TextView>(R.id.editButton).setOnClickListener {
 
-//                編集ボタンが押された時の処理
+                //                編集ボタンが押された時の処理
                 popupWindow.dismiss()
 
-                val detailDialog  = AlertDialog.Builder(context)
-                    .setPositiveButton("保存",DialogInterface.OnClickListener{
-                            _, _ ->
+                val detailDialog = AlertDialog.Builder(context)
+                    .setPositiveButton("保存", DialogInterface.OnClickListener { _, _ ->
 
                         realm.executeTransaction {
 
 
-                            wordCard.word =  wordEditText.text.toString()
-                           wordCard.meaning = meaningEditText.text.toString()
+                            wordCard.word = wordEditText.text.toString()
+                            wordCard.meaning = meaningEditText.text.toString()
 
                             it.copyToRealm(wordCard)
 
@@ -73,11 +74,13 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
                         }
 
                     })
-                    .setNegativeButton("キャンセル",
-                       null)
+                    .setNegativeButton(
+                        "キャンセル",
+                        null
+                    )
                     .create()
 
-                val parentView = detailDialog.getLayoutInflater().inflate(R.layout.fragment_word_edit,null)
+                val parentView = detailDialog.getLayoutInflater().inflate(R.layout.fragment_word_edit, null)
 
                 wordEditText = parentView.findViewById(R.id.wordEditText)
                 wordEditText.setText(realmResults.get(position)?.word)
@@ -92,7 +95,7 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
 
             popupView.findViewById<TextView>(R.id.deleteButton).setOnClickListener {
 
-//                削除ボタンが押された時の処理
+                //                削除ボタンが押された時の処理
                 popupWindow.dismiss()
 
                 AlertDialog.Builder(context)
@@ -107,15 +110,16 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
                     .show()
 
             }
-            var width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,100f,context!!.resources!!.displayMetrics)
-            popupWindow.setWindowLayoutMode(width.toInt(),WindowManager.LayoutParams.WRAP_CONTENT)
-            popupWindow.width =width.toInt()
+            var width =
+                TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100f, context!!.resources!!.displayMetrics)
+            popupWindow.setWindowLayoutMode(width.toInt(), WindowManager.LayoutParams.WRAP_CONTENT)
+            popupWindow.width = width.toInt()
 
             popupWindow.contentView = popupView
             popupWindow.isOutsideTouchable = true
             popupWindow.isFocusable = true
             popupWindow.isTouchable = true
-            popupWindow.setBackgroundDrawable(ColorDrawable(context.resources.getColor(android.R.color.white,null)))
+            popupWindow.setBackgroundDrawable(ColorDrawable(context.resources.getColor(android.R.color.white, null)))
             popupWindow.elevation = 4f
 
             popupWindow.showAsDropDown(holder.optionButton, holder.optionButton.width, -holder.optionButton.height)
@@ -124,13 +128,13 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
         holder.wordBox.setOnClickListener {
 
 
-            val detailDialog  = AlertDialog.Builder(context)
-                .setPositiveButton("OK",DialogInterface.OnClickListener{
-                    dialogInterface, _ -> dialogInterface.dismiss()
+            val detailDialog = AlertDialog.Builder(context)
+                .setPositiveButton("OK", DialogInterface.OnClickListener { dialogInterface, _ ->
+                    dialogInterface.dismiss()
                 })
                 .create()
 
-            val parentView = detailDialog.getLayoutInflater().inflate(R.layout.dialog_fragment_word_detail,null)
+            val parentView = detailDialog.getLayoutInflater().inflate(R.layout.dialog_fragment_word_detail, null)
 
             val detailWord = parentView.findViewById<TextView>(R.id.wordEditText)
             detailWord.setText(realmResults.get(position)?.word)
@@ -146,32 +150,20 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
     }
 
 
-    override fun getItemCount(): Int {
-
-        return realmResults.count()
-
-    }
+    override fun getItemCount(): Int = realmResults.count()
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
         val inflater = LayoutInflater.from(context)
         val mView = inflater.inflate(R.layout.item_card, parent, false)
 
-        val viewHolder = RecyclerViewHolder(mView)
-
-        viewHolder.wordTextView.setText(wordString)
-        viewHolder.meaningTextView.setText(meaningString)
-        viewHolder.optionButton.setImageResource(R.drawable.outline_more_vert_black_24)
 
         realm.addChangeListener {
-
             notifyDataSetChanged()
-
         }
 
         return RecyclerViewHolder(mView)
     }
-
 
 
     fun deleteWord(position: Int) {

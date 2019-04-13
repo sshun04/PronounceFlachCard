@@ -141,9 +141,5 @@ class MemorizeRecyclerViewAdapter(private val context: Context?, val realmResult
     }
 
 
-//    fun changeLister():OrderedRealmCollectionChangeListener<RealmResults<WordObject>>{
-//        notifyDataSetChanged()
-//    }
-
 
 }

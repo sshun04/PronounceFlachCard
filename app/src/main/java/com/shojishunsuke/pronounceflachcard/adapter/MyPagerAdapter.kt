@@ -12,41 +12,26 @@ class MyPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fr
 
 
     override fun getItem(position: Int): Fragment {
-        when (position) {
-            0 -> {
-
-                return FlashCardFragment()
-            }
-
-            1 -> {
-                return MemorizeWordFragment()
-            }
-
-            2 -> {
-                return TestFragment()
-            }
-
-            else -> {
-                return FlashCardFragment()
-            }
+        return when (position) {
+            0 -> FlashCardFragment()
+            1 -> MemorizeWordFragment()
+            2 -> TestFragment()
+            else -> FlashCardFragment()
         }
 
 
     }
 
-    override fun getCount(): Int {
-        return 3
+    override fun getCount(): Int = 3
 
-    }
 
     override fun getPageTitle(position: Int): CharSequence? {
-        when (position) {
+        return when (position) {
 
-
-            0 -> return "単語帳"
-            1 -> return "覚える"
-            2 -> return "テスト"
-            else -> return null
+            0 -> "単語帳"
+            1 -> "覚える"
+            2 -> "テスト"
+            else -> null
 
         }
     }

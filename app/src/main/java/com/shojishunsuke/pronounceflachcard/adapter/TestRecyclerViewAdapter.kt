@@ -23,8 +23,6 @@ class TestRecyclerViewAdapter(private val context: Context?, val resultWords: Ar
         } else {
             holder.checkeTextView.setText("✖️")
             holder.checkeTextView.setTextColor(Color.parseColor("#f44336"))
-
-
         }
 
 
@@ -45,12 +43,8 @@ class TestRecyclerViewAdapter(private val context: Context?, val resultWords: Ar
 
     }
 
-    override fun getItemCount(): Int {
+    override fun getItemCount(): Int = resultWords.count()
 
-        return resultWords.count()
-
-
-    }
 
     override fun onViewRecycled(holder: TestRecyclerViewHolder) {
         holder.deatilTextView.visibility = View.GONE

@@ -10,7 +10,7 @@ import com.shojishunsuke.pronounceflachcard.Model.QuestionWord
 import com.shojishunsuke.pronounceflachcard.R
 import java.util.ArrayList
 
-class TestStartFragment:Fragment() {
+class TestStartFragment: Fragment() {
 
     var questionNumber = 0
     val wordsDetailList = ArrayList<QuestionWord>()

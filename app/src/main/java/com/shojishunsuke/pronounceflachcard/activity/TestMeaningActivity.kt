@@ -14,11 +14,10 @@ import com.shojishunsuke.pronounceflachcard.testFragment.TestMeaningShowWordFrag
 
 class TestMeaningActivity : AppCompatActivity() {
 
-    var isCheckedOnly = true
-    var questionNumber = 0
 
-    lateinit var toolbar: Toolbar
-    val questionWordsList = ArrayList<QuestionWord>()
+    private var questionNumber = 0
+
+   private val questionWordsList = ArrayList<QuestionWord>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +27,7 @@ class TestMeaningActivity : AppCompatActivity() {
         val key_question_number = resources.getString(R.string.key_question_number)
         val key_quesiton_words = resources.getString(R.string.key_question_words)
 
-        toolbar = this.findViewById(R.id.testMeaningToolBar)
+        val toolbar = this.findViewById<Toolbar>(R.id.testMeaningToolBar)
         setSupportActionBar(toolbar)
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -37,7 +36,7 @@ class TestMeaningActivity : AppCompatActivity() {
         supportActionBar!!.setTitle("意味テスト")
 
 
-        isCheckedOnly = intent.getBooleanExtra(key_checked, true)
+        val isCheckedOnly = intent.getBooleanExtra(key_checked, true)
 
         var bundle = Bundle()
         bundle.putInt(key_question_number, questionNumber)
@@ -61,7 +60,7 @@ class TestMeaningActivity : AppCompatActivity() {
         }
     }
 
-    fun showConfirmDialog() {
+  private  fun showConfirmDialog() {
 
         AlertDialog.Builder(this)
             .setMessage("テストを終了しますか？")
@@ -83,14 +82,12 @@ class TestMeaningActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
+        return when (item?.itemId) {
             android.R.id.home -> {
                 showConfirmDialog()
-                return true
+                true
             }
-            else -> {
-                return false
-            }
+            else -> false
 
         }
 

@@ -11,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.shojishunsuke.pronounceflachcard.Model.QuestionWord
 import com.shojishunsuke.pronounceflachcard.Model.WordObject
@@ -33,6 +32,7 @@ class TestPronounceFragment : Fragment() {
         val resultButton = layout.findViewById<Button>(R.id.resultButton)
         val confirmTextView = layout.findViewById<TextView>(R.id.textView1)
 
+
         val key_checked = resources.getString(R.string.key_is_checked_Only)
         val key_question_number = resources.getString(R.string.key_question_number)
         val key_quesiton_words = resources.getString(R.string.key_question_words)
@@ -42,15 +42,10 @@ class TestPronounceFragment : Fragment() {
         val isCheckedOnly = arguments!!.getBoolean(key_checked)
         val questionWordsList = arguments!!.getSerializable(key_quesiton_words) as ArrayList<QuestionWord>
 
+        showingCards = if (isCheckedOnly) realm.where(WordObject::class.java).equalTo("isDone", true).findAll()
+        else realm.where(WordObject::class.java).findAll()
 
-        if (isCheckedOnly) {
-            showingCards = realm.where(WordObject::class.java).equalTo("isDone", true).findAll()
-            showingWord = showingCards.get(questionNumber)!!.word
-
-        } else {
-            showingCards = realm.where(WordObject::class.java).findAll()
-            showingWord = showingCards.get(questionNumber)!!.word
-        }
+        showingWord = showingCards.get(questionNumber)!!.word
 
         textView.setText(showingWord)
 
@@ -71,37 +66,18 @@ class TestPronounceFragment : Fragment() {
                 Log.d("PronounceActivity", "ready")
 
             }
-
-            override fun onRmsChanged(p0: Float) {
-
-            }
-
-            override fun onBufferReceived(p0: ByteArray?) {
-
-            }
-
-            override fun onPartialResults(p0: Bundle?) {
-
-            }
-
-            override fun onEvent(p0: Int, p1: Bundle?) {
-
-            }
-
-            override fun onBeginningOfSpeech() {
-
-            }
+            override fun onRmsChanged(p0: Float) {}
+            override fun onBufferReceived(p0: ByteArray?) {}
+            override fun onPartialResults(p0: Bundle?) {}
+            override fun onEvent(p0: Int, p1: Bundle?) {}
+            override fun onBeginningOfSpeech() {}
 
             override fun onEndOfSpeech() {
-
                 Log.d("PronounceActivity", "speech end")
-
             }
 
             override fun onError(p0: Int) {
-
                 Log.d("PronounceActivity", "error")
-
             }
 
             override fun onResults(p0: Bundle?) {
@@ -111,49 +87,43 @@ class TestPronounceFragment : Fragment() {
                 val stringList = p0!!.getStringArrayList(key)
 
 
-                    questionWord.woord = showingWord
-                    questionWord.quetionNumber = questionNumber
-                    questionWord.isPronounce = true
+                questionWord.woord = showingWord
+                questionWord.quetionNumber = questionNumber
+                questionWord.isPronounce = true
 
-                    if (stringList.contains(showingWord)) {
+                if (stringList.contains(showingWord)) {
 
-                        questionWord.isTrue = true
-                        questionWord.recognizedWord = showingWord
+                    questionWord.isTrue = true
+                    questionWord.recognizedWord = showingWord
 
-                    } else {
+                } else {
 
-                        questionWord.isTrue = false
-                        questionWord.recognizedWord = stringList.get(0)
+                    questionWord.isTrue = false
+                    questionWord.recognizedWord = stringList.get(0)
 
-                    }
+                }
 
-                    speechRecognizer.destroy()
+                speechRecognizer.destroy()
 
-                    confirmTextView.visibility = View.GONE
-
-
-
-                    if (showingCards.count() == questionNumber + 1) {
+                confirmTextView.visibility = View.GONE
 
 
-                        resultButton.visibility = View.VISIBLE
 
+                if (showingCards.count() == questionNumber + 1) {
 
-                    } else {
+                    resultButton.visibility = View.VISIBLE
 
-                        questionNumber++
-                        nextButton.visibility = View.VISIBLE
+                } else {
+                    questionNumber++
+                    nextButton.visibility = View.VISIBLE
 
+                }
 
-                    }
+                questionWordsList.add(questionWord)
 
-                    questionWordsList.add(questionWord)
-
-                    bundle.putInt(key_question_number, questionNumber)
-                    bundle.putBoolean(key_checked, isCheckedOnly)
-                    bundle.putSerializable(key_quesiton_words, questionWordsList)
-
-
+                bundle.putInt(key_question_number, questionNumber)
+                bundle.putBoolean(key_checked, isCheckedOnly)
+                bundle.putSerializable(key_quesiton_words, questionWordsList)
 
 
             }
@@ -163,29 +133,31 @@ class TestPronounceFragment : Fragment() {
 
         resultButton.setOnClickListener {
             val testResultFragment = TestResultFragment()
-            testResultFragment.arguments = bundle
 
-            val fragmentTransAction = fragmentManager!!.beginTransaction()
-            fragmentTransAction.addToBackStack(null)
-            fragmentTransAction.replace(R.id.testPronounceBackground, testResultFragment)
-            fragmentTransAction.commit()
+            replace(testResultFragment, bundle)
+
         }
 
 
         nextButton.setOnClickListener {
             val testPronounceFragment = TestPronounceFragment()
-            testPronounceFragment.arguments = bundle
 
-            val fragmentTransAction = fragmentManager!!.beginTransaction()
-            fragmentTransAction.addToBackStack(null)
-            fragmentTransAction.replace(R.id.testPronounceBackground, testPronounceFragment)
-            fragmentTransAction.commit()
+            replace(testPronounceFragment, bundle)
 
         }
 
         speechRecognizer.startListening(speechIntent)
 
         return layout
+    }
+
+    private fun replace(fragment: Fragment, bundle: Bundle) {
+        fragment.arguments = bundle
+        val fragmentTransAction = fragmentManager!!.beginTransaction()
+        fragmentTransAction.addToBackStack("null")
+        fragmentTransAction.replace(R.id.testPronounceBackground, fragment)
+        fragmentTransAction.commit()
+
     }
 
 }
