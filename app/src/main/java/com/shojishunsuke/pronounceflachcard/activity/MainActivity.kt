@@ -35,15 +35,11 @@ class MainActivity : AppCompatActivity() {
         val fragmentAdapter = MyPagerAdapter(supportFragmentManager)
         viewPager.adapter = fragmentAdapter
 
-//
-
-
 
         tabLayout.setupWithViewPager(viewPager)
 
         viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
-
 
             }
 
@@ -59,18 +55,12 @@ class MainActivity : AppCompatActivity() {
                 Log.d("select", position.toString())
 
                 when (position) {
-                    0 -> {
-                        setTheme(R.style.MyCustomTheme_Default)
+                    0 -> setTheme(R.style.MyCustomTheme_Default)
 
-                    }
-                    1 -> {
-                        setTheme(R.style.MyCustomTheme_Memorize)
+                    1 -> setTheme(R.style.MyCustomTheme_Memorize)
 
-                    }
-                    2 -> {
-                        setTheme(R.style.MyCustomTheme_Test)
+                    2 -> setTheme(R.style.MyCustomTheme_Test)
 
-                    }
                 }
             }
         })

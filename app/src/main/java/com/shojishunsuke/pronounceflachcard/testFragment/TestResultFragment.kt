@@ -31,7 +31,6 @@ class TestResultFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
 
-
         var trueWordsNumber: Int = 0
 
         resultWords.forEach {
@@ -41,8 +40,6 @@ class TestResultFragment : Fragment() {
 
             }
         }
-
-
 
         textView.setText(trueWordsNumber.toString()+"問正解")
 

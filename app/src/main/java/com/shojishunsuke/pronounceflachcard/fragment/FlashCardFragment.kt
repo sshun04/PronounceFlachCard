@@ -21,7 +21,7 @@ class FlashCardFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val layout = inflater.inflate(R.layout.fragment_flash_card_tab, container, false)
 
-        val recyclerview = layout.findViewById<RecyclerView>(R.id.recyclerview)
+        val recyclerView = layout.findViewById<RecyclerView>(R.id.recyclerview)
         val addButton = layout.findViewById<FloatingActionButton>(R.id.addwordbutton)
 
         addButton.setImageResource(R.drawable.baseline_add_white_18)
@@ -30,22 +30,17 @@ class FlashCardFragment : Fragment() {
             addDialog.show(childFragmentManager,"add_dialog")
         })
 
-        val getData = read()
-        recyclerview.adapter = CardRecyclerViewAdapter(context,getData)
 
+        recyclerView.adapter = CardRecyclerViewAdapter(context,read())
 
-        recyclerview.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-
+        recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
         return layout
     }
 
 
-    fun read(): RealmResults<WordObject> {
+  private  fun read(): RealmResults<WordObject> = realm.where(WordObject::class.java).findAll()
 
-        return realm.where(WordObject::class.java).findAll()
-
-    }
 
 
 }
