@@ -13,7 +13,7 @@ import com.shojishunsuke.pronounceflachcard.R
 import io.realm.Realm
 import io.realm.RealmResults
 
-class TestMeaningShowAnswerFragment : Fragment() {
+class TestMeaningShowAnswerFragment : Fragment(), View.OnClickListener {
 
     val realm = Realm.getDefaultInstance()
 
@@ -28,6 +28,8 @@ class TestMeaningShowAnswerFragment : Fragment() {
     lateinit var key_checked: String
     lateinit var key_question_number: String
     lateinit var key_quesiton_words: String
+
+    lateinit var questionWord :QuestionWord
 
     lateinit var questionWordsList: ArrayList<QuestionWord>
 
@@ -50,106 +52,69 @@ class TestMeaningShowAnswerFragment : Fragment() {
 
         questionNumber = arguments!!.getInt(key_question_number)
         isCheckedOnly = arguments!!.getBoolean(key_checked)
-
         questionWordsList = arguments!!.getSerializable(key_quesiton_words) as ArrayList<QuestionWord>
 
-        if (isCheckedOnly) {
 
-            showingCards = realm.where(WordObject::class.java).equalTo("isDone", true).findAll()
-
-        } else {
-
-            showingCards = realm.where(WordObject::class.java).findAll()
-
-        }
+        showingCards = if (isCheckedOnly) realm.where(WordObject::class.java).equalTo("isDone", true).findAll()
+        else realm.where(WordObject::class.java).findAll()
 
         showingMeaning = showingCards.get(questionNumber)!!.meaning
         shownWord = showingCards.get(questionNumber)!!.word
 
         textView.setText(showingMeaning)
 
-        val questionWord = QuestionWord()
+        questionWord = QuestionWord()
         questionWord.quetionNumber = questionNumber
         questionWord.woord = shownWord
-        questionWord.isPronounce =false
+        questionWord.isPronounce = false
 
-        trueButton.setOnClickListener {
+        trueButton.setOnClickListener(this)
+        falseButton.setOnClickListener(this)
 
-            //正解した問題の番号を保存
-            questionWord.isTrue = true
-
-
-
-            if (showingCards.count() == questionNumber + 1) {
-
-                questionWordsList.add(questionWord)
-
-                showResultFragment()
-
-            } else {
-                questionWordsList.add(questionWord)
-
-                showWordFragment()
-
-            }
-        }
-
-        falseButton.setOnClickListener {
-
-            questionWord.isTrue = false
-
-            if (showingCards.count() == questionNumber + 1) {
-
-
-                questionWordsList.add(questionWord)
-
-
-                showResultFragment()
-
-            } else {
-                questionWordsList.add(questionWord)
-
-                showWordFragment()
-            }
-
-        }
 
         return layout
     }
 
-    private fun showResultFragment() {
 
-        val fragmentTransAction = fragmentManager!!.beginTransaction()
-
-        val showResultFragment = TestResultFragment()
-
-        var bundle = Bundle()
+    private fun showFragment(fragment: Fragment, isResult: Boolean) {
+        val bundle = Bundle()
 
         bundle.putBoolean(key_checked, isCheckedOnly)
         bundle.putSerializable(key_quesiton_words, questionWordsList)
 
-        showResultFragment.arguments = bundle
+        if (!isResult) {
+            questionNumber++
+            bundle.putInt(key_question_number, questionNumber)
+        }
 
-        fragmentTransAction.replace(R.id.testMeaningBackGround, showResultFragment)
+        fragment.arguments = bundle
+        val fragmentTransAction = fragmentManager!!.beginTransaction()
+        fragmentTransAction.replace(R.id.testMeaningBackGround,fragment)
         fragmentTransAction.commit()
+
+
 
     }
 
-    private fun showWordFragment() {
+    override fun onClick(p0: View?) {
+        when(p0){
+            trueButton -> {questionWord.isTrue = true}
+            falseButton ->{questionWord.isTrue = false }
 
-        val fragmentTransAction = fragmentManager!!.beginTransaction()
+        }
 
-        var bundle = Bundle()
-        questionNumber++
+        if (showingCards.count() == questionNumber + 1) {
 
-        bundle.putInt(key_question_number, questionNumber)
-        bundle.putBoolean(key_checked, isCheckedOnly)
-        bundle.putSerializable(key_quesiton_words, questionWordsList)
+            questionWordsList.add(questionWord)
 
-        val showWordFragment = TestMeaningShowWordFragment()
-        showWordFragment.arguments = bundle
+            showFragment(fragment =  TestResultFragment(),isResult = true)
 
-        fragmentTransAction.replace(R.id.testMeaningBackGround, showWordFragment)
-        fragmentTransAction.commit()
+        } else {
+            questionWordsList.add(questionWord)
+
+            showFragment(fragment = TestMeaningShowWordFragment(),isResult = false)
+        }
+
+
     }
 }

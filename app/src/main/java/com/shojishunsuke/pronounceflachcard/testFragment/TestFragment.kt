@@ -71,7 +71,6 @@ class TestFragment : Fragment() {
 
             if (realm.where(WordObject::class.java).findAll().isEmpty()) {
 //                単語が０個ならダイアログ表示
-
                 showSimpleAlertDialog("テストを開始するには単語を追加してください。")
 
             } else {
