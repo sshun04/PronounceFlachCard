@@ -108,10 +108,7 @@ class MemorizeRecyclerViewAdapter(private val context: Context?, val realmResult
             }
         })
 
-
-
         return MemorizeRecyclerViewHolder(mView)
-
 
     }
 
@@ -129,7 +126,6 @@ class MemorizeRecyclerViewAdapter(private val context: Context?, val realmResult
         }
 
     }
-
 
     class MemorizeRecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
