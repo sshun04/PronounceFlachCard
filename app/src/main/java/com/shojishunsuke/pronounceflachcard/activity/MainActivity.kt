@@ -38,32 +38,6 @@ class MainActivity : AppCompatActivity() {
 
         tabLayout.setupWithViewPager(viewPager)
 
-        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {
-
-            }
-
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
-
-            }
-
-            override fun onPageSelected(position: Int) {
-                //      タブが切り替わった時の処理
-
-
-                Log.d("select", position.toString())
-
-                when (position) {
-                    0 -> setTheme(R.style.MyCustomTheme_Default)
-
-                    1 -> setTheme(R.style.MyCustomTheme_Memorize)
-
-                    2 -> setTheme(R.style.MyCustomTheme_Test)
-
-                }
-            }
-        })
 
 
     }
