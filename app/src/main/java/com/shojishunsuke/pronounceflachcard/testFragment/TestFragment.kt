@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import com.shojishunsuke.pronounceflachcard.activity.TestMeaningActivity
@@ -24,6 +25,7 @@ class TestFragment : Fragment() {
     lateinit var testMeaningButton: Button
     lateinit var checkedWordsButton: Button
     lateinit var allWordsButton: Button
+    lateinit var floatingBackButton :FloatingActionButton
 
     var isPronounce = false
     var isCheckedWords = false
@@ -35,6 +37,15 @@ class TestFragment : Fragment() {
         testMeaningButton = layout.findViewById(R.id.meaningTestButton)
         checkedWordsButton = layout.findViewById(R.id.checkedWordsButton)
         allWordsButton = layout.findViewById(R.id.allWordsButton)
+        floatingBackButton = layout.findViewById(R.id.testBackButton)
+
+
+        floatingBackButton.setImageResource(R.drawable.baseline_refresh_white_18dp)
+
+
+        floatingBackButton.setOnClickListener {
+            onResume()
+        }
 
         testPronounceButton.setOnClickListener {
 
@@ -89,11 +100,14 @@ class TestFragment : Fragment() {
         return layout
     }
 
+
+
     override fun onResume() {
         super.onResume()
 
         testPronounceButton.visibility = View.VISIBLE
         testMeaningButton.visibility = View.VISIBLE
+        floatingBackButton.hide()
 
         checkedWordsButton.visibility = View.GONE
         allWordsButton.visibility = View.GONE
@@ -119,7 +133,7 @@ class TestFragment : Fragment() {
 
         checkedWordsButton.visibility = View.VISIBLE
         allWordsButton.visibility = View.VISIBLE
-
+        floatingBackButton.show()
     }
 
     private fun openWordTestFragment() {

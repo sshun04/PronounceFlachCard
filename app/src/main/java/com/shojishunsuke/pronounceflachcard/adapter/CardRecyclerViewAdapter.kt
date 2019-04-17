@@ -47,12 +47,13 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
 
         holder.optionButton.setOnClickListener {
 
+
+
             lateinit var wordEditText: EditText
             lateinit var meaningEditText: EditText
 
             popupWindow = PopupWindow(context)
             var popupView = LayoutInflater.from(context).inflate(R.layout.menu, null)
-
 
             popupView.findViewById<TextView>(R.id.editButton).setOnClickListener {
 
@@ -121,8 +122,10 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
             popupWindow.isTouchable = true
             popupWindow.setBackgroundDrawable(ColorDrawable(context.resources.getColor(android.R.color.white, null)))
             popupWindow.elevation = 4f
+            popupWindow.width = 300
 
-            popupWindow.showAsDropDown(holder.optionButton, holder.optionButton.width, -holder.optionButton.height)
+
+            popupWindow.showAsDropDown(holder.optionButton, -holder.optionButton.width, -holder.optionButton.height-30)
         }
 
         holder.wordBox.setOnClickListener {
