@@ -31,7 +31,7 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
 
-        var wordCard = realmResults.get(position)
+        val wordCard = realmResults[position]
         wordString = wordCard!!.word
         meaningString = wordCard.meaning
 
@@ -53,7 +53,7 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
             lateinit var meaningEditText: EditText
 
             popupWindow = PopupWindow(context)
-            var popupView = LayoutInflater.from(context).inflate(R.layout.menu, null)
+            val popupView = LayoutInflater.from(context).inflate(R.layout.menu, null)
 
             popupView.findViewById<TextView>(R.id.editButton).setOnClickListener {
 
@@ -140,10 +140,10 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
             val parentView = detailDialog.getLayoutInflater().inflate(R.layout.dialog_fragment_word_detail, null)
 
             val detailWord = parentView.findViewById<TextView>(R.id.wordEditText)
-            detailWord.setText(realmResults.get(position)?.word)
+            detailWord.setText(realmResults[position]?.word)
 
             val detailMeaning = parentView.findViewById<TextView>(R.id.meaningEditText)
-            detailMeaning.setText(realmResults.get(position)?.meaning)
+            detailMeaning.setText(realmResults[position]?.meaning)
 
             detailDialog.setView(parentView)
             detailDialog.show()
@@ -169,11 +169,11 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
     }
 
 
-    fun deleteWord(position: Int) {
+ private   fun deleteWord(position: Int) {
 
         realm.executeTransaction {
 
-            realmResults.get(position)!!.deleteFromRealm()
+            realmResults[position]!!.deleteFromRealm()
 
         }
 

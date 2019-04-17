@@ -39,7 +39,7 @@ class MemorizeWordFragment : Fragment() {
         return layout
     }
 
-    fun read(): RealmResults<WordObject> = realm.where(WordObject::class.java).findAll()
+ private   fun read(): RealmResults<WordObject> = realm.where(WordObject::class.java).findAll()
 
 
 }
