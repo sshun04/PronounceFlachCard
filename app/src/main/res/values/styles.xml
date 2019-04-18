@@ -10,6 +10,7 @@
     </style>
     
     <style name="AppTheme.ActionBarStyle" parent="Widget.AppCompat.Light.ActionBar">
+        <item name="background">@color/colorPrimary</item>
         <item name="titleTextStyle">@style/AppTheme.ActionBarStyle.TitleTextStyle</item>
         
     </style>

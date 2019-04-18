@@ -115,6 +115,7 @@ class MemorizeRecyclerViewAdapter(private val context: Context?, val realmResult
     override fun onInit(p0: Int) {
         if (p0 == TextToSpeech.SUCCESS){
             if (textToSpeach.isLanguageAvailable(Locale.ENGLISH)>= TextToSpeech.LANG_AVAILABLE) {
+                textToSpeach.setLanguage(Locale.ENGLISH)
                 textToSpeach.setSpeechRate(1.0f)
                 textToSpeach.setPitch(1.0f)
 
