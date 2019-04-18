@@ -125,7 +125,8 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
             popupWindow.width = 300
 
 
-            popupWindow.showAsDropDown(holder.optionButton, -holder.optionButton.width, -holder.optionButton.height-30)
+
+            popupWindow.showAsDropDown(holder.optionButton, 0, -holder.optionButton.height-10)
         }
 
         holder.wordBox.setOnClickListener {
