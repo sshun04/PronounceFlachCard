@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="72dp"
         app:cardElevation="2dp"
-        app:cardCornerRadius="4dp"
+        app:cardCornerRadius="8dp"
         android:layout_marginTop="8dp"
 >
 
@@ -82,6 +82,7 @@
 
 
         <ImageView
+                android:foreground="?android:attr/selectableItemBackground"
                 app:layout_constraintStart_toEndOf="@id/wordBox"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
