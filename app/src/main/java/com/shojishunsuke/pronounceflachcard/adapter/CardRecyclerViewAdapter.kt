@@ -178,8 +178,7 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
         val wordTextView = view.findViewById<TextView>(R.id.wordTextView)
         val meaningTextView = view.findViewById<TextView>(R.id.meaningTextView)
         val optionButton = view.findViewById<ImageView>(R.id.editButton)
-        val wordBox = view.findViewById<ConstraintLayout>(R.id.wordBox)
-        val card   = view.findViewById<CardView>(R.id.cardView)
+        val wordBox = view.findViewById<ConstraintLayout>(R.id.selectablecard)
 
     }
 
