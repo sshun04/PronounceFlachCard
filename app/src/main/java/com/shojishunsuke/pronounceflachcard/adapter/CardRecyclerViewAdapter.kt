@@ -3,6 +3,8 @@ package com.shojishunsuke.pronounceflachcard.adapter
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.RippleDrawable
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -12,8 +14,14 @@ import android.widget.ImageView
 import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.shape.CornerTreatment
+import com.google.android.material.shape.CutCornerTreatment
+import com.google.android.material.shape.MaterialShapeDrawable
+import com.google.android.material.shape.ShapePathModel
 import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import com.shojishunsuke.pronounceflachcard.R
 import io.realm.Realm
@@ -42,6 +50,7 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
         holder.optionButton.setImageResource(R.drawable.outline_more_vert_black_24)
 
         holder.optionButton.setTag(wordCard)
+
 
         holder.optionButton.setOnClickListener {
 
@@ -170,8 +179,10 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
         val meaningTextView = view.findViewById<TextView>(R.id.meaningTextView)
         val optionButton = view.findViewById<ImageView>(R.id.editButton)
         val wordBox = view.findViewById<ConstraintLayout>(R.id.wordBox)
+        val card   = view.findViewById<CardView>(R.id.cardView)
 
     }
+
 
 
 }

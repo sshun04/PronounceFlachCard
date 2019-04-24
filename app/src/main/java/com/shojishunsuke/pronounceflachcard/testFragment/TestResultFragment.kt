@@ -1,10 +1,13 @@
 package com.shojishunsuke.pronounceflachcard.testFragment
 
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,7 +34,7 @@ class TestResultFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
 
-        var trueWordsNumber: Int = 0
+        var trueWordsNumber = 0
 
         resultWords.forEach {
             if (it.isTrue) {
@@ -41,9 +44,16 @@ class TestResultFragment : Fragment() {
             }
         }
 
-        textView.setText(trueWordsNumber.toString()+"問正解")
+        val resultProgress = layout.findViewById<ProgressBar>(R.id.progressCircle).apply {
+            max = resultWords.size
+            setProgress(trueWordsNumber,true)
+        }
+
+       textView.setText("$trueWordsNumber/${resultWords.size}")
 
 
         return layout
     }
+
+
 }

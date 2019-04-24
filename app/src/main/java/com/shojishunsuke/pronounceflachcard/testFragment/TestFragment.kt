@@ -2,28 +2,40 @@ package com.shojishunsuke.pronounceflachcard.testFragment
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.Icon
+import android.graphics.drawable.RippleDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
+import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.shape.CutCornerTreatment
+import com.google.android.material.shape.MaterialShapeDrawable
+import com.google.android.material.shape.ShapePathModel
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import com.shojishunsuke.pronounceflachcard.activity.TestMeaningActivity
 import com.shojishunsuke.pronounceflachcard.activity.TestPronounceActivity
 import io.realm.Realm
 import io.realm.RealmResults
+import kotlinx.android.synthetic.main.fragment_test_tab.*
 
 class TestFragment : Fragment() {
 
     val realm = Realm.getDefaultInstance()
 
     lateinit var checkedWords: RealmResults<WordObject>
-    lateinit var testPronounceButton: Button
+    lateinit var testPronounceButton: MaterialButton
     lateinit var testMeaningButton: Button
-    lateinit var checkedWordsButton: Button
+    lateinit var checkedWordsButton:MaterialButton
     lateinit var allWordsButton: Button
     lateinit var floatingBackButton :FloatingActionButton
 
@@ -33,11 +45,20 @@ class TestFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val layout = inflater.inflate(R.layout.fragment_test_tab, container, false)
 
-        testPronounceButton = layout.findViewById(R.id.pronounceTestButton)
+        testPronounceButton = layout.findViewById<MaterialButton>(R.id.pronounceTestButton).apply {
+
+            setSharpCutButton(this)
+            elevation = 8f
+        }
         testMeaningButton = layout.findViewById(R.id.meaningTestButton)
-        checkedWordsButton = layout.findViewById(R.id.checkedWordsButton)
+        checkedWordsButton = layout.findViewById<MaterialButton>(R.id.checkedWordsButton).apply {
+
+            setSharpCutButton(this)
+            elevation = 8f
+        }
         allWordsButton = layout.findViewById(R.id.allWordsButton)
         floatingBackButton = layout.findViewById(R.id.testBackButton)
+
 
 
         floatingBackButton.setImageResource(R.drawable.baseline_refresh_white_18dp)
@@ -158,5 +179,24 @@ class TestFragment : Fragment() {
         }
     }
 
+    private fun setSharpCutButton(materialButton: MaterialButton){
+        val shapePathModel = ShapePathModel().apply {
+            topLeftCorner = CutCornerTreatment(48f)
+            bottomRightCorner = CutCornerTreatment(48f)
+
+        }
+
+        val shapeDrawable = MaterialShapeDrawable(shapePathModel).apply {
+            setTint(ContextCompat.getColor(context!!,R.color.colorCardBack))
+        }
+
+        materialButton.background = shapeDrawable.toRipple()
+
+    }
+
+    private fun Drawable.toRipple():RippleDrawable =
+            RippleDrawable(ContextCompat.getColorStateList(context!!,R.color.mtrl_btn_ripple_color),
+                this,
+                null)
 
 }
