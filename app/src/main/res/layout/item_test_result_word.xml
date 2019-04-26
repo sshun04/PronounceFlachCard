@@ -10,43 +10,63 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
     >
 
         <TextView
                 android:id="@+id/wordTextView5"
                 app:layout_constraintStart_toEndOf="@id/checkView"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/checkView"
                 android:text="text goes here"
                 android:textSize="32dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                app:layout_constraintBottom_toBottomOf="@id/checkView"
+                app:layout_constraintBottom_toBottomOf="@+id/checkView"
         />
 
         <TextView
+                app:layout_constraintBottom_toBottomOf="@id/guideline2"
                 android:gravity="center"
                 android:id="@+id/checkView"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:textSize="36dp"
+                android:textSize="32dp"
+                android:layout_margin="8dp"
                 android:text="✔︎"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-        />
+                android:layout_marginTop="8dp"/>
 
         <TextView
                 android:id="@+id/detailTextView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@id/wordTextView5"
                 android:textSize="32dp"
-                android:layout_marginVertical="4dp"
+                android:text="meaning"
                 android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@id/wordTextView5"
+                app:layout_constraintTop_toTopOf="@id/guideline2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-        />
+                android:layout_marginTop="8dp"
+                android:layout_marginVertical="8dp"
+                android:layout_marginBottom="8dp"/>
+
+        <ImageView
+                android:rotation="180"
+                android:id="@+id/expandArrow"
+                android:background="@drawable/baseline_keyboard_arrow_up_black_18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/wordTextView5"
+                app:layout_constraintBottom_toBottomOf="@+id/wordTextView5"
+                android:layout_margin="12dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"/>
+        <androidx.constraintlayout.widget.Guideline
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/guideline2"
+                app:layout_constraintGuide_begin="72dp"
+                android:orientation="horizontal"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

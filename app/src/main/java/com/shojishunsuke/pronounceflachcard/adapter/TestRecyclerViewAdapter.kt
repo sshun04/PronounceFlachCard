@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.shojishunsuke.pronounceflachcard.Model.QuestionWord
@@ -15,7 +16,7 @@ class TestRecyclerViewAdapter(private val context: Context?, val resultWords: Ar
 
     override fun onBindViewHolder(holder: TestRecyclerViewHolder, position: Int) {
         val resultWord = resultWords.get(position)
-        holder.resultTextView.setText(resultWord.woord)
+        holder.resultTextView.setText(resultWord.word)
 
         if (resultWord.isTrue) {
             holder.checkeTextView.setText("✔︎")
@@ -26,19 +27,21 @@ class TestRecyclerViewAdapter(private val context: Context?, val resultWords: Ar
         }
 
 
-        if (resultWord.isPronounce) {
 
-            holder.checkeTextView.setOnClickListener {
+            holder.expandButton.setOnClickListener {
+
                 if (holder.deatilTextView.visibility == View.GONE) {
                     holder.deatilTextView.visibility = View.VISIBLE
-                    holder.deatilTextView.setText(resultWord.recognizedWord)
+                    it.rotation = 0f
+                    holder.deatilTextView.setText(resultWord.meaning)
                 } else {
 
+                    it.rotation = 180f
                     holder.deatilTextView.visibility = View.GONE
 
                 }
             }
-        }
+
 
 
     }
@@ -65,6 +68,7 @@ class TestRecyclerViewAdapter(private val context: Context?, val resultWords: Ar
         val resultTextView = view.findViewById<TextView>(R.id.wordTextView5)
         val checkeTextView = view.findViewById<TextView>(R.id.checkView)
         val deatilTextView = view.findViewById<TextView>(R.id.detailTextView)
+        val expandButton = view.findViewById<ImageView>(R.id.expandArrow)
 
     }
 }

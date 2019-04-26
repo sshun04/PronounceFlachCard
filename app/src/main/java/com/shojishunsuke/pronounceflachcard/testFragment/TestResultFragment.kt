@@ -1,11 +1,11 @@
 package com.shojishunsuke.pronounceflachcard.testFragment
 
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.GradientDrawable
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.DecelerateInterpolator
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -18,6 +18,8 @@ import com.shojishunsuke.pronounceflachcard.adapter.TestRecyclerViewAdapter
 
 class TestResultFragment : Fragment() {
 
+    var progressCount = 0
+    lateinit var resultProgress: ProgressBar
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val layout = inflater.inflate(R.layout.fragment_test_result, container, false)
@@ -44,15 +46,27 @@ class TestResultFragment : Fragment() {
             }
         }
 
-        val resultProgress = layout.findViewById<ProgressBar>(R.id.progressCircle).apply {
+        resultProgress = layout.findViewById<ProgressBar>(R.id.progressCircle).apply {
+//            max = resultWords.size
+//            setProgress(trueWordsNumber,true)
             max = resultWords.size
-            setProgress(trueWordsNumber,true)
+
         }
+
+        onHogeProgress(trueWordsNumber)
+
 
        textView.setText("$trueWordsNumber/${resultWords.size}")
 
 
         return layout
+    }
+
+    private fun onHogeProgress(progress :Int){
+        val objectAnimator = ObjectAnimator.ofInt(resultProgress,"Progress",progress)
+        objectAnimator.duration = 1000
+        objectAnimator.interpolator = DecelerateInterpolator()
+        objectAnimator.start()
     }
 
 

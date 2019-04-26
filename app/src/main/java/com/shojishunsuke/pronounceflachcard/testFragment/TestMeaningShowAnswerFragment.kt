@@ -64,8 +64,9 @@ class TestMeaningShowAnswerFragment : Fragment(), View.OnClickListener {
         textView.setText(showingMeaning)
 
         questionWord = QuestionWord()
-        questionWord.quetionNumber = questionNumber
-        questionWord.woord = shownWord
+        questionWord.questionNumber = questionNumber
+        questionWord.word = shownWord
+        questionWord.meaning = showingMeaning
         questionWord.isPronounce = false
 
         trueButton.setOnClickListener(this)

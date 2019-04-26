@@ -46,6 +46,7 @@ class TestPronounceFragment : Fragment() {
         else realm.where(WordObject::class.java).findAll()
 
         showingWord = showingCards.get(questionNumber)!!.word
+        val meaning = showingCards.get(questionNumber)!!.meaning
 
         textView.setText(showingWord)
 
@@ -87,8 +88,9 @@ class TestPronounceFragment : Fragment() {
                 val stringList = p0!!.getStringArrayList(key)
 
 
-                questionWord.woord = showingWord
-                questionWord.quetionNumber = questionNumber
+                questionWord.word = showingWord
+                questionWord.meaning = meaning
+                questionWord.questionNumber = questionNumber
                 questionWord.isPronounce = true
 
                 if (stringList.contains(showingWord)) {
