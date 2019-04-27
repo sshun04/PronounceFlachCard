@@ -7,11 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.RotateAnimation
-import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.animation.AnimationUtils
 import com.shojishunsuke.pronounceflachcard.Model.QuestionWord
 import com.shojishunsuke.pronounceflachcard.R
 
@@ -30,19 +29,23 @@ class TestRecyclerViewAdapter(private val context: Context?, val resultWords: Ar
             holder.checkeTextView.setTextColor(Color.parseColor("#f44336"))
         }
 
+        if (resultWord.isPronounce){
+            holder.recognizedTextView.visibility =View.VISIBLE
+            holder.recognizedTextView.setText(resultWord.recognizedWord)}
 
 
             holder.expandButton.setOnClickListener {
 
-                if (holder.deatilTextView.visibility == View.GONE) {
-                    holder.deatilTextView.visibility = View.VISIBLE
+                if (holder.detailBox.visibility == View.GONE) {
+                    holder.detailBox.visibility = View.VISIBLE
                     startRotate(it,0f,-180f)
-                    holder.deatilTextView.setText(resultWord.meaning)
+                    holder.maningTextView.setText(resultWord.meaning)
+
                 } else {
 
 
                     startRotate(it,-180f,0f)
-                    holder.deatilTextView.visibility = View.GONE
+                    holder.detailBox.visibility  =View.GONE
 
                 }
             }
@@ -62,7 +65,7 @@ class TestRecyclerViewAdapter(private val context: Context?, val resultWords: Ar
 
 
     override fun onViewRecycled(holder: TestRecyclerViewHolder) {
-        holder.deatilTextView.visibility = View.GONE
+        holder.recognizedTextView.visibility = View.GONE
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TestRecyclerViewHolder {
@@ -79,8 +82,10 @@ class TestRecyclerViewAdapter(private val context: Context?, val resultWords: Ar
 
         val resultTextView = view.findViewById<TextView>(R.id.wordTextView5)
         val checkeTextView = view.findViewById<TextView>(R.id.checkView)
-        val deatilTextView = view.findViewById<TextView>(R.id.detailTextView)
+        val recognizedTextView = view.findViewById<TextView>(R.id.detailTextView)
         val expandButton = view.findViewById<ImageView>(R.id.expandArrow)
+        val maningTextView  = view.findViewById<TextView>(R.id.meaningTextView)
+        val detailBox = view.findViewById<LinearLayout>(R.id.detailView)
 
     }
 }

@@ -36,21 +36,36 @@
                 android:text="✔︎"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-               />
+        />
 
-        <TextView
-                android:id="@+id/detailTextView"
+        <LinearLayout
+                android:id="@+id/detailView"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@id/wordTextView5"
-                android:textSize="24dp"
-                android:text="meaning"
-                android:visibility="gone"
                 app:layout_constraintTop_toTopOf="@id/guideline2"
+                android:layout_marginVertical="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginVertical="8dp"
-                android:layout_marginBottom="8dp"/>
+                android:orientation="vertical" android:layout_marginBottom="8dp">
+            <TextView
+                    android:visibility="gone"
+                    android:id="@+id/detailTextView"
+                    android:textSize="24dp"
+                    android:text="recognized"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"/>
+
+            <TextView
+                    android:textSize="24dp"
+                    android:text="meaning"
+                    android:id="@+id/meaningTextView"
+                    android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
 
         <ImageView
                 android:rotation="180"
@@ -62,10 +77,13 @@
                 android:layout_margin="12dp"
                 android:layout_width="32dp"
                 android:layout_height="32dp"/>
+
+
         <androidx.constraintlayout.widget.Guideline
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/guideline2"
                 android:orientation="horizontal"/>
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
