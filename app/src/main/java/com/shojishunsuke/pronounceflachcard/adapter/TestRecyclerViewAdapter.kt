@@ -5,9 +5,13 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.RotateAnimation
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.animation.AnimationUtils
 import com.shojishunsuke.pronounceflachcard.Model.QuestionWord
 import com.shojishunsuke.pronounceflachcard.R
 
@@ -32,17 +36,25 @@ class TestRecyclerViewAdapter(private val context: Context?, val resultWords: Ar
 
                 if (holder.deatilTextView.visibility == View.GONE) {
                     holder.deatilTextView.visibility = View.VISIBLE
-                    it.rotation = 0f
+                    startRotate(it,0f,-180f)
                     holder.deatilTextView.setText(resultWord.meaning)
                 } else {
 
-                    it.rotation = 180f
+
+                    startRotate(it,-180f,0f)
                     holder.deatilTextView.visibility = View.GONE
 
                 }
             }
 
 
+
+    }
+    private fun startRotate(view: View,startRotate:Float,endRotate:Float){
+        val rotateAnimation = RotateAnimation(startRotate,endRotate,Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f)
+        rotateAnimation.duration = 300
+        rotateAnimation.fillAfter = true
+        view.startAnimation(rotateAnimation)
 
     }
 

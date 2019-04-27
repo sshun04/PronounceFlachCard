@@ -2,6 +2,7 @@ package com.shojishunsuke.pronounceflachcard.testFragment
 
 import android.animation.ObjectAnimator
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,12 +50,13 @@ class TestResultFragment : Fragment() {
         resultProgress = layout.findViewById<ProgressBar>(R.id.progressCircle).apply {
 //            max = resultWords.size
 //            setProgress(trueWordsNumber,true)
-            max = resultWords.size
+            max = resultWords.size*100
 
         }
 
-        onHogeProgress(trueWordsNumber)
 
+
+        onHogeProgress(trueWordsNumber*100)
 
        textView.setText("$trueWordsNumber/${resultWords.size}")
 
@@ -63,11 +65,18 @@ class TestResultFragment : Fragment() {
     }
 
     private fun onHogeProgress(progress :Int){
-        val objectAnimator = ObjectAnimator.ofInt(resultProgress,"Progress",progress)
-        objectAnimator.duration = 1000
-        objectAnimator.interpolator = DecelerateInterpolator()
-        objectAnimator.start()
+
+       val handler =Handler()
+        handler.postDelayed(Runnable{
+
+           resultProgress.setProgress(progress,true)
+        },300)
+//        val objectAnimator  =ObjectAnimator.ofInt(resultProgress,"Progress",progress)
+//        objectAnimator.setDuration(1000)
+//        objectAnimator.start()
+
     }
+
 
 
 }

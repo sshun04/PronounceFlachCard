@@ -18,7 +18,7 @@
                 app:layout_constraintStart_toEndOf="@id/checkView"
                 app:layout_constraintTop_toTopOf="@+id/checkView"
                 android:text="text goes here"
-                android:textSize="32dp"
+                android:textSize="24dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -31,24 +31,24 @@
                 android:id="@+id/checkView"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:textSize="32dp"
-                android:layout_margin="8dp"
+                android:textSize="24dp"
+                android:layout_margin="4dp"
                 android:text="✔︎"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="8dp"/>
+               />
 
         <TextView
                 android:id="@+id/detailTextView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@id/wordTextView5"
-                android:textSize="32dp"
+                android:textSize="24dp"
                 android:text="meaning"
                 android:visibility="gone"
                 app:layout_constraintTop_toTopOf="@id/guideline2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:layout_marginVertical="8dp"
                 android:layout_marginBottom="8dp"/>
 
@@ -65,7 +65,6 @@
         <androidx.constraintlayout.widget.Guideline
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/guideline2"
-                app:layout_constraintGuide_begin="72dp"
                 android:orientation="horizontal"/>
 
 
