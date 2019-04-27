@@ -8,7 +8,7 @@ data class QuestionWord(
     var meaning :String = "",
     var recognizedWord: String = "",
     var questionNumber: Int = 0,
-    var isPronounce: Boolean = true,
+    var isPronounce: Boolean = false,
     var isTrue: Boolean = false
 
 ) : Serializable {

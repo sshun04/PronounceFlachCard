@@ -1,19 +1,15 @@
 package com.shojishunsuke.pronounceflachcard.activity
 
 import android.content.DialogInterface
-import android.graphics.Color
 import android.os.Bundle
-import android.speech.RecognitionListener
 import android.view.KeyEvent
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.TextView
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.shojishunsuke.pronounceflachcard.Model.QuestionWord
 import com.shojishunsuke.pronounceflachcard.R
-import com.shojishunsuke.pronounceflachcard.testFragment.TestStartFragment
+import com.shojishunsuke.pronounceflachcard.testFragment.TestPronounceFragment
 
 
 class TestPronounceActivity : AppCompatActivity() {
@@ -21,12 +17,14 @@ class TestPronounceActivity : AppCompatActivity() {
 
 
 
+    private var questionNumber = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test_pronounce)
 
-        val key_checked = resources.getString(R.string.key_is_checked_Only)
+       val key_question_words = resources.getString(R.string.key_question_words)
+        val key_question_number = resources.getString(R.string.key_question_number)
 
         val toolbar = this.findViewById<Toolbar>(R.id.testPronounceToolBar)
         setSupportActionBar(toolbar)
@@ -36,20 +34,23 @@ class TestPronounceActivity : AppCompatActivity() {
         supportActionBar!!.setHomeButtonEnabled(true)
         supportActionBar!!.setTitle("発音テスト")
 
+        val questionWords = intent.getSerializableExtra(key_question_words)as ArrayList<QuestionWord>
 
 
 
-        val isCheckedOnly = intent.getBooleanExtra(key_checked, true)
+
 
         val bundle = Bundle()
-        bundle.putBoolean(key_checked, isCheckedOnly)
 
-        val testStartFragment = TestStartFragment()
-        testStartFragment.arguments = bundle
+        bundle.putInt(key_question_number,questionNumber)
+        bundle.putSerializable(key_question_words,questionWords)
+
+        val testPronounceFragment = TestPronounceFragment()
+        testPronounceFragment.arguments = bundle
 
         val fragmentTransAction = supportFragmentManager.beginTransaction()
         fragmentTransAction.addToBackStack(null)
-        fragmentTransAction.replace(R.id.testPronounceBackground, testStartFragment)
+        fragmentTransAction.replace(R.id.testPronounceBackground, testPronounceFragment)
         fragmentTransAction.commit()
 
     }

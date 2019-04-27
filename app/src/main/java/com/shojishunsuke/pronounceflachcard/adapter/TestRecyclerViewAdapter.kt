@@ -61,7 +61,7 @@ class TestRecyclerViewAdapter(private val context: Context?, val resultWords: Ar
 
     }
 
-    override fun getItemCount(): Int = resultWords.count()
+    override fun getItemCount(): Int = resultWords.size
 
 
     override fun onViewRecycled(holder: TestRecyclerViewHolder) {

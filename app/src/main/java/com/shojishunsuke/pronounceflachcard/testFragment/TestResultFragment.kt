@@ -19,7 +19,6 @@ import com.shojishunsuke.pronounceflachcard.adapter.TestRecyclerViewAdapter
 
 class TestResultFragment : Fragment() {
 
-    var progressCount = 0
     lateinit var resultProgress: ProgressBar
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -48,8 +47,7 @@ class TestResultFragment : Fragment() {
         }
 
         resultProgress = layout.findViewById<ProgressBar>(R.id.progressCircle).apply {
-//            max = resultWords.size
-//            setProgress(trueWordsNumber,true)
+
             max = resultWords.size*100
 
         }

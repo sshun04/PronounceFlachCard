@@ -17,7 +17,7 @@ class TestMeaningActivity : AppCompatActivity() {
 
     private var questionNumber = 0
 
-   private val questionWordsList = ArrayList<QuestionWord>()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,11 +36,11 @@ class TestMeaningActivity : AppCompatActivity() {
         supportActionBar!!.setTitle("意味テスト")
 
 
-        val isCheckedOnly = intent.getBooleanExtra(key_checked, true)
+      val questionWordsList = intent.getSerializableExtra(key_quesiton_words)
+
 
         var bundle = Bundle()
         bundle.putInt(key_question_number, questionNumber)
-        bundle.putBoolean(key_checked, isCheckedOnly)
         bundle.putSerializable(key_quesiton_words, questionWordsList)
 
 
