@@ -69,9 +69,6 @@ class TestResultFragment : Fragment() {
 
            resultProgress.setProgress(progress,true)
         },300)
-//        val objectAnimator  =ObjectAnimator.ofInt(resultProgress,"Progress",progress)
-//        objectAnimator.setDuration(1000)
-//        objectAnimator.start()
 
     }
 
