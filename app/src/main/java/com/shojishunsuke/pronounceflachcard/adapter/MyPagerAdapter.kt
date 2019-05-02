@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.shojishunsuke.pronounceflachcard.fragment.FlashCardFragment
 import com.shojishunsuke.pronounceflachcard.fragment.MemorizeWordFragment
-import com.shojishunsuke.pronounceflachcard.testFragment.TestFragment
+import com.shojishunsuke.pronounceflachcard.testFragment.TestReadyFragment
 
 
 class MyPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
@@ -15,7 +15,7 @@ class MyPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fr
         return when (position) {
             0 -> FlashCardFragment()
             1 -> MemorizeWordFragment()
-            2 -> TestFragment()
+            2 -> TestReadyFragment()
             else -> FlashCardFragment()
         }
 

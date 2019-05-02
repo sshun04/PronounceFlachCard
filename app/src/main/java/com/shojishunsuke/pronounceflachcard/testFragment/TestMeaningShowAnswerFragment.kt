@@ -18,14 +18,11 @@ class TestMeaningShowAnswerFragment : Fragment(), View.OnClickListener {
     val realm = Realm.getDefaultInstance()
 
 
-    lateinit var showingCards: RealmResults<WordObject>
-    lateinit var showingMeaning: String
-    lateinit var shownWord: String
+
     lateinit var textView: TextView
     lateinit var trueButton: Button
     lateinit var falseButton: Button
 
-    lateinit var key_checked: String
     lateinit var key_question_number: String
     lateinit var key_quesiton_words: String
 
@@ -34,8 +31,7 @@ class TestMeaningShowAnswerFragment : Fragment(), View.OnClickListener {
     lateinit var questionWordsList: ArrayList<QuestionWord>
 
 
-    var questionNumber = 0
-    var isCheckedOnly = true
+     private var questionNumber:Int = 0
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -45,28 +41,19 @@ class TestMeaningShowAnswerFragment : Fragment(), View.OnClickListener {
         trueButton = layout.findViewById(R.id.trueButton)
         falseButton = layout.findViewById(R.id.falseButton)
 
-        key_checked = resources.getString(R.string.key_is_checked_Only)
         key_question_number = resources.getString(R.string.key_question_number)
         key_quesiton_words = resources.getString(R.string.key_question_words)
 
 
         questionNumber = arguments!!.getInt(key_question_number)
-        isCheckedOnly = arguments!!.getBoolean(key_checked)
+
         questionWordsList = arguments!!.getSerializable(key_quesiton_words) as ArrayList<QuestionWord>
 
 
-        showingCards = if (isCheckedOnly) realm.where(WordObject::class.java).equalTo("isDone", true).findAll()
-        else realm.where(WordObject::class.java).findAll()
+        questionWord =questionWordsList[questionNumber]
 
-        showingMeaning = showingCards.get(questionNumber)!!.meaning
-        shownWord = showingCards.get(questionNumber)!!.word
+        textView.setText(questionWord.meaning)
 
-        textView.setText(showingMeaning)
-
-        questionWord = QuestionWord()
-        questionWord.quetionNumber = questionNumber
-        questionWord.woord = shownWord
-        questionWord.isPronounce = false
 
         trueButton.setOnClickListener(this)
         falseButton.setOnClickListener(this)
@@ -76,10 +63,31 @@ class TestMeaningShowAnswerFragment : Fragment(), View.OnClickListener {
     }
 
 
+
+
+    override fun onClick(p0: View?) {
+        when(p0){
+            trueButton -> {questionWord.isTrue = true}
+            falseButton ->{questionWord.isTrue = false }
+
+        }
+
+        if (questionWordsList.size == questionNumber+1 ) {
+
+
+            showFragment(fragment =  TestResultFragment(),isResult = true)
+
+        } else {
+
+
+            showFragment(fragment = TestMeaningShowWordFragment(),isResult = false)
+        }
+
+
+    }
     private fun showFragment(fragment: Fragment, isResult: Boolean) {
         val bundle = Bundle()
 
-        bundle.putBoolean(key_checked, isCheckedOnly)
         bundle.putSerializable(key_quesiton_words, questionWordsList)
 
         if (!isResult) {
@@ -92,28 +100,6 @@ class TestMeaningShowAnswerFragment : Fragment(), View.OnClickListener {
         fragmentTransAction.replace(R.id.testMeaningBackGround,fragment)
         fragmentTransAction.commit()
 
-
-
-    }
-
-    override fun onClick(p0: View?) {
-        when(p0){
-            trueButton -> {questionWord.isTrue = true}
-            falseButton ->{questionWord.isTrue = false }
-
-        }
-
-        if (showingCards.count() == questionNumber + 1) {
-
-            questionWordsList.add(questionWord)
-
-            showFragment(fragment =  TestResultFragment(),isResult = true)
-
-        } else {
-            questionWordsList.add(questionWord)
-
-            showFragment(fragment = TestMeaningShowWordFragment(),isResult = false)
-        }
 
 
     }
