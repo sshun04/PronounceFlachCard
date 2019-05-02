@@ -3,12 +3,11 @@ package com.shojishunsuke.pronounceflachcard.adapter
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.RippleDrawable
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.TypedValue
+import android.view.*
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.PopupWindow
@@ -116,23 +115,9 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
 
                 return@setOnMenuItemClickListener true
             }
+            popupMenu.inflate(R.menu.popup_menu)
+            popupMenu.show()
 
-            var width =
-                TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100f, context!!.resources!!.displayMetrics)
-            popupWindow.setWindowLayoutMode(width.toInt(), WindowManager.LayoutParams.WRAP_CONTENT)
-            popupWindow.width = width.toInt()
-
-            popupWindow.contentView = popupView
-            popupWindow.isOutsideTouchable = true
-            popupWindow.isFocusable = true
-            popupWindow.isTouchable = true
-            popupWindow.setBackgroundDrawable(ColorDrawable(context.resources.getColor(android.R.color.white, null)))
-            popupWindow.elevation = 4f
-            popupWindow.width = 300
-
-
-
-            popupWindow.showAsDropDown(holder.optionButton, 0, -holder.optionButton.height-10)
 
         }
 
