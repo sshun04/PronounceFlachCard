@@ -8,4 +8,9 @@
     <string name="key_true_numbers">TrueQuestionNumbers</string>
     <string name="key_false_numbers">FalseQuestionNumbers</string>
     <string name="key_question_words">QuestionWords</string>
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
+
 </resources>

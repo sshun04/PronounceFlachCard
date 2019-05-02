@@ -116,8 +116,24 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
 
                 return@setOnMenuItemClickListener true
             }
-            popupMenu.inflate(R.menu.popup_menu)
-            popupMenu.show()
+
+            var width =
+                TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100f, context!!.resources!!.displayMetrics)
+            popupWindow.setWindowLayoutMode(width.toInt(), WindowManager.LayoutParams.WRAP_CONTENT)
+            popupWindow.width = width.toInt()
+
+            popupWindow.contentView = popupView
+            popupWindow.isOutsideTouchable = true
+            popupWindow.isFocusable = true
+            popupWindow.isTouchable = true
+            popupWindow.setBackgroundDrawable(ColorDrawable(context.resources.getColor(android.R.color.white, null)))
+            popupWindow.elevation = 4f
+            popupWindow.width = 300
+
+
+
+            popupWindow.showAsDropDown(holder.optionButton, 0, -holder.optionButton.height-10)
+
         }
 
         holder.wordBox.setOnClickListener {
