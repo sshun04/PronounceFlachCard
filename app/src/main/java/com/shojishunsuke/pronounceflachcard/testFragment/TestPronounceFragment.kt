@@ -19,10 +19,8 @@ import io.realm.Realm
 import io.realm.RealmResults
 
 class TestPronounceFragment : Fragment() {
-    val realm = Realm.getDefaultInstance()
 
-    private lateinit var showingCards: RealmResults<WordObject>
-    private lateinit var showingWord: String
+
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -33,21 +31,16 @@ class TestPronounceFragment : Fragment() {
         val confirmTextView = layout.findViewById<TextView>(R.id.textView1)
 
 
-        val key_checked = resources.getString(R.string.key_is_checked_Only)
+
         val key_question_number = resources.getString(R.string.key_question_number)
         val key_quesiton_words = resources.getString(R.string.key_question_words)
 
 
         var questionNumber = arguments!!.getInt(key_question_number)
-        val isCheckedOnly = arguments!!.getBoolean(key_checked)
         val questionWordsList = arguments!!.getSerializable(key_quesiton_words) as ArrayList<QuestionWord>
+        val questionWord = questionWordsList[questionNumber]
 
-        showingCards = if (isCheckedOnly) realm.where(WordObject::class.java).equalTo("isDone", true).findAll()
-        else realm.where(WordObject::class.java).findAll()
-
-        showingWord = showingCards.get(questionNumber)!!.word
-
-        textView.setText(showingWord)
+        textView.setText(questionWord.word)
 
 
         val speechIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
@@ -55,7 +48,7 @@ class TestPronounceFragment : Fragment() {
         speechIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, context!!.packageName)
 
         val bundle = Bundle()
-        val questionWord = QuestionWord()
+
 
         val speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context)
 
@@ -87,19 +80,15 @@ class TestPronounceFragment : Fragment() {
                 val stringList = p0!!.getStringArrayList(key)
 
 
-                questionWord.woord = showingWord
-                questionWord.quetionNumber = questionNumber
-                questionWord.isPronounce = true
-
-                if (stringList.contains(showingWord)) {
+                if (stringList.contains(questionWord.word)) {
 
                     questionWord.isTrue = true
-                    questionWord.recognizedWord = showingWord
+                    questionWord.recognizedWord = questionWord.word
 
                 } else {
 
                     questionWord.isTrue = false
-                    questionWord.recognizedWord = stringList.get(0)
+                    questionWord.recognizedWord = stringList[0]
 
                 }
 
@@ -109,7 +98,7 @@ class TestPronounceFragment : Fragment() {
 
 
 
-                if (showingCards.count() == questionNumber + 1) {
+                if (questionWordsList.size == questionNumber + 1) {
 
                     resultButton.visibility = View.VISIBLE
 
@@ -119,10 +108,7 @@ class TestPronounceFragment : Fragment() {
 
                 }
 
-                questionWordsList.add(questionWord)
-
                 bundle.putInt(key_question_number, questionNumber)
-                bundle.putBoolean(key_checked, isCheckedOnly)
                 bundle.putSerializable(key_quesiton_words, questionWordsList)
 
 

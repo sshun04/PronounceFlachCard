@@ -5,6 +5,7 @@
         android:layout_width="match_parent" android:layout_height="match_parent">
 
     <TextView
+            android:background="@android:color/white"
             android:id="@+id/textView2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -17,6 +18,8 @@
             android:layout_width="0dp"
             android:layout_height="0dp"/>
     <Button
+
+            android:foreground="?android:attr/selectableItemBackground"
             android:id="@+id/trueButton"
             android:text="✔︎"
             android:textSize="36dp"
@@ -32,6 +35,7 @@
 
     <Button
             android:id="@+id/falseButton"
+            android:foreground="?android:attr/selectableItemBackground"
             android:text="️✖︎"
             android:textSize="36dp"
             android:textColor="@android:color/white"
