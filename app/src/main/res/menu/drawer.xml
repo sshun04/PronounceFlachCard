@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+
+        <item
+                android:id="@+id/drawerListItem1"
+                android:title="list1"
+              >
+
+        </item>
+
+        <item
+                android:id="@+id/drawerListItem2"
+                android:title="list2"
+                >
+
+        </item>
+
+
+        <item
+                android:id="@+id/drawerListItem3"
+                android:title="list3"
+       >
+
+        </item>
+
+        <item
+                android:id="@+id/drawerListItem4"
+                android:title="list4"
+            >
+
+        </item>
+
+
+    </group>
+
+    <group>
+        <item
+                android:id="@+id/addNewList"
+                android:title="単語帳を作成"
+        >
+
+        </item>
+
+        <item
+                android:id="@+id/drawerOption"
+                android:title="設定">
+
+        </item>
+    </group>
+
+</menu>
