@@ -12,7 +12,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintVertical_bias="0.052"
+            app:layout_constraintVertical_bias="0.075"
             app:layout_constraintHorizontal_bias="0.117"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="wrap_content"
@@ -20,7 +20,7 @@
 
     <RadioGroup
             android:id="@+id/radioGroupFormat"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="28dp"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="@id/guideline6"
             app:layout_constraintTop_toBottomOf="@id/textView1"
@@ -32,6 +32,7 @@
                 android:id="@+id/pronounce"
                 android:text="  発音"
                 android:textSize="24dp"
+                android:layout_marginEnd="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
         />
@@ -40,7 +41,7 @@
                 android:id="@+id/meaning"
                 android:text="  意味"
                 android:textSize="24dp"
-                android:layout_marginHorizontal="40dp"
+                android:layout_marginStart="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
@@ -50,7 +51,7 @@
     <TextView
             android:id="@+id/textView2"
             android:text="出題範囲"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="28dp"
             app:layout_constraintStart_toStartOf="@id/textView1"
             app:layout_constraintTop_toBottomOf="@id/radioGroupFormat"
 
@@ -60,7 +61,7 @@
 
     <RadioGroup
             android:id="@+id/radioGroupRange"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="28dp"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="@id/guideline6"
             app:layout_constraintTop_toBottomOf="@id/textView2"
@@ -88,15 +89,18 @@
 
     <TextView
             android:id="@+id/textView4"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="36dp"
             app:layout_constraintStart_toStartOf="@id/textView1"
             app:layout_constraintTop_toBottomOf="@id/radioGroupRange"
             android:text="問題数  :"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
+
+
     <NumberPicker
             android:layout_marginStart="12dp"
+            android:visibility="gone"
             android:gravity="center"
             android:id="@+id/numberPicker"
             app:layout_constraintStart_toEndOf="@id/textView4"
@@ -108,18 +112,34 @@
     </NumberPicker>
 
     <TextView
-            android:layout_marginTop="28dp"
+
+            android:layout_marginTop="48dp"
             android:id="@+id/textView3"
             app:layout_constraintStart_toStartOf="@id/textView1"
             app:layout_constraintTop_toBottomOf="@id/textView4"
             android:text="出題順序"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+    />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+            android:dropDownWidth="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="8dp"
+            android:spinnerMode="dropdown"
+            android:id="@+id/numberDropDown"
+            app:layout_constraintBottom_toBottomOf="@id/textView4"
+            app:layout_constraintStart_toEndOf="@id/textView4"
+            app:layout_constraintTop_toTopOf="@id/textView4"
             android:layout_height="wrap_content"/>
+
+
 
     <RadioGroup
             android:id="@+id/radioGroupOrder"
             app:layout_constraintTop_toBottomOf="@id/textView3"
             app:layout_constraintStart_toStartOf="@id/guideline6"
+            android:visibility="gone"
             android:layout_marginTop="24dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -141,11 +161,33 @@
 
     </RadioGroup>
 
+    <TextView
+            android:id="@+id/switchLabel"
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toEndOf="@id/textView3"
+            android:textSize="24dp"
+            android:layout_marginTop="20dp"
+            android:text="ランダムに出題"
+            app:layout_constraintTop_toBottomOf="@id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <androidx.appcompat.widget.SwitchCompat
+            android:textSize="24dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/switchLabel"
+            app:layout_constraintBottom_toBottomOf="@id/switchLabel"
+            android:layout_width="wrap_content"
+            android:id="@+id/randomSwitch"
+            android:layout_height="wrap_content"/>
+
+
     <com.google.android.material.button.MaterialButton
             style="@style/Base.Widget.AppCompat.Button.Borderless"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/radioGroupOrder"
+            app:layout_constraintTop_toBottomOf="@id/switchLabel"
             android:textSize="48dp"
             android:text="テスト開始"
             android:id="@+id/testStartButton"
