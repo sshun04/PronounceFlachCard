@@ -5,7 +5,7 @@ import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import io.realm.Realm
 import io.realm.RealmResults
 
-class TestManager {
+class TestListProvider {
 
     private val realm = Realm.getDefaultInstance()
     lateinit var testList: RealmResults<WordObject>

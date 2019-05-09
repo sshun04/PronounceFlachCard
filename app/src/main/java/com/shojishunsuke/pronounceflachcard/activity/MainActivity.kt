@@ -18,7 +18,6 @@ import com.shojishunsuke.pronounceflachcard.adapter.MyPagerAdapter
 
 class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
-    private lateinit var drawerList: RecyclerView
     private lateinit var drawerToggle: ActionBarDrawerToggle
     private lateinit var newTitle: CharSequence
 
@@ -32,9 +31,7 @@ class MainActivity : AppCompatActivity() {
             setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START)
         }
 
-        drawerList = findViewById<RecyclerView>(R.id.left_drawer).apply {
-            setHasFixedSize(true)
-        }
+
 
         val tabLayout: TabLayout = this.findViewById(R.id.tablayout)
         val viewPager: ViewPager = this.findViewById(R.id.pager)

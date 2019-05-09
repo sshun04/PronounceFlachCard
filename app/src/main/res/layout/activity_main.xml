@@ -25,7 +25,7 @@
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:popupTheme="@style/Theme.AppCompat.Light"
                 android:elevation="8dp"
-       />
+        />
 
 
         <com.google.android.material.tabs.TabLayout
@@ -55,15 +55,19 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:background="@android:color/white"
-            android:id="@+id/left_drawer"
-            android:scrollbars="vertical"
-            android:layout_gravity="start"
-            android:choiceMode="singleChoice"
-            android:divider="@null"
-            android:layout_width="240dp"
-            android:layout_height="match_parent">
 
-    </androidx.recyclerview.widget.RecyclerView>
+
+    <fragment
+            android:name="com.shojishunsuke.pronounceflachcard.fragment.DrawerFragment"
+            android:id="@+id/left_drawer"
+            android:layout_width="220dp"
+              android:layout_gravity="start"
+              android:choiceMode="singleChoice"
+              android:layout_height="match_parent">
+
+    </fragment>
+
+
+
+
 </androidx.drawerlayout.widget.DrawerLayout>

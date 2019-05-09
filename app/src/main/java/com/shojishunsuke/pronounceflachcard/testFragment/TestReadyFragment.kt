@@ -9,7 +9,7 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import com.google.android.material.button.MaterialButton
 import com.shojishunsuke.pronounceflachcard.R
-import com.shojishunsuke.pronounceflachcard.TestManager
+import com.shojishunsuke.pronounceflachcard.TestListProvider
 import com.shojishunsuke.pronounceflachcard.activity.TestMeaningActivity
 import com.shojishunsuke.pronounceflachcard.activity.TestPronounceActivity
 
@@ -40,7 +40,7 @@ class TestReadyFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
         val key_quesiton_words = resources.getString(R.string.key_question_words)
 
-        val testManager = TestManager()
+        val testManager = TestListProvider()
 
         formatGroup.setOnCheckedChangeListener { _, i -> testFormat = i }
         rangeGroup.setOnCheckedChangeListener { _, i ->
