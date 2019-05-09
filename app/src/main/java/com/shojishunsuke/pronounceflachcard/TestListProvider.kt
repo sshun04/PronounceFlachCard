@@ -31,8 +31,6 @@ class TestListProvider {
             testArrayList.add(arrayWord)
         }
 
-
-
         if ( isRandom)
             testArrayList.shuffle()
 
@@ -46,6 +44,4 @@ class TestListProvider {
         realm.where(WordObject::class.java).findAll().size
     else
         realm.where(WordObject::class.java).equalTo("isDone", true).findAll().size
-
-
 }
