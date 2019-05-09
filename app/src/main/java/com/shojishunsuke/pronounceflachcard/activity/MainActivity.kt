@@ -32,22 +32,18 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-
         val tabLayout: TabLayout = this.findViewById(R.id.tablayout)
         val viewPager: ViewPager = this.findViewById(R.id.pager)
         val toolBar: androidx.appcompat.widget.Toolbar = this.findViewById(R.id.toolabar)
         setSupportActionBar(toolBar)
 
 
-
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_word_list))
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_memorization))
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_test))
 
-
         val fragmentAdapter = MyPagerAdapter(supportFragmentManager)
         viewPager.adapter = fragmentAdapter
-
 
         drawerToggle =
             object : ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.drawer_open, R.string.drawer_close) {
@@ -66,7 +62,6 @@ class MainActivity : AppCompatActivity() {
 
 
         tabLayout.setupWithViewPager(viewPager)
-
 
     }
 

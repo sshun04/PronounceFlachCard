@@ -9,6 +9,8 @@ object FlashCardManager {
     init {
 //        初期化のタイミングで最初にどのリストを表示するのか処理する
 //        あらかじめrealmに最後に開かれていたリストがどれかを保存しておく
+//        単語帳が一つも登録されていない場合は単語帳新規作成画面へ遷移させる
+
     }
 
     fun getCurrentList():RealmResults<WordObject>{

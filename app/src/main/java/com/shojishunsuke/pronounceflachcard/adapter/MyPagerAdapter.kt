@@ -18,12 +18,9 @@ class MyPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fr
             2 -> TestReadyFragment()
             else -> FlashCardFragment()
         }
-
-
     }
 
     override fun getCount(): Int = 3
-
 
     override fun getPageTitle(position: Int): CharSequence? {
         return when (position) {

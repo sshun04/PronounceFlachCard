@@ -65,8 +65,8 @@ class TestMeaningShowAnswerFragment : Fragment(), View.OnClickListener {
 
 
 
-    override fun onClick(p0: View?) {
-        when(p0){
+    override fun onClick(clickedButton: View?) {
+        when(clickedButton){
             trueButton -> {questionWord.isTrue = true}
             falseButton ->{questionWord.isTrue = false }
 

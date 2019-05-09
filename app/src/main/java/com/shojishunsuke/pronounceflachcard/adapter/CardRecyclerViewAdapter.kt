@@ -104,7 +104,7 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
                             .setMessage("本当に削除しますか？")
                             .setPositiveButton("OK", DialogInterface.OnClickListener { _, _ ->
 
-                                deleteWord(position)
+                                deleteWordFromRealm(position)
 
                             }
                             ).setNegativeButton("CANCEL", null)
@@ -162,7 +162,7 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
     }
 
 
-    private fun deleteWord(position: Int) {
+    private fun deleteWordFromRealm(position: Int) {
 
         realm.executeTransaction {
 

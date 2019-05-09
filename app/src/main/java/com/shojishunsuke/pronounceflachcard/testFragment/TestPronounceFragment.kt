@@ -13,10 +13,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.shojishunsuke.pronounceflachcard.Model.QuestionWord
-import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import com.shojishunsuke.pronounceflachcard.R
-import io.realm.Realm
-import io.realm.RealmResults
 
 class TestPronounceFragment : Fragment() {
 
@@ -120,7 +117,7 @@ class TestPronounceFragment : Fragment() {
         resultButton.setOnClickListener {
             val testResultFragment = TestResultFragment()
 
-            replace(testResultFragment, bundle)
+            replaceForeGround(testResultFragment, bundle)
 
         }
 
@@ -128,7 +125,7 @@ class TestPronounceFragment : Fragment() {
         nextButton.setOnClickListener {
             val testPronounceFragment = TestPronounceFragment()
 
-            replace(testPronounceFragment, bundle)
+            replaceForeGround(testPronounceFragment, bundle)
 
         }
 
@@ -137,7 +134,7 @@ class TestPronounceFragment : Fragment() {
         return layout
     }
 
-    private fun replace(fragment: Fragment, bundle: Bundle) {
+    private fun replaceForeGround(fragment: Fragment, bundle: Bundle) {
         fragment.arguments = bundle
         val fragmentTransAction = fragmentManager!!.beginTransaction()
         fragmentTransAction.addToBackStack("null")
