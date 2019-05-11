@@ -56,18 +56,15 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
     <fragment
             android:name="com.shojishunsuke.pronounceflachcard.fragment.DrawerFragment"
             android:id="@+id/left_drawer"
             android:layout_width="220dp"
-              android:layout_gravity="start"
-              android:choiceMode="singleChoice"
-              android:layout_height="match_parent">
+            android:layout_gravity="start"
+            android:choiceMode="singleChoice"
+            android:layout_height="match_parent">
 
     </fragment>
-
-
 
 
 </androidx.drawerlayout.widget.DrawerLayout>
