@@ -8,9 +8,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.shojishunsuke.pronounceflachcard.Model.QuestionWord
 import com.shojishunsuke.pronounceflachcard.R
-import com.shojishunsuke.pronounceflachcard.Model.WordObject
-import io.realm.Realm
-import io.realm.RealmResults
 
 
 class TestMeaningShowWordFragment:Fragment() {
@@ -23,20 +20,16 @@ class TestMeaningShowWordFragment:Fragment() {
 
         val textView = layout.findViewById<TextView>(R.id.meaningTextView3)
         val key_question_number = resources.getString(R.string.key_question_number)
-        val key_quesiton_words = resources.getString(R.string.key_question_words)
-
+        val key_quesiton_words_list = resources.getString(R.string.key_question_words)
 
         val questionNumber = arguments!!.getInt(key_question_number)
-        val questionWordsList = arguments!!.getSerializable(key_quesiton_words)as ArrayList<QuestionWord>
-
+        val questionWordsList = arguments!!.getSerializable(key_quesiton_words_list)as ArrayList<QuestionWord>
 
         textView.setText(questionWordsList[questionNumber].word)
 
         var bundle = Bundle()
         bundle.putInt(key_question_number,questionNumber)
-        bundle.putSerializable(key_quesiton_words,questionWordsList)
-
-
+        bundle.putSerializable(key_quesiton_words_list,questionWordsList)
 
         textView.setOnClickListener {
             val showAnswerFragment = TestMeaningShowAnswerFragment()
@@ -46,11 +39,7 @@ class TestMeaningShowWordFragment:Fragment() {
             fragmentTransAction.replace(R.id.testMeaningBackGround,showAnswerFragment)
             fragmentTransAction.commit()
 
-
         }
-
-
-
         return layout
     }
 }
