@@ -23,7 +23,6 @@ class TestMeaningActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test_meaning)
-        val key_checked = resources.getString(R.string.key_is_checked_Only)
         val key_question_number = resources.getString(R.string.key_question_number)
         val key_quesiton_words = resources.getString(R.string.key_question_words)
 
@@ -60,7 +59,7 @@ class TestMeaningActivity : AppCompatActivity() {
         }
     }
 
-  private  fun showConfirmDialog() {
+  private fun showConfirmDialog() {
 
         AlertDialog.Builder(this)
             .setMessage("テストを終了しますか？")

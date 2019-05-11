@@ -5,7 +5,7 @@ import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import io.realm.Realm
 import io.realm.RealmResults
 
-class TestManager {
+class TestListProvider {
 
     private val realm = Realm.getDefaultInstance()
     lateinit var testList: RealmResults<WordObject>
@@ -31,8 +31,6 @@ class TestManager {
             testArrayList.add(arrayWord)
         }
 
-
-
         if ( isRandom)
             testArrayList.shuffle()
 
@@ -46,6 +44,4 @@ class TestManager {
         realm.where(WordObject::class.java).findAll().size
     else
         realm.where(WordObject::class.java).equalTo("isDone", true).findAll().size
-
-
 }
