@@ -12,16 +12,16 @@ import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.Model.WordObject
+import com.shojishunsuke.pronounceflachcard.new_arch.presentation.AddWordDialogViewModel
 import io.realm.Realm
 import java.lang.Exception
 
 class AddWordDialogFragment : DialogFragment() {
-    val realm = Realm.getDefaultInstance()
-
 
     lateinit var wordEditText: EditText
     lateinit var meaningEditText: EditText
 
+    private val  addWordDialogViewModel = AddWordDialogViewModel()
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
         var dialog = Dialog(context)
@@ -45,7 +45,10 @@ class AddWordDialogFragment : DialogFragment() {
 
         dialog.findViewById<Button>(R.id.positiveButton).setOnClickListener(View.OnClickListener {
 
-           addWord(wordEditText.text.toString(),meaningEditText.text.toString())
+//           addWord(wordEditText.text.toString(),meaningEditText.text.toString())
+
+//            TODO listNameを渡す
+            addWordDialogViewModel.registerWord(wordEditText.text.toString(),meaningEditText.text.toString(),"")
 
             dismiss()
 
@@ -61,16 +64,5 @@ class AddWordDialogFragment : DialogFragment() {
 
     }
 
-    private fun addWord(editWord: String, editMeaning: String) {
 
-        realm.executeTransaction {
-
-            var wordCard = it.createObject(WordObject::class.java)
-
-            wordCard.word = editWord
-            wordCard.meaning = editMeaning
-
-            it.copyToRealm(wordCard)
-        }
-    }
 }

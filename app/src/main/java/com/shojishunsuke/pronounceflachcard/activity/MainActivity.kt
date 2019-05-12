@@ -7,9 +7,9 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.shojishunsuke.pronounceflachcard.R
@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var drawerToggle: ActionBarDrawerToggle
     private lateinit var newTitle: CharSequence
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -32,31 +31,32 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        val tabLayout: TabLayout = this.findViewById(R.id.tablayout)
-        val viewPager: ViewPager = this.findViewById(R.id.pager)
-        val toolBar: androidx.appcompat.widget.Toolbar = this.findViewById(R.id.toolabar)
+        val tabLayout = findViewById<TabLayout>(R.id.tablayout)
+        val viewPager = findViewById<ViewPager>(R.id.pager)
+        val toolBar = findViewById<Toolbar>(R.id.toolabar)
         setSupportActionBar(toolBar)
 
-
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_word_list))
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_memorization))
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_test))
+        tabLayout.apply {
+            addTab(tabLayout.newTab().setText(R.string.tab_word_list))
+            addTab(tabLayout.newTab().setText(R.string.tab_memorization))
+            addTab(tabLayout.newTab().setText(R.string.tab_test))
+        }
 
         val fragmentAdapter = MyPagerAdapter(supportFragmentManager)
         viewPager.adapter = fragmentAdapter
 
         drawerToggle =
-            object : ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.drawer_open, R.string.drawer_close) {
-                override fun onDrawerClosed(drawerView: View) {
+                object : ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.drawer_open, R.string.drawer_close) {
+                    override fun onDrawerClosed(drawerView: View) {
 
-                    invalidateOptionsMenu()
+                        invalidateOptionsMenu()
+                    }
+
+                    override fun onDrawerOpened(drawerView: View) {
+
+                        invalidateOptionsMenu()
+                    }
                 }
-
-                override fun onDrawerOpened(drawerView: View) {
-
-                    invalidateOptionsMenu()
-                }
-            }
         drawerLayout.addDrawerListener(drawerToggle)
         drawerToggle.syncState()
 

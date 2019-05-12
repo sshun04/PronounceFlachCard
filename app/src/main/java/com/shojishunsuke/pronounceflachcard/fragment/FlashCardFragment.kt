@@ -11,12 +11,17 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import com.shojishunsuke.pronounceflachcard.adapter.CardRecyclerViewAdapter
+import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
+import com.shojishunsuke.pronounceflachcard.new_arch.domain.FlashCardFragmentUsecase
+import com.shojishunsuke.pronounceflachcard.new_arch.presentation.FlashCardFragmentViewModel
 import io.realm.Realm
 import io.realm.RealmResults
 
 class FlashCardFragment : Fragment() {
-    val realm = Realm.getDefaultInstance()
+//    val realm = Realm.getDefaultInstance()
 
+
+   private val viewModel  = FlashCardFragmentViewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val layout = inflater.inflate(R.layout.fragment_flash_card_tab, container, false)
@@ -26,12 +31,15 @@ class FlashCardFragment : Fragment() {
 
         addButton.setImageResource(R.drawable.baseline_add_white_18)
         addButton.setOnClickListener(View.OnClickListener {
-            val addDialog = AddWordDialogFragment()
-            addDialog.show(childFragmentManager,"add_dialog")
+//            val addDialog = AddWordDialogFragment()
+//            addDialog.show(childFragmentManager,"add_dialog")
+
+            viewModel.showAddWordDialogFragment(childFragmentManager)
+
         })
 
 
-        recyclerView.adapter = CardRecyclerViewAdapter(context,read())
+        recyclerView.adapter = CardRecyclerViewAdapter(context,viewModel.getList(" "))
 
         recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
@@ -39,7 +47,7 @@ class FlashCardFragment : Fragment() {
     }
 
 
-  private  fun read(): RealmResults<WordObject> = realm.where(WordObject::class.java).findAll()
+//    private  fun read(): RealmResults<WordObject> = realm.where(WordObject::class.java).findAll()
 
 
 
