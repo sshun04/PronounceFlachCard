@@ -128,6 +128,11 @@ class MemorizeRecyclerViewAdapter(private val context: Context?, val realmResult
 
     }
 
+    override fun onViewRecycled(holder: MemorizeRecyclerViewHolder) {
+        holder.meaningTextView.visibility = View.GONE
+        holder.wordTextView.visibility = View.VISIBLE
+    }
+
     class MemorizeRecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         val wordTextView = view.findViewById<TextView>(R.id.wordMemoTextView)
