@@ -22,16 +22,14 @@ class CardRecyclerViewAdapter(private val context: Context?,private val wordList
         RecyclerView.Adapter<CardRecyclerViewAdapter.RecyclerViewHolder>(), OnDataChangedListener {
 
 
-    var wordString: String = ""
-    var meaningString: String = ""
 
-    val viewModel = CardRecyclerAdapterViewModel(this)
+   private val viewModel = CardRecyclerAdapterViewModel(this)
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
 
         val wordCard = wordList[position]
-        wordString = wordCard!!.word
-        meaningString = wordCard.meaning
+       val wordString = wordCard!!.word
+       val meaningString = wordCard.meaning
 
         holder.wordTextView.setText(wordString)
         holder.wordTextView.setTag(wordCard)
@@ -56,7 +54,7 @@ class CardRecyclerViewAdapter(private val context: Context?,private val wordList
                 when (it.itemId) {
                     R.id.editPop -> {
 
-
+//
                         val detailDialog = AlertDialog.Builder(context)
                                 .setPositiveButton("保存", DialogInterface.OnClickListener { _, _ ->
 
@@ -80,6 +78,9 @@ class CardRecyclerViewAdapter(private val context: Context?,private val wordList
 
                         detailDialog.setView(parentView)
                         detailDialog.show()
+
+
+
                     }
                     R.id.deletePop -> {
 

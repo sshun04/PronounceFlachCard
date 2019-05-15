@@ -1,11 +1,11 @@
 package com.shojishunsuke.pronounceflachcard.new_arch.domain
 
-import com.shojishunsuke.pronounceflachcard.new_arch.data.DatabaseRepository
+import com.shojishunsuke.pronounceflachcard.new_arch.data.RealmDatabaseRepository
 import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
 
-class CardRecyclerAdapaterUsecase(onDataChangedListener: OnDataChangedListener)  {
+class CardRecyclerViewAdapterUseCase(onDataChangedListener: OnDataChangedListener)  {
 
-    val dataRepository = DatabaseRepository(onDataChangedListener)
+   private val dataRepository = RealmDatabaseRepository(onDataChangedListener)
 
     fun editWord(id:String,word:String,meaning:String){
         dataRepository.editWord(id,word,meaning)

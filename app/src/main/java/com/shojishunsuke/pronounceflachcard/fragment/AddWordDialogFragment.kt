@@ -11,44 +11,51 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import com.shojishunsuke.pronounceflachcard.R
-import com.shojishunsuke.pronounceflachcard.Model.WordObject
+import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
 import com.shojishunsuke.pronounceflachcard.new_arch.presentation.AddWordDialogViewModel
-import io.realm.Realm
-import java.lang.Exception
 
 class AddWordDialogFragment : DialogFragment() {
 
-    lateinit var wordEditText: EditText
-    lateinit var meaningEditText: EditText
 
-    private val  addWordDialogViewModel = AddWordDialogViewModel()
+
+    lateinit var addWordDialogViewModel: AddWordDialogViewModel
+
+
+    companion object {
+        fun newInstance(onDataChangedListener: OnDataChangedListener): AddWordDialogFragment {
+            val dialog = AddWordDialogFragment()
+//            TODO 単語登録に必要なlistNameを渡す
+            dialog.addWordDialogViewModel = AddWordDialogViewModel(onDataChangedListener)
+            return dialog
+        }
+    }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
-        var dialog = Dialog(context)
+        val dialog = Dialog(context)
 
         dialog.window!!.requestFeature(Window.FEATURE_NO_TITLE)
-        dialog.window!!.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN)
+        dialog.window!!.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN)
 
         try {
 
             dialog.setContentView(R.layout.dialog_fragment_add_word)
 
-        }catch (e :Exception){
+        } catch (e: Exception) {
             e.stackTrace
         }
 
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        wordEditText = dialog.findViewById(R.id.wordEditText)
-        meaningEditText = dialog.findViewById(R.id.meaningEditText)
+       val wordEditText = dialog.findViewById<EditText>(R.id.wordEditText)
+       val meaningEditText = dialog.findViewById<EditText>(R.id.meaningEditText)
 
 
         dialog.findViewById<Button>(R.id.positiveButton).setOnClickListener(View.OnClickListener {
 
-//           addWord(wordEditText.text.toString(),meaningEditText.text.toString())
 
-//            TODO listNameを渡す
-            addWordDialogViewModel.registerWord(wordEditText.text.toString(),meaningEditText.text.toString(),"")
+//            TODO 単語登録に必要なlistNameを渡す
+            addWordDialogViewModel.registerWord(wordEditText.text.toString(), meaningEditText.text.toString(), "")
 
             dismiss()
 

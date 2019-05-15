@@ -1,9 +1,11 @@
 package com.shojishunsuke.pronounceflachcard.new_arch.presentation
 
-import com.shojishunsuke.pronounceflachcard.new_arch.domain.AddWordDialogUsecase
+import androidx.lifecycle.ViewModel
+import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
+import com.shojishunsuke.pronounceflachcard.new_arch.domain.AddWordDialogUseCase
 
-class AddWordDialogViewModel {
-    private val addWordDialogUsecase = AddWordDialogUsecase()
+class AddWordDialogViewModel(onDataChangedListener: OnDataChangedListener):ViewModel() {
+    private val addWordDialogUsecase = AddWordDialogUseCase(onDataChangedListener)
 
     fun registerWord(word:String,meaning:String,listName : String){
 

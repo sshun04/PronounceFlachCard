@@ -2,6 +2,7 @@ package com.shojishunsuke.pronounceflachcard.activity
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.KeyEvent
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
@@ -52,6 +53,7 @@ class TestPronounceActivity : AppCompatActivity() {
         fragmentTransAction.addToBackStack(null)
         fragmentTransAction.replace(R.id.testPronounceBackground, testPronounceFragment)
         fragmentTransAction.commit()
+
 
     }
 

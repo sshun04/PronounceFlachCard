@@ -1,16 +1,16 @@
 package com.shojishunsuke.pronounceflachcard.new_arch.domain
 
 import com.shojishunsuke.pronounceflachcard.Model.WordObject
-import com.shojishunsuke.pronounceflachcard.new_arch.data.DatabaseRepository
+import com.shojishunsuke.pronounceflachcard.new_arch.data.RealmDatabaseRepository
 import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
 
-class FlashCardFragmentUsecase:OnDataChangedListener{
+class FlashCardFragmentUseCase(onDataChangedListener: OnDataChangedListener):WordListProvider{
 
-   private val databaseRepository  = DatabaseRepository(this)
+   private val databaseRepository  = RealmDatabaseRepository(onDataChangedListener)
 
 
 
-    fun provideSortedList(listName:String):List<WordObject>{
+   override fun provideWordList(listName:String):List<WordObject>{
         val wholeList = databaseRepository.getWholeWords()
         var sortedList = mutableListOf<WordObject>()
         wholeList.forEach {
@@ -22,7 +22,5 @@ class FlashCardFragmentUsecase:OnDataChangedListener{
         return  sortedList
     }
 
-    override fun onDataChanged() {
 
-    }
 }

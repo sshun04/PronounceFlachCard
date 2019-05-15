@@ -10,7 +10,7 @@ class TestListProvider {
     private val realm = Realm.getDefaultInstance()
     lateinit var testList: RealmResults<WordObject>
 
-    fun createTestList(testFormat: Int, testRange: Int, isRandom:Boolean, listSize: Int): ArrayList<QuestionWord> {
+    fun createTestList(testFormat: Int, testRange: Int, isRandom: Boolean, listSize: Int): ArrayList<QuestionWord> {
 
         var testArrayList = ArrayList<QuestionWord>()
 
@@ -31,7 +31,7 @@ class TestListProvider {
             testArrayList.add(arrayWord)
         }
 
-        if ( isRandom)
+        if (isRandom)
             testArrayList.shuffle()
 
 
