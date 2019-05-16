@@ -21,7 +21,7 @@ class WordDetailDialogFragment:DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
-        var dialog = Dialog(context)
+        var dialog = Dialog(context!!)
 
         dialog.window!!.requestFeature(Window.FEATURE_NO_TITLE)
         dialog.window!!.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN)

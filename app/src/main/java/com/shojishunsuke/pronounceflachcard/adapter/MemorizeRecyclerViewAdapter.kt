@@ -26,7 +26,7 @@ class MemorizeRecyclerViewAdapter(private val context: Context?, val realmResult
 
     override fun onBindViewHolder(holder: MemorizeRecyclerViewHolder, position: Int) {
         val wordCard = realmResults[position]
-        wordString = wordCard!!.word
+        wordString = wordCard.word
         meaningString = wordCard.meaning
 
         holder.wordTextView.setText(wordString)

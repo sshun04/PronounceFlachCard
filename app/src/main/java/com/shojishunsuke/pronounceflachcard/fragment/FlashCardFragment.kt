@@ -17,7 +17,7 @@ import com.shojishunsuke.pronounceflachcard.new_arch.presentation.FlashCardFragm
 import com.shojishunsuke.pronounceflachcard.new_arch.presentation.SharedViewModel
 
 class FlashCardFragment : Fragment(), OnDataChangedListener {
-//    val realm = Realm.getDefaultInstance()
+
 
 
     private val flashCardViewModel = FlashCardFragmentViewModel(this)
@@ -37,8 +37,6 @@ class FlashCardFragment : Fragment(), OnDataChangedListener {
 
         addButton.setImageResource(R.drawable.baseline_add_white_18)
         addButton.setOnClickListener(View.OnClickListener {
-            //            val addDialog = AddWordDialogFragment()
-//            addDialog.show(childFragmentManager,"add_dialog")
 
             flashCardViewModel.setupAddWordDialogFragment(childFragmentManager)
 
@@ -46,7 +44,7 @@ class FlashCardFragment : Fragment(), OnDataChangedListener {
 
         val sharedViewModel = ViewModelProviders.of(this).get(SharedViewModel::class.java)
 
-        sharedViewModel.currentTilte.observe(this, Observer { title ->
+        sharedViewModel.title.observe(this, Observer { title ->
             //           リサイクラビューのアイテムを更新
             recyclerView.adapter = CardRecyclerViewAdapter(context, flashCardViewModel.getWordsList(title))
         })
@@ -59,7 +57,7 @@ class FlashCardFragment : Fragment(), OnDataChangedListener {
     override fun onDataChanged() {
 
     }
-    //    private  fun read(): RealmResults<WordObject> = realm.where(WordObject::class.java).findAll()
+
 
 
 }

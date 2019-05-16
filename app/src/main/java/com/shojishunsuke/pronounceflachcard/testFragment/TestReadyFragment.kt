@@ -30,7 +30,6 @@ class TestReadyFragment : Fragment(), AdapterView.OnItemSelectedListener {
         val rangeGroup = layout.findViewById<RadioGroup>(R.id.radioGroupRange)
         val numberSpinner = layout.findViewById<androidx.appcompat.widget.AppCompatSpinner>(R.id.numberDropDown)
         val startButton = layout.findViewById<MaterialButton>(R.id.testStartButton)
-        val numberpicker = layout.findViewById<NumberPicker>(R.id.numberPicker)
         val randomSwitch = layout.findViewById<androidx.appcompat.widget.SwitchCompat>(R.id.randomSwitch)
 
 
@@ -55,7 +54,7 @@ class TestReadyFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 testList.add(i)
             }
 
-            arrayAdapter = ArrayAdapter(context, R.layout.support_simple_spinner_dropdown_item, testList)
+            arrayAdapter = ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item, testList)
             numberSpinner.adapter = arrayAdapter
 
 

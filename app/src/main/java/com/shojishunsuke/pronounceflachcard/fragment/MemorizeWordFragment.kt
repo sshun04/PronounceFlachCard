@@ -34,7 +34,7 @@ class MemorizeWordFragment : Fragment(), OnDataChangedListener {
 
         val sharedViewModel = ViewModelProviders.of(this).get(SharedViewModel::class.java)
 
-        sharedViewModel.currentTilte.observe(this, Observer { title ->
+        sharedViewModel.title.observe(this, Observer { title ->
             //           リサイクラビューのアイテムを更新
             recyclerView.adapter = MemorizeRecyclerViewAdapter(context, memorizeViewModel.getWordsList(title))
 

@@ -49,15 +49,14 @@ class DeleteWordDialogFragment :DialogFragment(){
 
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        val wordEditText = dialog.findViewById<EditText>(R.id.wordEditText)
-        val meaningEditText = dialog.findViewById<EditText>(R.id.meaningEditText)
+
 
 
         dialog.findViewById<Button>(R.id.positiveButton).setOnClickListener(View.OnClickListener {
 
 
 
-            viewModel.deleteWord(id)
+            viewModel.deleteWord(id!!)
 
             dismiss()
 
