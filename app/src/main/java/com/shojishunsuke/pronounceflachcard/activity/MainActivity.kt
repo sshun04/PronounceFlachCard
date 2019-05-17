@@ -10,10 +10,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.shojishunsuke.pronounceflachcard.R
+import com.shojishunsuke.pronounceflachcard.SharedViewModelFactory
 import com.shojishunsuke.pronounceflachcard.adapter.MyPagerAdapter
+import com.shojishunsuke.pronounceflachcard.new_arch.presentation.SharedViewModel
 
 
 class MainActivity : AppCompatActivity() {
@@ -21,15 +25,21 @@ class MainActivity : AppCompatActivity() {
     private lateinit var drawerToggle: ActionBarDrawerToggle
     private lateinit var newTitle: CharSequence
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+
+
+
 
         newTitle = title
         drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout).apply {
             setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START)
         }
-
 
         val tabLayout = findViewById<TabLayout>(R.id.tablayout)
         val viewPager = findViewById<ViewPager>(R.id.pager)

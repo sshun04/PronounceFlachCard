@@ -25,6 +25,7 @@ class DrawerRecyclerViewAdapter(private val fragmentActivity: FragmentActivity,p
         holder.titleTextView.setOnClickListener {
 
             sharedViewModel.select(titleList[position])
+            sharedViewModel.saveLastTitle()
 
         }
 

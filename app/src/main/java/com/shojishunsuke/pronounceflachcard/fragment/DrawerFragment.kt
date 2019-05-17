@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.shojishunsuke.pronounceflachcard.R
+import com.shojishunsuke.pronounceflachcard.SharedViewModelFactory
 import com.shojishunsuke.pronounceflachcard.adapter.DrawerRecyclerViewAdapter
 import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
 import com.shojishunsuke.pronounceflachcard.new_arch.presentation.DrawerViewModel
@@ -37,7 +38,7 @@ class DrawerFragment:Fragment(),OnDataChangedListener {
         }
 
         val sharedViewModel = activity?.run {
-            ViewModelProviders.of(this).get(SharedViewModel::class.java)
+            ViewModelProviders.of(this,SharedViewModelFactory(context!!)).get(SharedViewModel::class.java)
         }?: throw Exception("Invalid Activity")
 
 

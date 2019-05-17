@@ -6,7 +6,13 @@ import com.shojishunsuke.pronounceflachcard.new_arch.domain.TestReadyUseCase
 class TestReadyViewModel {
     private val testReadyUseCase = TestReadyUseCase()
 
-    fun getWordsList(listName:String):List<WordObject>{
+    fun getWordsList(listName: String): List<WordObject> {
         return testReadyUseCase.provideTestWordList(listName)
+    }
+
+
+    fun setupTestActivity() {
+
+
     }
 }
