@@ -10,22 +10,24 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModelProviders
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
-import com.shojishunsuke.pronounceflachcard.new_arch.presentation.AddWordDialogViewModel
+import com.shojishunsuke.pronounceflachcard.new_arch.presentation.RegisterWordDialogViewModel
+import com.shojishunsuke.pronounceflachcard.new_arch.presentation.SharedViewModel
 
-class AddWordDialogFragment : DialogFragment() {
+class RegisterWordDialogFragment : DialogFragment() {
 
 
 
-    lateinit var addWordDialogViewModel: AddWordDialogViewModel
+    lateinit var registerWordDialogViewModel: RegisterWordDialogViewModel
 
 
     companion object {
-        fun newInstance(onDataChangedListener: OnDataChangedListener): AddWordDialogFragment {
-            val dialog = AddWordDialogFragment()
-//            TODO 単語登録に必要なlistNameを渡す
-            dialog.addWordDialogViewModel = AddWordDialogViewModel(onDataChangedListener)
+        fun newInstance(onDataChangedListener: OnDataChangedListener): RegisterWordDialogFragment {
+            val dialog = RegisterWordDialogFragment()
+
+            dialog.registerWordDialogViewModel = RegisterWordDialogViewModel(onDataChangedListener)
             return dialog
         }
     }
@@ -53,9 +55,11 @@ class AddWordDialogFragment : DialogFragment() {
 
         dialog.findViewById<Button>(R.id.positiveButton).setOnClickListener(View.OnClickListener {
 
+            val sharedViewModel = activity?.run {
+                ViewModelProviders.of(this).get(SharedViewModel::class.java)
+            }?: throw Exception("Invalid Activity")
 
-//            TODO 単語登録に必要なlistNameを渡す
-            addWordDialogViewModel.registerWord(wordEditText.text.toString(), meaningEditText.text.toString(), "")
+            registerWordDialogViewModel.registerWord(wordEditText.text.toString(), meaningEditText.text.toString(),sharedViewModel.title)
 
             dismiss()
 

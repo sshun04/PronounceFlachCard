@@ -15,20 +15,26 @@ import com.shojishunsuke.pronounceflachcard.adapter.CardRecyclerViewAdapter
 import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
 import com.shojishunsuke.pronounceflachcard.new_arch.presentation.FlashCardFragmentViewModel
 import com.shojishunsuke.pronounceflachcard.new_arch.presentation.SharedViewModel
+import kotlinx.android.synthetic.main.fragment_flash_card_tab.*
 
 class FlashCardFragment : Fragment(), OnDataChangedListener {
 
 
+    lateinit var recyclerView: RecyclerView
+    lateinit var sharedViewModel: SharedViewModel
 
     private val flashCardViewModel = FlashCardFragmentViewModel(this)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val layout = inflater.inflate(R.layout.fragment_flash_card_tab, container, false)
 
-        val recyclerView = layout.findViewById<RecyclerView>(R.id.recyclerview).apply {
+        sharedViewModel = activity?.run {
+            ViewModelProviders.of(this).get(SharedViewModel::class.java)
+        }?: throw Exception("Invalid Activity")
 
-            //        todo  SharedPreferenceからlistNameを取得する
-            adapter = CardRecyclerViewAdapter(context, flashCardViewModel.getWordsList(" "))
+       recyclerView = layout.findViewById<RecyclerView>(R.id.recyclerview).apply {
+
+            adapter = CardRecyclerViewAdapter(context, flashCardViewModel.getWordsList(sharedViewModel.title))
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
 
@@ -42,9 +48,8 @@ class FlashCardFragment : Fragment(), OnDataChangedListener {
 
         })
 
-        val sharedViewModel = ViewModelProviders.of(this).get(SharedViewModel::class.java)
 
-        sharedViewModel.title.observe(this, Observer { title ->
+        sharedViewModel.currentTitle.observe(this, Observer { title ->
             //           リサイクラビューのアイテムを更新
             recyclerView.adapter = CardRecyclerViewAdapter(context, flashCardViewModel.getWordsList(title))
         })
@@ -55,7 +60,7 @@ class FlashCardFragment : Fragment(), OnDataChangedListener {
     }
 
     override fun onDataChanged() {
-
+       recyclerView.adapter  = CardRecyclerViewAdapter(context, flashCardViewModel.getWordsList(sharedViewModel.title))
     }
 
 

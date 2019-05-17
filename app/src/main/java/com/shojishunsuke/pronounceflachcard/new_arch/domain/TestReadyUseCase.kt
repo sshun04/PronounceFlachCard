@@ -9,7 +9,7 @@ class TestReadyUseCase : OnDataChangedListener {
 
     //   maybe-later ここでテストに必要な単語だけにソートする
     fun provideTestWordList(listName: String): List<WordObject> {
-        val wholeList = databaseRepository.getWholeWords()
+        val wholeList = databaseRepository.loadWholeWords()
         var sortedList = mutableListOf<WordObject>()
         wholeList.forEach {
             if (it.listName == listName) {

@@ -12,12 +12,12 @@ import java.util.*
 import kotlin.coroutines.coroutineContext
 
 class MemorizeRecyclerViewAdapterViewModel(onDataChangedListener: OnDataChangedListener,context: Context) :ViewModel(),TextToSpeech.OnInitListener{
-   private val usecCase = MemorizeRecyclerViewAdapterUseCase(onDataChangedListener)
+   private val useCase = MemorizeRecyclerViewAdapterUseCase(onDataChangedListener)
 
     private val textToSpeech = TextToSpeech(context,this)
 
     fun switchCheckedState(id:String,isChecked:Boolean){
-        usecCase.switchCheckedState(id,isChecked)
+        useCase.switchCheckedState(id,isChecked)
     }
 
     fun readOut(){
@@ -30,8 +30,6 @@ class MemorizeRecyclerViewAdapterViewModel(onDataChangedListener: OnDataChangedL
                 textToSpeech.setLanguage(Locale.ENGLISH)
                 textToSpeech.setSpeechRate(1.0f)
                 textToSpeech.setPitch(1.0f)
-
-
 
             }else{
                Log.d("TextToSpeech.onInit","Failed")

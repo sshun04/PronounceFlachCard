@@ -14,7 +14,7 @@ class RealmDatabaseRepository(onDataChangedListener: OnDataChangedListener) : Lo
         realm.addChangeListener { onDataChangedListener.onDataChanged() }
     }
 
-    override fun getWholeWords(): List<WordObject> {
+    override fun loadWholeWords(): List<WordObject> {
         return realm.where(WordObject::class.java).findAll().toList()
     }
 
@@ -78,7 +78,7 @@ class RealmDatabaseRepository(onDataChangedListener: OnDataChangedListener) : Lo
 
     }
 
-    override fun getTitleList(): List<FlashCardTitle> {
+    override fun loadTitleList(): List<FlashCardTitle> {
 
         return realm.where(FlashCardTitle::class.java).findAll().toList()
     }

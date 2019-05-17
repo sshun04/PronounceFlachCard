@@ -6,17 +6,13 @@ import androidx.lifecycle.ViewModel
 import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
 import com.shojishunsuke.pronounceflachcard.new_arch.domain.SharedUseCase
 
-class SharedViewModel(onDataChangedListener: OnDataChangedListener) : ViewModel() {
-    private val listNames: List<String>
-    private val currentTitle = MutableLiveData<String>()
-    private val useCase = SharedUseCase(onDataChangedListener)
+class SharedViewModel : ViewModel() {
+    val currentTitle = MutableLiveData<String>()
 
-
-    init {
-        listNames = useCase.getWholeTitleList()
+    fun select(title:String){
+        currentTitle.value = title
     }
 
-    val title: LiveData<String> get() = this.title
-
+    val title:String get() = currentTitle.value!!
 
 }

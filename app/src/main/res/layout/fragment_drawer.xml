@@ -7,6 +7,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:background="@android:color/white"
+            android:layout_marginHorizontal="16dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -31,16 +32,40 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ListView
-                android:id="@+id/flashCardsList"
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/titleList"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/header"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_width="0dp"
-                android:layout_height="0dp">
+                android:layout_height="wrap_content"/>
+        <View
+                android:id="@+id/divider"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/titleList"
+                android:background="@android:color/darker_gray"
+                android:layout_width="0dp"
+                android:layout_height="1dp"/>
 
-        </ListView>
+        <LinearLayout
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+
+            <com.google.android.material.button.MaterialButton
+                    android:text="アンパンマン"
+                    android:gravity="start"
+                    android:textSize="12dp"
+                    android:id="@+id/registerButton"
+                    style="@style/Base.Widget.AppCompat.Button.Borderless"
+                    app:backgroundTint="@android:color/transparent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+        </LinearLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

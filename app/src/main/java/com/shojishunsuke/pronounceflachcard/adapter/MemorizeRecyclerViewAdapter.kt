@@ -1,22 +1,19 @@
 package com.shojishunsuke.pronounceflachcard.adapter
 
 import android.content.Context
-import android.speech.tts.TextToSpeech
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
 import com.shojishunsuke.pronounceflachcard.new_arch.presentation.MemorizeRecyclerViewAdapterViewModel
-import java.util.*
 
-class MemorizeRecyclerViewAdapter(private val context: Context?, val realmResults: List<WordObject>) :
+class MemorizeRecyclerViewAdapter(private val context: Context?,private val wordList: List<WordObject>) :
     RecyclerView.Adapter<MemorizeRecyclerViewAdapter.MemorizeRecyclerViewHolder>(),OnDataChangedListener {
 
     private val viewModel = MemorizeRecyclerViewAdapterViewModel(this,context!!)
@@ -25,7 +22,7 @@ class MemorizeRecyclerViewAdapter(private val context: Context?, val realmResult
     var meaningString: String = ""
 
     override fun onBindViewHolder(holder: MemorizeRecyclerViewHolder, position: Int) {
-        val wordCard = realmResults[position]
+        val wordCard = wordList[position]
         wordString = wordCard.word
         meaningString = wordCard.meaning
 
@@ -55,12 +52,12 @@ class MemorizeRecyclerViewAdapter(private val context: Context?, val realmResult
     }
 
     override fun onDataChanged() {
-
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {
 
-        return realmResults.count()
+        return wordList.count()
 
     }
 

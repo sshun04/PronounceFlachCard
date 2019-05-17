@@ -10,8 +10,8 @@ class FlashCardFragmentUseCase(onDataChangedListener: OnDataChangedListener):Wor
 
 
 
-   override fun provideWordList(listName:String):List<WordObject>{
-        val wholeList = databaseRepository.getWholeWords()
+   override fun provideWordList(listName:String):MutableList<WordObject>{
+        val wholeList = databaseRepository.loadWholeWords()
         var sortedList = mutableListOf<WordObject>()
         wholeList.forEach {
             if (it.listName ==  listName){

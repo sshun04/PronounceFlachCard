@@ -8,7 +8,7 @@ import com.shojishunsuke.pronounceflachcard.new_arch.domain.MemorizeFragmentUseC
 class MemorizeFragmentViewModel(onDataChangedListener: OnDataChangedListener):ViewModel(){
     private val  useCase = MemorizeFragmentUseCase(onDataChangedListener)
 
-    fun getWordsList(listName:String):List<WordObject>{
+    fun getWordsList(listName:String):MutableList<WordObject>{
         return useCase.provideWordList(listName)
     }
 

@@ -17,8 +17,9 @@ import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
 import com.shojishunsuke.pronounceflachcard.new_arch.presentation.CardRecyclerAdapterViewModel
+import com.shojishunsuke.pronounceflachcard.new_arch.presentation.SharedViewModel
 
-class CardRecyclerViewAdapter(private val context: Context?,private val wordList: List<WordObject>) :
+class CardRecyclerViewAdapter(private val context: Context?,private val wordList: MutableList<WordObject>) :
         RecyclerView.Adapter<CardRecyclerViewAdapter.RecyclerViewHolder>(), OnDataChangedListener {
 
 
@@ -28,7 +29,7 @@ class CardRecyclerViewAdapter(private val context: Context?,private val wordList
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
 
         val wordCard = wordList[position]
-       val wordString = wordCard!!.word
+       val wordString = wordCard.word
        val meaningString = wordCard.meaning
 
         holder.wordTextView.setText(wordString)
@@ -68,7 +69,7 @@ class CardRecyclerViewAdapter(private val context: Context?,private val wordList
                                 )
                                 .create()
 
-                        val parentView = detailDialog.getLayoutInflater().inflate(R.layout.fragment_word_edit, null)
+                        val parentView = detailDialog.layoutInflater.inflate(R.layout.fragment_word_edit, null)
 
                         wordEditText = parentView.findViewById(R.id.wordEditText)
                         wordEditText.setText(wordCard.word)
@@ -91,6 +92,7 @@ class CardRecyclerViewAdapter(private val context: Context?,private val wordList
                                 .setPositiveButton("OK", DialogInterface.OnClickListener { _, _ ->
 
                                     viewModel.deleteWord(wordCard.id)
+                                    wordList.removeAt(position)
                                 }
                                 ).setNegativeButton("CANCEL", null)
                                 .show()

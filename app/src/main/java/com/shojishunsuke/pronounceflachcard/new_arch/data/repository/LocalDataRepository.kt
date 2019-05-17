@@ -5,11 +5,11 @@ import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import io.realm.RealmResults
 
 interface LocalDataRepository {
-    fun getWholeWords():List<WordObject>
+    fun loadWholeWords():List<WordObject>
     fun deleteWord(id :String)
     fun editWord(id: String,word: String,meaning: String)
     fun registerWord(word:String,meaning:String,listName :String)
     fun switchWhetherChecked(id: String,isChecked:Boolean)
     fun registerListTitle(title: String)
-    fun getTitleList():List<FlashCardTitle>
+    fun loadTitleList():List<FlashCardTitle>
 }
