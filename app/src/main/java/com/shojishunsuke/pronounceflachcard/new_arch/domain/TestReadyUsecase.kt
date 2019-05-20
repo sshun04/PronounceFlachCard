@@ -4,7 +4,7 @@ import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import com.shojishunsuke.pronounceflachcard.new_arch.data.RealmDatabaseRepository
 import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
 
-class TestReadyUseCase : OnDataChangedListener {
+class TestReadyUsecase : OnDataChangedListener {
    private val databaseRepository = RealmDatabaseRepository(this)
 
     //   maybe-later ここでテストに必要な単語だけにソートする

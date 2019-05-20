@@ -5,13 +5,13 @@ import androidx.lifecycle.ViewModel
 import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import com.shojishunsuke.pronounceflachcard.fragment.RegisterWordDialogFragment
 import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
-import com.shojishunsuke.pronounceflachcard.new_arch.domain.FlashCardFragmentUseCase
+import com.shojishunsuke.pronounceflachcard.new_arch.domain.FlashCardFragmentUsecase
 
 class FlashCardFragmentViewModel(private val onDataChangedListener: OnDataChangedListener) :ViewModel(){
 
 
 
-   private val flashCardFragmentUsecase = FlashCardFragmentUseCase(onDataChangedListener)
+   private val flashCardFragmentUsecase = FlashCardFragmentUsecase(onDataChangedListener)
 
     fun getWordsList(listName :String):MutableList<WordObject>{
         return flashCardFragmentUsecase.provideWordList(listName)

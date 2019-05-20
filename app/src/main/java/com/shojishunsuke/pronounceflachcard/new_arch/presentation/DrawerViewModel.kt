@@ -6,11 +6,11 @@ import android.content.DialogInterface
 import android.widget.EditText
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
-import com.shojishunsuke.pronounceflachcard.new_arch.domain.DrawerUseCase
+import com.shojishunsuke.pronounceflachcard.new_arch.domain.DrawerUsecase
 
 class DrawerViewModel(onDataChangedListener: OnDataChangedListener) {
 
-    private val useCase = DrawerUseCase(onDataChangedListener)
+    private val useCase = DrawerUsecase(onDataChangedListener)
 
     lateinit var registerEditText: EditText
 

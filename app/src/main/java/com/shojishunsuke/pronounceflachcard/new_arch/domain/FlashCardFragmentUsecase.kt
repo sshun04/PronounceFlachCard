@@ -4,8 +4,10 @@ import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import com.shojishunsuke.pronounceflachcard.new_arch.data.RealmDatabaseRepository
 import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
 
-class MemorizeFragmentUseCase(onDataChangedListener: OnDataChangedListener):WordListProvider {
-    private val databaseRepository = RealmDatabaseRepository(onDataChangedListener)
+class FlashCardFragmentUsecase(onDataChangedListener: OnDataChangedListener):WordListProvider{
+
+   private val databaseRepository  = RealmDatabaseRepository(onDataChangedListener)
+
 
 
    override fun provideWordList(listName:String):MutableList<WordObject>{

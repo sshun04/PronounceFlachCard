@@ -3,16 +3,13 @@ package com.shojishunsuke.pronounceflachcard.new_arch.presentation
 import android.content.Context
 import android.speech.tts.TextToSpeech
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
-import com.shojishunsuke.pronounceflachcard.new_arch.domain.MemorizeFragmentUseCase
-import com.shojishunsuke.pronounceflachcard.new_arch.domain.MemorizeRecyclerViewAdapterUseCase
+import com.shojishunsuke.pronounceflachcard.new_arch.domain.MemorizeRecyclerViewAdapterUsecase
 import java.util.*
-import kotlin.coroutines.coroutineContext
 
 class MemorizeRecyclerViewAdapterViewModel(onDataChangedListener: OnDataChangedListener,context: Context) :ViewModel(),TextToSpeech.OnInitListener{
-   private val useCase = MemorizeRecyclerViewAdapterUseCase(onDataChangedListener)
+   private val useCase = MemorizeRecyclerViewAdapterUsecase(onDataChangedListener)
 
     private val textToSpeech = TextToSpeech(context,this)
 

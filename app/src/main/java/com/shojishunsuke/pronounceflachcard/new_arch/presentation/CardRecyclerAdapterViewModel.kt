@@ -2,12 +2,12 @@ package com.shojishunsuke.pronounceflachcard.new_arch.presentation
 
 import androidx.lifecycle.ViewModel
 import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
-import com.shojishunsuke.pronounceflachcard.new_arch.domain.CardRecyclerViewAdapterUseCase
+import com.shojishunsuke.pronounceflachcard.new_arch.domain.CardRecyclerViewAdapterUsecase
 
 class CardRecyclerAdapterViewModel(private val onDataChangedListener: OnDataChangedListener):ViewModel() {
 
 
-   private val cardRecyclerAdapaterUsecase   = CardRecyclerViewAdapterUseCase (onDataChangedListener)
+   private val cardRecyclerAdapaterUsecase   = CardRecyclerViewAdapterUsecase (onDataChangedListener)
 
     fun editWord(id:String,word:String,meaning:String){
         cardRecyclerAdapaterUsecase.editWord(id,word,meaning)
