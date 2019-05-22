@@ -59,7 +59,16 @@ class TestMeaningActivity : AppCompatActivity() {
         }
     }
 
-  private fun showConfirmDialog() {
+
+
+    override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
+        if (event!!.keyCode == KeyEvent.KEYCODE_BACK) {
+            showConfirmDialog()
+        }
+        return super.dispatchKeyEvent(event)
+    }
+
+    private fun showConfirmDialog() {
 
         AlertDialog.Builder(this)
             .setMessage("テストを終了しますか？")
@@ -72,14 +81,6 @@ class TestMeaningActivity : AppCompatActivity() {
             .show()
 
     }
-
-    override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
-        if (event!!.keyCode == KeyEvent.KEYCODE_BACK) {
-            showConfirmDialog()
-        }
-        return super.dispatchKeyEvent(event)
-    }
-
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when (item?.itemId) {
             android.R.id.home -> {

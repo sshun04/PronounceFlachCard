@@ -3,36 +3,35 @@ package com.shojishunsuke.pronounceflachcard
 import com.shojishunsuke.pronounceflachcard.Model.QuestionWord
 import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import io.realm.Realm
-import io.realm.RealmResults
 
-class TestListProvider {
+class TestListProvider(private val wordsList: List<WordObject>) {
 
-    private val realm = Realm.getDefaultInstance()
-    lateinit var testList: RealmResults<WordObject>
+    lateinit var testList: MutableList<WordObject>
 
-    fun createTestList(testFormat: Int, testRange: Int, isRandom: Boolean, listSize: Int): ArrayList<QuestionWord> {
+    fun createTestList( listSize:Int,testRange: Int, isRandom: Boolean): ArrayList<QuestionWord> {
 
         var testArrayList = ArrayList<QuestionWord>()
 
-        when (testRange) {
-            R.id.allWords -> testList = realm.where(WordObject::class.java).findAll()
-            R.id.checkedWord -> testList = realm.where(WordObject::class.java).equalTo("isDone", true).findAll()
-            else -> {
+        if (testRange == R.id.checkedWord) {
+            wordsList.forEach { wordObject ->
+                if (wordObject.isDone) testList.add(wordObject)
+            }
+        }else{
+            wordsList.forEach { wordObject ->
+                testList.add(wordObject)
             }
         }
+
 
         for (word in testList) {
             val arrayWord = QuestionWord()
             arrayWord.meaning = word.meaning
             arrayWord.word = word.word
 
-            arrayWord.isPronounce = (testFormat == R.id.pronounce)
-
             testArrayList.add(arrayWord)
         }
 
-        if (isRandom)
-            testArrayList.shuffle()
+        if (isRandom) testArrayList.shuffle()
 
 
         val differ = testArrayList.size - listSize
@@ -40,8 +39,4 @@ class TestListProvider {
         return testArrayList.dropLast(differ) as ArrayList<QuestionWord>
     }
 
-    fun getCurrentListSize(range: Int): Int = if (range == R.id.allWords)
-        realm.where(WordObject::class.java).findAll().size
-    else
-        realm.where(WordObject::class.java).equalTo("isDone", true).findAll().size
 }

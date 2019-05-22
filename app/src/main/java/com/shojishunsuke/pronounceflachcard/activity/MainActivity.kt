@@ -10,14 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.shojishunsuke.pronounceflachcard.R
-import com.shojishunsuke.pronounceflachcard.SharedViewModelFactory
 import com.shojishunsuke.pronounceflachcard.adapter.MyPagerAdapter
-import com.shojishunsuke.pronounceflachcard.new_arch.presentation.SharedViewModel
 
 
 class MainActivity : AppCompatActivity() {

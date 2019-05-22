@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -13,12 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.shojishunsuke.pronounceflachcard.R
-import com.shojishunsuke.pronounceflachcard.SharedViewModelFactory
+import com.shojishunsuke.pronounceflachcard.new_arch.factory.SharedViewModelFactory
 import com.shojishunsuke.pronounceflachcard.adapter.DrawerRecyclerViewAdapter
 import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
 import com.shojishunsuke.pronounceflachcard.new_arch.presentation.DrawerViewModel
 import com.shojishunsuke.pronounceflachcard.new_arch.presentation.SharedViewModel
-import kotlinx.android.synthetic.main.fragment_word_edit.*
 
 class DrawerFragment:Fragment(),OnDataChangedListener {
 
@@ -38,7 +36,9 @@ class DrawerFragment:Fragment(),OnDataChangedListener {
         }
 
         val sharedViewModel = activity?.run {
-            ViewModelProviders.of(this,SharedViewModelFactory(context!!)).get(SharedViewModel::class.java)
+            ViewModelProviders.of(this,
+                SharedViewModelFactory(context!!)
+            ).get(SharedViewModel::class.java)
         }?: throw Exception("Invalid Activity")
 
 

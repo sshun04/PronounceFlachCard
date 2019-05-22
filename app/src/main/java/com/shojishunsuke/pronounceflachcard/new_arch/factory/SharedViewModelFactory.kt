@@ -1,4 +1,4 @@
-package com.shojishunsuke.pronounceflachcard
+package com.shojishunsuke.pronounceflachcard.new_arch.factory
 
 import android.content.Context
 import androidx.lifecycle.ViewModel

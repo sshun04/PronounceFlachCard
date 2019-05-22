@@ -9,10 +9,10 @@ class SharedViewModel(context: Context) : ViewModel() {
    val currentTitle = MutableLiveData<String>()
 
     private val key_title = "LAST_TITle"
-     val sharedPreferences:SharedPreferences
+    val sharedPreferences:SharedPreferences
 
     init {
-        sharedPreferences = context.getSharedPreferences("a",Context.MODE_PRIVATE)
+       sharedPreferences = context.getSharedPreferences("a",Context.MODE_PRIVATE)
         currentTitle.value = sharedPreferences.getString(key_title,"")
     }
 
