@@ -18,7 +18,6 @@ class DrawerUsecase(onDataChangedListener: OnDataChangedListener) {
         databaseRepository.registerListTitle(title)
     }
     fun deleteListTitle(title: String){
-
         databaseRepository.deleteList(title)
     }
 }

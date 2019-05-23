@@ -103,9 +103,9 @@ class CardRecyclerViewAdapter(private val context: Context?,private val wordList
 
                 return@setOnMenuItemClickListener true
             }
+
             popupMenu.inflate(R.menu.popup_menu)
             popupMenu.show()
-
 
         }
 

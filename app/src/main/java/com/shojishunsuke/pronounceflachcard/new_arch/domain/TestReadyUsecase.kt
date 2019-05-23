@@ -10,7 +10,7 @@ class TestReadyUsecase : OnDataChangedListener {
 
     fun getCurrentListSize(listTitle: String, isChecked: Boolean): Int {
 
-        val wordList = databaseRepository.loadListWords(listTitle)
+        val wordList = databaseRepository.loadWordList(listTitle)
         var questionNumber = 0
 
 
@@ -34,7 +34,7 @@ class TestReadyUsecase : OnDataChangedListener {
         testRange: Int,
         isRandom: Boolean
     ): ArrayList<QuestionWord> {
-        val realmListList = databaseRepository.loadListWords(listTitle)
+        val realmListList = databaseRepository.loadWordList(listTitle)
 
         val testListProvider = TestListProvider(realmListList)
 

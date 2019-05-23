@@ -12,8 +12,7 @@ class FlashCardFragmentUsecase(onDataChangedListener: OnDataChangedListener):Wor
 
 
    override fun provideWordList(listName:String):RealmResults<WordObject>{
-
-       return databaseRepository.loadListWords(listName)
+       return databaseRepository.loadWordList(listName)
     }
 
 

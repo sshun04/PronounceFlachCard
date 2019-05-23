@@ -3,7 +3,6 @@ package com.shojishunsuke.pronounceflachcard.new_arch.presentation
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModel
 import com.shojishunsuke.pronounceflachcard.Model.QuestionWord
-import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.testFragment.TestResultFragment
 
 class TestSharedViewModel(private val testList: ArrayList<QuestionWord>) : ViewModel() {
@@ -11,42 +10,42 @@ class TestSharedViewModel(private val testList: ArrayList<QuestionWord>) : ViewM
     private var currentNumber = 0
 
     val question: String get() = testList[currentNumber].word
-    val answer  : String get() = testList[currentNumber].meaning
-    var hasNextQuestion  = true
+    val answer: String get() = testList[currentNumber].meaning
+    var hasNextQuestion = true
 
 
-    fun onAnswered(isTrue: Boolean, recognizedWord: String,completionListener:TestCompletionListener) {
+    fun onAnswered(isTrue: Boolean, recognizedWord: String, completionListener: TestCompletionListener) {
 
         testList[currentNumber].apply {
             this.isTrue = isTrue
-            if (isTrue){
+            if (isTrue) {
                 this.recognizedWord = question
-            }else{
+            } else {
                 this.recognizedWord = recognizedWord
             }
 
         }
         currentNumber++
 
-        if (currentNumber == testList.size){
+        if (currentNumber == testList.size) {
             completionListener.onCompleteTest()
         }
 
 
     }
 
-    fun onAnswered(isTrue: Boolean,completionListener: TestCompletionListener){
+    fun onAnswered(isTrue: Boolean, completionListener: TestCompletionListener) {
         testList[currentNumber].isTrue = isTrue
         currentNumber++
 
-        if (currentNumber == testList.size){
+        if (currentNumber == testList.size) {
 
             hasNextQuestion = false
             completionListener.onCompleteTest()
         }
     }
 
-    fun setupResultFragment(supportFragmentManager:FragmentManager,backgroundResource:Int){
+    fun setupResultFragment(supportFragmentManager: FragmentManager, backgroundResource: Int) {
         val resultFragment = TestResultFragment()
 
         val fragmentTransAction = supportFragmentManager.beginTransaction()
@@ -56,8 +55,11 @@ class TestSharedViewModel(private val testList: ArrayList<QuestionWord>) : ViewM
 
     }
 
-    interface TestCompletionListener{
+    fun getTotalResult(): ArrayList<QuestionWord> = testList
+
+
+    interface TestCompletionListener {
         fun onCompleteTest()
     }
-    fun getTotalResult(): ArrayList<QuestionWord> = testList
+
 }
