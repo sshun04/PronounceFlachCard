@@ -34,7 +34,7 @@ class RegisterWordDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
-        val dialog = Dialog(context)
+        val dialog = Dialog(context!!)
 
         dialog.window!!.requestFeature(Window.FEATURE_NO_TITLE)
         dialog.window!!.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN)

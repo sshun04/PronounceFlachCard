@@ -46,7 +46,7 @@ class RealmDatabaseRepository(onDataChangedListener: OnDataChangedListener) : Lo
             wordCard.id = UUID.randomUUID().toString()
             wordCard.word = word
             wordCard.meaning = meaning
-            wordCard.listName = listName
+            wordCard.listTitle = listName
 
             it.copyToRealm(wordCard)
 
@@ -82,6 +82,16 @@ class RealmDatabaseRepository(onDataChangedListener: OnDataChangedListener) : Lo
 
         return realm.where(FlashCardTitle::class.java).findAll().toList()
     }
+
+    override fun deleteList(listTitle: String) {
+
+        realm.executeTransaction {
+            val list = it.where(WordObject::class.java).equalTo("listTitle",listTitle).findAll()
+            list.deleteAllFromRealm()
+        }
+    }
+
+
 
 
 }

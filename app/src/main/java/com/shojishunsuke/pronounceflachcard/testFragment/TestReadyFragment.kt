@@ -19,7 +19,7 @@ class TestReadyFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private var testFormat = -1
     private var testRange = -1
-    private var listSize = 0
+    private var listSize = 1
     private var isRandom = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -31,12 +31,12 @@ class TestReadyFragment : Fragment(), AdapterView.OnItemSelectedListener {
         val randomSwitch = layout.findViewById<androidx.appcompat.widget.SwitchCompat>(R.id.randomSwitch)
 
         val viewModel = ViewModelProviders.of(this).get(TestReadyViewModel::class.java)
-        val sharedViewModel = ViewModelProviders.of(this).get(SharedViewModel::class.java)
+      
+       val sharedViewModel = activity?.run {
+            ViewModelProviders.of(this).get(SharedViewModel::class.java)
+        }?: throw Exception("Invalid Activity")
 
         randomSwitch.setOnCheckedChangeListener { _, boolean -> isRandom = boolean }
-
-
-        val key_quesiton_words = resources.getString(R.string.key_question_words)
 
         formatGroup.setOnCheckedChangeListener { _, i -> testFormat = i }
         rangeGroup.setOnCheckedChangeListener { _, i ->
@@ -47,7 +47,7 @@ class TestReadyFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
             val testList = ArrayList<Int>()
 
-            for (i in 1..sizeLimit) {
+            for (i in 1 until sizeLimit) {
                 testList.add(i)
             }
 
@@ -61,6 +61,8 @@ class TestReadyFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
 
         startButton.setOnClickListener {
+
+
 
             if (testRange != -1 && testFormat != -1) {
 

@@ -4,9 +4,9 @@ import com.shojishunsuke.pronounceflachcard.new_arch.data.RealmDatabaseRepositor
 import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
 
 class DrawerUsecase(onDataChangedListener: OnDataChangedListener) {
-    val databaseRepository = RealmDatabaseRepository(onDataChangedListener)
+    private val databaseRepository = RealmDatabaseRepository(onDataChangedListener)
 
-    fun  loadWholeTitleList():List<String>{
+    fun  loadWholeTitleList():MutableList<String>{
         val titleList  = mutableListOf<String>()
         databaseRepository.loadTitleList().forEach {
             titleList.add(it.title)
@@ -14,7 +14,11 @@ class DrawerUsecase(onDataChangedListener: OnDataChangedListener) {
         return titleList
     }
 
-    fun regitsterNewListTitle(title:String){
+    fun registerNewListTitle(title:String){
         databaseRepository.registerListTitle(title)
+    }
+    fun deleteListTitle(title: String){
+
+        databaseRepository.deleteList(title)
     }
 }

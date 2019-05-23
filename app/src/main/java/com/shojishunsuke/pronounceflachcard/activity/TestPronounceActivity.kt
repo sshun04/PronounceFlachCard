@@ -26,8 +26,7 @@ class TestPronounceActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test_pronounce)
 
-       val key_question_words = resources.getString(R.string.key_question_words)
-        val key_question_number = resources.getString(R.string.key_question_number)
+
 
         val toolbar = this.findViewById<Toolbar>(R.id.testPronounceToolBar)
         setSupportActionBar(toolbar)
@@ -44,21 +43,6 @@ class TestPronounceActivity : AppCompatActivity() {
 
         val testPronounceViewModel = ViewModelProviders.of(this).get(TestPronounceActivityViewModel::class.java)
         testPronounceViewModel.setupFragment(supportFragmentManager)
-//        val bundle = Bundle()
-//
-//        bundle.putInt(key_question_number,questionNumber)
-//        bundle.putSerializable(key_question_words,questionWords)
-
-//        val testPronounceFragment = TestPronounceFragment()
-////        testPronounceFragment.arguments = bundle
-//
-//        val fragmentTransAction = supportFragmentManager.beginTransaction()
-//        fragmentTransAction.addToBackStack(null)
-//        fragmentTransAction.replace(R.id.testPronounceBackground, testPronounceFragment)
-//        fragmentTransAction.commit()
-
-
-
 
 
     }

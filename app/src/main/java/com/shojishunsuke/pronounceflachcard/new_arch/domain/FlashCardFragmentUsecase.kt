@@ -14,7 +14,7 @@ class FlashCardFragmentUsecase(onDataChangedListener: OnDataChangedListener):Wor
         val wholeList = databaseRepository.loadWholeWords()
         var sortedList = mutableListOf<WordObject>()
         wholeList.forEach {
-            if (it.listName ==  listName){
+            if (it.listTitle ==  listName){
                 sortedList.add(it)
             }
         }

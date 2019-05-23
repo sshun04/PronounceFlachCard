@@ -8,14 +8,10 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import com.shojishunsuke.pronounceflachcard.Model.QuestionWord
-import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.new_arch.presentation.TestSharedViewModel
-import io.realm.Realm
-import io.realm.RealmResults
 
-class TestMeaningShowAnswerFragment : Fragment(), View.OnClickListener,TestSharedViewModel.TestCompletionListener {
+class TestMeaningShowAnswerFragment : Fragment(), View.OnClickListener, TestSharedViewModel.TestCompletionListener {
 
     lateinit var textView: TextView
     lateinit var trueButton: Button
@@ -31,7 +27,10 @@ class TestMeaningShowAnswerFragment : Fragment(), View.OnClickListener,TestShare
         trueButton = layout.findViewById(R.id.trueButton)
         falseButton = layout.findViewById(R.id.falseButton)
 
-     sharedViewModel = ViewModelProviders.of(this).get(TestSharedViewModel::class.java)
+        sharedViewModel = activity?.run {
+            ViewModelProviders.of(this).get(TestSharedViewModel::class.java)
+        }?: throw Exception("Invalid Activity")
+
 
         textView.setText(sharedViewModel.answer)
 
@@ -42,14 +41,29 @@ class TestMeaningShowAnswerFragment : Fragment(), View.OnClickListener,TestShare
     }
 
     override fun onClick(clickedButton: View?) {
-        when(clickedButton){
-            trueButton -> {sharedViewModel.onAnswered(true,this)}
-            falseButton ->{sharedViewModel.onAnswered(false,this)}
+        when (clickedButton) {
+            trueButton -> {
+                sharedViewModel.onAnswered(true, this)
+            }
+            falseButton -> {
+                sharedViewModel.onAnswered(false, this)
+            }
 
         }
+
+        if (sharedViewModel.hasNextQuestion) {
+
+            val testMeaningShowWordFragment = TestMeaningShowWordFragment()
+            val fragmentTransAction = fragmentManager!!.beginTransaction()
+            fragmentTransAction.addToBackStack(null)
+            fragmentTransAction.replace(R.id.testMeaningBackGround, testMeaningShowWordFragment)
+            fragmentTransAction.commit()
+        }
+
+
     }
 
     override fun onCompleteTest() {
-        sharedViewModel.setupResultFragment(fragmentManager!!)
+        sharedViewModel.setupResultFragment(fragmentManager!!,R.id.testMeaningBackGround)
     }
 }

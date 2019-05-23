@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
         val tabLayout = findViewById<TabLayout>(R.id.tablayout)
         val viewPager = findViewById<ViewPager>(R.id.pager)
-        val toolBar = findViewById<Toolbar>(R.id.toolabar)
+        val toolBar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolBar)
 
         tabLayout.apply {

@@ -38,7 +38,7 @@ class MemorizeRecyclerViewAdapter(private val context: Context?,private val word
 
 
         holder.pronounceButton.setOnClickListener {
-            viewModel.readOut()
+            viewModel.readOut(wordString)
            }
 
         holder.wordTextView.setTag(wordCard)
@@ -52,7 +52,7 @@ class MemorizeRecyclerViewAdapter(private val context: Context?,private val word
     }
 
     override fun onDataChanged() {
-        notifyDataSetChanged()
+//        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {

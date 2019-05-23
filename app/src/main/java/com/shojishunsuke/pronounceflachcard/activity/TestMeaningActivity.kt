@@ -7,15 +7,17 @@ import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModelProviders
 import com.shojishunsuke.pronounceflachcard.Model.QuestionWord
 import com.shojishunsuke.pronounceflachcard.R
+import com.shojishunsuke.pronounceflachcard.new_arch.factory.TestSharedViewModelFactory
+import com.shojishunsuke.pronounceflachcard.new_arch.presentation.TestSharedViewModel
 import com.shojishunsuke.pronounceflachcard.testFragment.TestMeaningShowWordFragment
 
 
 class TestMeaningActivity : AppCompatActivity() {
 
 
-    private var questionNumber = 0
 
 
 
@@ -23,8 +25,7 @@ class TestMeaningActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test_meaning)
-        val key_question_number = resources.getString(R.string.key_question_number)
-        val key_quesiton_words = resources.getString(R.string.key_question_words)
+
 
         val toolbar = this.findViewById<Toolbar>(R.id.testMeaningToolBar)
         setSupportActionBar(toolbar)
@@ -34,29 +35,24 @@ class TestMeaningActivity : AppCompatActivity() {
         supportActionBar!!.setHomeButtonEnabled(true)
         supportActionBar!!.setTitle("意味テスト")
 
-
-      val questionWordsList = intent.getSerializableExtra(key_quesiton_words)
-
-
-        var bundle = Bundle()
-        bundle.putInt(key_question_number, questionNumber)
-        bundle.putSerializable(key_quesiton_words, questionWordsList)
+        val questionWords = intent.getSerializableExtra("list") as ArrayList<QuestionWord>
 
 
-        if (savedInstanceState == null) {
 
-            val showWordFragment = TestMeaningShowWordFragment()
-            showWordFragment.arguments = bundle
+        val testSharedViewModel = ViewModelProviders.of(this,
+            TestSharedViewModelFactory(questionWords)
+        ).get(TestSharedViewModel::class.java)
+
+        val testMeaningShowWordFragment = TestMeaningShowWordFragment()
+
+        val fragmentTransAction = supportFragmentManager.beginTransaction()
+        fragmentTransAction.addToBackStack(null)
+        fragmentTransAction.replace(R.id.testMeaningBackGround,testMeaningShowWordFragment)
+        fragmentTransAction.commit()
 
 
-            val fragmentTransaction = supportFragmentManager.beginTransaction()
-            fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.replace(
-                R.id.testMeaningBackGround,
-                showWordFragment
-            )
-            fragmentTransaction.commit()
-        }
+
+
     }
 
 

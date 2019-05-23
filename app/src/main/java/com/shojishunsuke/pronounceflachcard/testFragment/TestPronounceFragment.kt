@@ -28,8 +28,9 @@ class TestPronounceFragment : Fragment(),TestSharedViewModel.TestCompletionListe
         confirmTextView = layout.findViewById(R.id.textView1)
 
         fragmentViewModel = ViewModelProviders.of(this).get(TestPronounceFragmentViewModel::class.java)
-        sharedViewModel = ViewModelProviders.of(this).get(TestSharedViewModel::class.java)
-
+        sharedViewModel = activity?.run {
+            ViewModelProviders.of(this).get(TestSharedViewModel::class.java)
+        }?: throw Exception("Invalid Activity")
 
         nextButton.setOnClickListener {
             setupQuestion()
@@ -69,7 +70,7 @@ class TestPronounceFragment : Fragment(),TestSharedViewModel.TestCompletionListe
 
         resultButton.setOnClickListener {
 
-            sharedViewModel.setupResultFragment(fragmentManager!!)
+            sharedViewModel.setupResultFragment(fragmentManager!!,R.id.testPronounceBackground)
         }
     }
 }

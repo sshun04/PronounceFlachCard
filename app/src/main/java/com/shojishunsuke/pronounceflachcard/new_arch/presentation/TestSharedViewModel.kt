@@ -12,6 +12,7 @@ class TestSharedViewModel(private val testList: ArrayList<QuestionWord>) : ViewM
 
     val question: String get() = testList[currentNumber].word
     val answer  : String get() = testList[currentNumber].meaning
+    var hasNextQuestion  = true
 
 
     fun onAnswered(isTrue: Boolean, recognizedWord: String,completionListener:TestCompletionListener) {
@@ -39,16 +40,18 @@ class TestSharedViewModel(private val testList: ArrayList<QuestionWord>) : ViewM
         currentNumber++
 
         if (currentNumber == testList.size){
+
+            hasNextQuestion = false
             completionListener.onCompleteTest()
         }
     }
 
-    fun setupResultFragment(supportFragmentManager:FragmentManager){
+    fun setupResultFragment(supportFragmentManager:FragmentManager,backgroundResource:Int){
         val resultFragment = TestResultFragment()
 
         val fragmentTransAction = supportFragmentManager.beginTransaction()
         fragmentTransAction.addToBackStack(null)
-        fragmentTransAction.replace(R.id.testPronounceBackground, resultFragment)
+        fragmentTransAction.replace(backgroundResource, resultFragment)
         fragmentTransAction.commit()
 
     }

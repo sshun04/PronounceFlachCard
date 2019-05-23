@@ -4,17 +4,23 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.widget.EditText
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.shojishunsuke.pronounceflachcard.R
+import com.shojishunsuke.pronounceflachcard.adapter.DrawerRecyclerViewAdapter
 import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
 import com.shojishunsuke.pronounceflachcard.new_arch.domain.DrawerUsecase
 
-class DrawerViewModel(onDataChangedListener: OnDataChangedListener) {
+class DrawerViewModel:ViewModel(),OnDataChangedListener {
 
-    private val useCase = DrawerUsecase(onDataChangedListener)
+    private val useCase = DrawerUsecase(this)
 
     lateinit var registerEditText: EditText
 
-    fun loadTitleList(): List<String> {
+    val currentAdapter: MutableLiveData<DrawerRecyclerViewAdapter> = MutableLiveData()
+
+    fun loadTitleList(): MutableList<String> {
 
         return useCase.loadWholeTitleList()
 
@@ -22,17 +28,19 @@ class DrawerViewModel(onDataChangedListener: OnDataChangedListener) {
 
     private fun registerNewTitle(title: String) {
 
-        return useCase.regitsterNewListTitle(title)
+        return useCase.registerNewListTitle(title)
 
     }
 
-    fun popupRegisterDialogFragment(context: Context) {
+    fun popupRegisterDialogFragment(context: Context,fragmentActivity: FragmentActivity) {
 
 
         val registerDialog = AlertDialog.Builder(context)
             .setPositiveButton("登録", DialogInterface.OnClickListener { _, _ ->
 
                 registerNewTitle(registerEditText.text.toString())
+                updateRecyclerView(context,fragmentActivity)
+
             })
             .setNegativeButton(
                 "キャンセル",
@@ -46,6 +54,20 @@ class DrawerViewModel(onDataChangedListener: OnDataChangedListener) {
 
         registerDialog.setView(parentView)
         registerDialog.show()
+
+    }
+    fun updateRecyclerView(context: Context,activity: FragmentActivity){
+        val adapter = DrawerRecyclerViewAdapter(activity,context,loadTitleList())
+        currentAdapter.value = adapter
+    }
+
+    fun deleteList(title:String){
+        useCase.deleteListTitle(title)
+    }
+
+
+
+    override fun onDataChanged() {
 
     }
 }

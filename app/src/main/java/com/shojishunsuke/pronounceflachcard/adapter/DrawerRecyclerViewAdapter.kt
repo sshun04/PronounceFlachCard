@@ -13,7 +13,7 @@ import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
 import com.shojishunsuke.pronounceflachcard.new_arch.presentation.SharedViewModel
 
-class DrawerRecyclerViewAdapter(private val fragmentActivity: FragmentActivity,private val context: Context, private val titleList: List<String>) :
+class DrawerRecyclerViewAdapter(private val fragmentActivity: FragmentActivity,private val context: Context, private val titleList: MutableList<String>) :
     RecyclerView.Adapter<DrawerRecyclerViewAdapter.TitleViewHolder>(), OnDataChangedListener {
 
     override fun onBindViewHolder(holder: TitleViewHolder, position: Int) {

@@ -21,18 +21,18 @@ import com.shojishunsuke.pronounceflachcard.new_arch.presentation.TestSharedView
 
 class TestResultFragment : Fragment() {
 
-    lateinit var resultProgress: ProgressBar
+    lateinit  var resultProgress: ProgressBar
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val layout = inflater.inflate(R.layout.fragment_test_result, container, false)
 
         val textView = layout.findViewById<TextView>(R.id.resultTextView)
-        val endButton = layout.findViewById<Button>(R.id.endButton)
 
         val recyclerView = layout.findViewById<RecyclerView>(R.id.resultRecyclerView)
 
-        val sharedViewModel = ViewModelProviders.of(this).get(TestSharedViewModel::class.java)
-
+        val sharedViewModel = activity?.run {
+            ViewModelProviders.of(this).get(TestSharedViewModel::class.java)
+        }?: throw Exception("Invalid Activity")
         val resultWords = sharedViewModel.getTotalResult()
 
         recyclerView.adapter = TestRecyclerViewAdapter(context, resultWords)
@@ -52,10 +52,7 @@ class TestResultFragment : Fragment() {
             max = resultWords.size*100
 
         }
-
-
-
-        onHogeProgress(trueWordsNumber*100)
+        onSetProgress(trueWordsNumber*100)
 
        textView.setText("$trueWordsNumber/${resultWords.size}")
 
@@ -63,7 +60,7 @@ class TestResultFragment : Fragment() {
         return layout
     }
 
-    private fun onHogeProgress(progress :Int){
+    private fun onSetProgress(progress :Int){
 
        val handler =Handler()
         handler.postDelayed(Runnable{

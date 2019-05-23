@@ -7,31 +7,15 @@ import com.shojishunsuke.pronounceflachcard.new_arch.domain.CardRecyclerViewAdap
 class CardRecyclerAdapterViewModel(private val onDataChangedListener: OnDataChangedListener):ViewModel() {
 
 
-   private val cardRecyclerAdapaterUsecase   = CardRecyclerViewAdapterUsecase (onDataChangedListener)
+   private val cardRecyclerAdapterUsecase   = CardRecyclerViewAdapterUsecase (onDataChangedListener)
 
     fun editWord(id:String,word:String,meaning:String){
-        cardRecyclerAdapaterUsecase.editWord(id,word,meaning)
+        cardRecyclerAdapterUsecase.editWord(id,word,meaning)
     }
 
     fun  deleteWord(id: String){
-        cardRecyclerAdapaterUsecase.deleteWord(id)
+        cardRecyclerAdapterUsecase.deleteWord(id)
     }
-
-
-//    できればCustomDialogFragmentに任せたい
-//    RecyclerViewAdapterはFragmentManagerを持っていないから難し
-
-//    fun setUpEditWordDialog(childFragmentManager: FragmentManager,wordId: String){
-//        val editDialog = EditWordDialogFragment.newInstance(onDataChangedListener,wordId)
-//        editDialog.show(childFragmentManager,"edit_dialog")
-//    }
-//
-//    fun setUpDeleteDialog(childFragmentManager: FragmentManager,wordId: String){
-//
-//        val deleteDialog = DeleteWordDialogFragment.newInstance(onDataChangedListener,wordId)
-//        deleteDialog.show(childFragmentManager,"delete_dialog")
-//
-//    }
 
 
 }

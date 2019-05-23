@@ -12,4 +12,5 @@ interface LocalDataRepository {
     fun switchWhetherChecked(id: String,isChecked:Boolean)
     fun registerListTitle(title: String)
     fun loadTitleList():List<FlashCardTitle>
+    fun deleteList(listTitle:String)
 }

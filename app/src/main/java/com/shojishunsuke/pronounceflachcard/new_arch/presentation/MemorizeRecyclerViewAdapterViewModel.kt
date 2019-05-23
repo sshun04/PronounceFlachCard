@@ -17,14 +17,14 @@ class MemorizeRecyclerViewAdapterViewModel(onDataChangedListener: OnDataChangedL
         useCase.switchCheckedState(id,isChecked)
     }
 
-    fun readOut(){
-
+    fun readOut(word:String){
+        textToSpeech.speak(word,TextToSpeech.QUEUE_FLUSH,null,null)
     }
 
     override fun onInit(p0: Int) {
         if (p0 == TextToSpeech.SUCCESS){
             if (textToSpeech.isLanguageAvailable(Locale.ENGLISH)>= TextToSpeech.LANG_AVAILABLE) {
-                textToSpeech.setLanguage(Locale.ENGLISH)
+                textToSpeech.language = Locale.ENGLISH
                 textToSpeech.setSpeechRate(1.0f)
                 textToSpeech.setPitch(1.0f)
 

@@ -12,7 +12,7 @@ class MemorizeFragmentUsecase(onDataChangedListener: OnDataChangedListener):Word
         val wholeList = databaseRepository.loadWholeWords()
         var sortedList = mutableListOf<WordObject>()
         wholeList.forEach {
-            if (it.listName ==  listName){
+            if (it.listTitle ==  listName){
                 sortedList.add(it)
             }
         }

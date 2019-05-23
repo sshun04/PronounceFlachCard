@@ -1,16 +1,16 @@
-package com.shojishunsuke.pronounceflachcard
+package com.shojishunsuke.pronounceflachcard.utility
 
 import com.shojishunsuke.pronounceflachcard.Model.QuestionWord
 import com.shojishunsuke.pronounceflachcard.Model.WordObject
-import io.realm.Realm
+import com.shojishunsuke.pronounceflachcard.R
 
 class TestListProvider(private val wordsList: List<WordObject>) {
 
-    lateinit var testList: MutableList<WordObject>
+     val testList: MutableList<WordObject> = mutableListOf()
 
     fun createTestList( listSize:Int,testRange: Int, isRandom: Boolean): ArrayList<QuestionWord> {
 
-        var testArrayList = ArrayList<QuestionWord>()
+        val testArrayList = ArrayList<QuestionWord>()
 
         if (testRange == R.id.checkedWord) {
             wordsList.forEach { wordObject ->
@@ -22,21 +22,27 @@ class TestListProvider(private val wordsList: List<WordObject>) {
             }
         }
 
+        if (isRandom) testList.shuffle()
 
-        for (word in testList) {
+//        for (word in testList) {
+//            val arrayWord = QuestionWord()
+//            arrayWord.meaning = word.meaning
+//            arrayWord.word = word.word
+//
+//            testArrayList.add(arrayWord)
+//        }
+//
+        for (i in 0 until listSize){
             val arrayWord = QuestionWord()
-            arrayWord.meaning = word.meaning
-            arrayWord.word = word.word
+            arrayWord.word = testList[i].word
+            arrayWord.meaning = testList[i].meaning
 
             testArrayList.add(arrayWord)
         }
 
-        if (isRandom) testArrayList.shuffle()
 
 
-        val differ = testArrayList.size - listSize
-
-        return testArrayList.dropLast(differ) as ArrayList<QuestionWord>
+       return  testArrayList
     }
 
 }
