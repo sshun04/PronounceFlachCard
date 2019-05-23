@@ -6,6 +6,7 @@ import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import com.shojishunsuke.pronounceflachcard.fragment.RegisterWordDialogFragment
 import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
 import com.shojishunsuke.pronounceflachcard.new_arch.domain.FlashCardFragmentUsecase
+import io.realm.RealmResults
 
 class FlashCardFragmentViewModel(private val onDataChangedListener: OnDataChangedListener) :ViewModel(){
 
@@ -13,7 +14,7 @@ class FlashCardFragmentViewModel(private val onDataChangedListener: OnDataChange
 
    private val flashCardFragmentUsecase = FlashCardFragmentUsecase(onDataChangedListener)
 
-    fun getWordsList(listName :String):MutableList<WordObject>{
+    fun getWordsList(listName :String):RealmResults<WordObject>{
         return flashCardFragmentUsecase.provideWordList(listName)
     }
 

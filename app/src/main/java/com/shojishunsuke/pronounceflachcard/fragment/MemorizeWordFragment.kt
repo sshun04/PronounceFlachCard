@@ -26,17 +26,20 @@ class MemorizeWordFragment : Fragment(), OnDataChangedListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val layout = inflater.inflate(R.layout.fragment_memorize_word_tab, container, false)
-        recyclerView = layout.findViewById<RecyclerView>(R.id.memorizeRecyclerView).apply {
-            //    todo  SharedPreferenceからlistNameを取ってくる
-            adapter = MemorizeRecyclerViewAdapter(context, memorizeViewModel.getWordsList(""))
-            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
-        }
-       sharedViewModel = activity?.run {
+
+        sharedViewModel = activity?.run {
             ViewModelProviders.of(this).get(SharedViewModel::class.java)
         }?: throw Exception("Invalid Activity")
 
-        sharedViewModel.currentTitle.observe(this, Observer { title ->
+        recyclerView = layout.findViewById<RecyclerView>(R.id.memorizeRecyclerView).apply {
+
+            adapter = MemorizeRecyclerViewAdapter(context, memorizeViewModel.getWordsList(sharedViewModel.title))
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+
+        }
+
+        sharedViewModel.liveDataTitle.observe(this, Observer { title ->
             //           リサイクラビューのアイテムを更新
             recyclerView.adapter = MemorizeRecyclerViewAdapter(context, memorizeViewModel.getWordsList(title))
 
@@ -47,9 +50,7 @@ class MemorizeWordFragment : Fragment(), OnDataChangedListener {
 
 
     override fun onDataChanged() {
-
-        recyclerView.adapter = MemorizeRecyclerViewAdapter(context, memorizeViewModel.getWordsList(sharedViewModel.title))
-
+//        recyclerView.adapter = MemorizeRecyclerViewAdapter(context, memorizeViewModel.getWordsList(sharedViewModel.title))
     }
 
 

@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content">
 
             <com.google.android.material.button.MaterialButton
-                    android:text="アンパンマン"
+                    android:text="単語帳を作成"
                     android:layout_marginLeft="16dp"
                     android:gravity="start"
                     android:textSize="12dp"

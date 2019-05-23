@@ -5,6 +5,7 @@ import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.LocalDataRepository
 import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
 import io.realm.Realm
+import io.realm.RealmResults
 import java.util.*
 
 class RealmDatabaseRepository(onDataChangedListener: OnDataChangedListener) : LocalDataRepository {
@@ -14,8 +15,8 @@ class RealmDatabaseRepository(onDataChangedListener: OnDataChangedListener) : Lo
         realm.addChangeListener { onDataChangedListener.onDataChanged() }
     }
 
-    override fun loadWholeWords(): List<WordObject> {
-        return realm.where(WordObject::class.java).findAll().toList()
+    override fun loadListWords(listTitle: String): RealmResults<WordObject> {
+        return realm.where(WordObject::class.java).equalTo("listTitle",listTitle).findAll()
     }
 
     override fun deleteWord(id: String) {

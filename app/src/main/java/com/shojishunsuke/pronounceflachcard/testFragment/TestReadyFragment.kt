@@ -43,7 +43,7 @@ class TestReadyFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
             testRange = i
 
-            val sizeLimit = viewModel.getCurrentListSize(testRange)
+            val sizeLimit = viewModel.getCurrentListSize(sharedViewModel.title,testRange)
 
             val testList = ArrayList<Int>()
 

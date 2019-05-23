@@ -15,7 +15,6 @@ import com.shojishunsuke.pronounceflachcard.adapter.CardRecyclerViewAdapter
 import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
 import com.shojishunsuke.pronounceflachcard.new_arch.presentation.FlashCardFragmentViewModel
 import com.shojishunsuke.pronounceflachcard.new_arch.presentation.SharedViewModel
-import kotlinx.android.synthetic.main.fragment_flash_card_tab.*
 
 class FlashCardFragment : Fragment(), OnDataChangedListener {
 
@@ -30,15 +29,13 @@ class FlashCardFragment : Fragment(), OnDataChangedListener {
 
         sharedViewModel = activity?.run {
             ViewModelProviders.of(this).get(SharedViewModel::class.java)
-        }?: throw Exception("Invalid Activity")
+        } ?: throw Exception("Invalid Activity")
 
-       recyclerView = layout.findViewById<RecyclerView>(R.id.recyclerview).apply {
-
+        recyclerView = layout.findViewById<RecyclerView>(R.id.recyclerview).apply {
             adapter = CardRecyclerViewAdapter(context, flashCardViewModel.getWordsList(sharedViewModel.title))
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-
-
         }
+
         val addButton = layout.findViewById<FloatingActionButton>(R.id.addwordbutton)
 
         addButton.setImageResource(R.drawable.baseline_add_white_18)
@@ -49,9 +46,10 @@ class FlashCardFragment : Fragment(), OnDataChangedListener {
         })
 
 
-        sharedViewModel.currentTitle.observe(this, Observer { title ->
+        sharedViewModel.liveDataTitle.observe(this, Observer { title ->
             //           リサイクラビューのアイテムを更新
             recyclerView.adapter = CardRecyclerViewAdapter(context, flashCardViewModel.getWordsList(title))
+
         })
 
 
@@ -59,10 +57,7 @@ class FlashCardFragment : Fragment(), OnDataChangedListener {
         return layout
     }
 
-    override fun onDataChanged() {
-       recyclerView.adapter  = CardRecyclerViewAdapter(context, flashCardViewModel.getWordsList(sharedViewModel.title))
-    }
-
+    override fun onDataChanged() {}
 
 
 }

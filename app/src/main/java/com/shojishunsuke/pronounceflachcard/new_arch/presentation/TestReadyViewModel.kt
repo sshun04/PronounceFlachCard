@@ -12,9 +12,9 @@ class TestReadyViewModel : ViewModel() {
 
     private val testReadyUsecase = TestReadyUsecase()
 
-    fun getCurrentListSize(testRange: Int): Int {
+    fun getCurrentListSize(listTitle: String,testRange: Int): Int {
         val isChecked = testRange == R.id.checkedWord
-        return testReadyUsecase.getCurrentListSize(isChecked)
+        return testReadyUsecase.getCurrentListSize(listTitle,isChecked)
     }
 
 

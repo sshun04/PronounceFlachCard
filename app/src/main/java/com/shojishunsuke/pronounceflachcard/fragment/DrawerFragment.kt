@@ -48,7 +48,7 @@ class DrawerFragment : Fragment() {
 
 
 
-        sharedViewModel.currentTitle.observe(this, Observer { title ->
+        sharedViewModel.liveDataTitle.observe(this, Observer { title ->
             headerTextView.text = title
         })
 

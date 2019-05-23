@@ -18,8 +18,9 @@ import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
 import com.shojishunsuke.pronounceflachcard.new_arch.presentation.CardRecyclerAdapterViewModel
 import com.shojishunsuke.pronounceflachcard.new_arch.presentation.SharedViewModel
+import io.realm.RealmResults
 
-class CardRecyclerViewAdapter(private val context: Context?,private val wordList: MutableList<WordObject>) :
+class CardRecyclerViewAdapter(private val context: Context?,private val wordList: RealmResults<WordObject>) :
         RecyclerView.Adapter<CardRecyclerViewAdapter.RecyclerViewHolder>(), OnDataChangedListener {
 
 
@@ -29,7 +30,7 @@ class CardRecyclerViewAdapter(private val context: Context?,private val wordList
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
 
         val wordCard = wordList[position]
-       val wordString = wordCard.word
+       val wordString = wordCard!!.word
        val meaningString = wordCard.meaning
 
         holder.wordTextView.setText(wordString)
@@ -55,7 +56,6 @@ class CardRecyclerViewAdapter(private val context: Context?,private val wordList
                 when (it.itemId) {
                     R.id.editPop -> {
 
-//
                         val detailDialog = AlertDialog.Builder(context)
                                 .setPositiveButton("保存", DialogInterface.OnClickListener { _, _ ->
 
@@ -92,7 +92,8 @@ class CardRecyclerViewAdapter(private val context: Context?,private val wordList
                                 .setPositiveButton("OK", DialogInterface.OnClickListener { _, _ ->
 
                                     viewModel.deleteWord(wordCard.id)
-                                    wordList.removeAt(position)
+                                    notifyItemRemoved(position)
+
                                 }
                                 ).setNegativeButton("CANCEL", null)
                                 .show()
@@ -145,9 +146,7 @@ class CardRecyclerViewAdapter(private val context: Context?,private val wordList
 
 
 
-    override fun onDataChanged() {
-        notifyDataSetChanged()
-    }
+    override fun onDataChanged() {}
 
     class RecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 

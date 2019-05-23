@@ -1,7 +1,6 @@
 package com.shojishunsuke.pronounceflachcard.new_arch.domain
 
 import com.shojishunsuke.pronounceflachcard.Model.QuestionWord
-import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import com.shojishunsuke.pronounceflachcard.utility.TestListProvider
 import com.shojishunsuke.pronounceflachcard.new_arch.data.RealmDatabaseRepository
 import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
@@ -9,9 +8,9 @@ import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChang
 class TestReadyUsecase : OnDataChangedListener {
     private val databaseRepository = RealmDatabaseRepository(this)
 
-    fun getCurrentListSize(isChecked: Boolean): Int {
+    fun getCurrentListSize(listTitle: String, isChecked: Boolean): Int {
 
-        val wordList = databaseRepository.loadWholeWords()
+        val wordList = databaseRepository.loadListWords(listTitle)
         var questionNumber = 0
 
 
@@ -30,20 +29,14 @@ class TestReadyUsecase : OnDataChangedListener {
 
     //   maybe-later ここでテストに必要な単語だけにソートする
     fun provideTestWordList(
-        listName: String,
+        listTitle: String,
         listSize:Int,
         testRange: Int,
         isRandom: Boolean
     ): ArrayList<QuestionWord> {
-        val wholeList = databaseRepository.loadWholeWords()
-        var sortedList = mutableListOf<WordObject>()
-        wholeList.forEach {
-            if (it.listTitle == listName) {
-                sortedList.add(it)
-            }
-        }
+        val realmListList = databaseRepository.loadListWords(listTitle)
 
-        val testListProvider = TestListProvider(sortedList)
+        val testListProvider = TestListProvider(realmListList)
 
         return testListProvider.createTestList(listSize,testRange, isRandom)
     }

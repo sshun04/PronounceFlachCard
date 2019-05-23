@@ -12,19 +12,18 @@ import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
 import com.shojishunsuke.pronounceflachcard.new_arch.presentation.MemorizeRecyclerViewAdapterViewModel
+import io.realm.RealmResults
 
-class MemorizeRecyclerViewAdapter(private val context: Context?,private val wordList: List<WordObject>) :
+class MemorizeRecyclerViewAdapter(private val context: Context?,private val wordList: RealmResults<WordObject>) :
     RecyclerView.Adapter<MemorizeRecyclerViewAdapter.MemorizeRecyclerViewHolder>(),OnDataChangedListener {
 
     private val viewModel = MemorizeRecyclerViewAdapterViewModel(this,context!!)
 
-    var wordString: String = ""
-    var meaningString: String = ""
 
     override fun onBindViewHolder(holder: MemorizeRecyclerViewHolder, position: Int) {
         val wordCard = wordList[position]
-        wordString = wordCard.word
-        meaningString = wordCard.meaning
+        val wordString = wordCard!!.word
+        val meaningString = wordCard.meaning
 
         holder.wordTextView.setText(wordString)
         holder.meaningTextView.setText(meaningString)
@@ -52,7 +51,7 @@ class MemorizeRecyclerViewAdapter(private val context: Context?,private val word
     }
 
     override fun onDataChanged() {
-//        notifyDataSetChanged()
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {
