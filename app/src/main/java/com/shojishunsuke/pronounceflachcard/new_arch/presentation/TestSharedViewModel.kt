@@ -13,7 +13,6 @@ class TestSharedViewModel(private val testList: ArrayList<QuestionWord>) : ViewM
     val answer: String get() = testList[currentNumber].meaning
     var hasNextQuestion = true
 
-
     fun onAnswered(isTrue: Boolean, recognizedWord: String, completionListener: TestCompletionListener) {
 
         testList[currentNumber].apply {

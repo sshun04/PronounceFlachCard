@@ -1,22 +1,18 @@
 package com.shojishunsuke.pronounceflachcard.testFragment
 
-import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.DecelerateInterpolator
-import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.shojishunsuke.pronounceflachcard.Model.QuestionWord
 import com.shojishunsuke.pronounceflachcard.R
-import com.shojishunsuke.pronounceflachcard.adapter.TestRecyclerViewAdapter
+import com.shojishunsuke.pronounceflachcard.adapter.TestResultRecyclerViewAdapter
 import com.shojishunsuke.pronounceflachcard.new_arch.presentation.TestSharedViewModel
 
 class TestResultFragment : Fragment() {
@@ -35,7 +31,7 @@ class TestResultFragment : Fragment() {
         }?: throw Exception("Invalid Activity")
         val resultWords = sharedViewModel.getTotalResult()
 
-        recyclerView.adapter = TestRecyclerViewAdapter(context, resultWords)
+        recyclerView.adapter = TestResultRecyclerViewAdapter(context, resultWords)
         recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
 

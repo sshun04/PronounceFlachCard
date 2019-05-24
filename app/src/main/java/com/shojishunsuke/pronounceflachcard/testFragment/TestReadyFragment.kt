@@ -19,7 +19,7 @@ class TestReadyFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private var testFormat = -1
     private var testRange = -1
-    private var listSize = 1
+    private var listSize = 0
     private var isRandom = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -47,7 +47,7 @@ class TestReadyFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
             val testList = ArrayList<Int>()
 
-            for (i in 1 until sizeLimit) {
+            for (i in 1 .. sizeLimit) {
                 testList.add(i)
             }
 
@@ -64,7 +64,7 @@ class TestReadyFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
 
 
-            if (testRange != -1 && testFormat != -1) {
+            if (testRange != -1 && testFormat != -1 && listSize != 0) {
 
                 viewModel.setupTestActivity(
                     context!!,

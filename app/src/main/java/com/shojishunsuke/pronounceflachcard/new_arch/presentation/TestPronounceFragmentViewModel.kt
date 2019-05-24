@@ -10,6 +10,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 
 class TestPronounceFragmentViewModel : ViewModel() {
+
     fun setupSpeechRecognizer(context: Context, judgeListener: JudgeListener) {
 
         val speechIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)

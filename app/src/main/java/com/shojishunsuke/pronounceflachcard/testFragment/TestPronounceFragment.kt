@@ -36,7 +36,6 @@ class TestPronounceFragment : Fragment(),TestSharedViewModel.TestCompletionListe
             setupQuestion()
         }
 
-
         setupQuestion()
 
         return layout
@@ -64,13 +63,7 @@ class TestPronounceFragment : Fragment(),TestSharedViewModel.TestCompletionListe
 
     override fun onCompleteTest() {
 
-        confirmTextView.visibility = View.GONE
-        nextButton.visibility = View.GONE
-        resultButton.visibility = View.VISIBLE
-
-        resultButton.setOnClickListener {
-
-            sharedViewModel.setupResultFragment(fragmentManager!!,R.id.testPronounceBackground)
-        }
+        nextButton.text = "結果を見る"
+        nextButton.setOnClickListener {   sharedViewModel.setupResultFragment(fragmentManager!!,R.id.testPronounceBackground) }
     }
 }

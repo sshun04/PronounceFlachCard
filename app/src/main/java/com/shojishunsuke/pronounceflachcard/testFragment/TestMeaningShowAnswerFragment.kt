@@ -17,7 +17,6 @@ class TestMeaningShowAnswerFragment : Fragment(), View.OnClickListener, TestShar
     lateinit var trueButton: Button
     lateinit var falseButton: Button
 
-
     lateinit var sharedViewModel: TestSharedViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -30,7 +29,6 @@ class TestMeaningShowAnswerFragment : Fragment(), View.OnClickListener, TestShar
         sharedViewModel = activity?.run {
             ViewModelProviders.of(this).get(TestSharedViewModel::class.java)
         }?: throw Exception("Invalid Activity")
-
 
         textView.setText(sharedViewModel.answer)
 
@@ -48,7 +46,6 @@ class TestMeaningShowAnswerFragment : Fragment(), View.OnClickListener, TestShar
             falseButton -> {
                 sharedViewModel.onAnswered(false, this)
             }
-
         }
 
         if (sharedViewModel.hasNextQuestion) {

@@ -65,8 +65,6 @@ class DrawerViewModel:ViewModel(),OnDataChangedListener {
         useCase.deleteListTitle(title)
     }
 
-
-
     override fun onDataChanged() {
 
     }
