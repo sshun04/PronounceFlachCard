@@ -44,7 +44,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/titleList"
-                android:background="@android:color/darker_gray"
+                android:background="@android:color/primary_text_dark"
                 android:layout_width="0dp"
                 android:layout_height="1dp"/>
 
@@ -55,17 +55,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content">
 
-            <com.google.android.material.button.MaterialButton
-                    android:text="単語帳を作成"
-                    android:layout_marginLeft="16dp"
-                    android:gravity="start"
-                    android:textSize="12dp"
-                    android:id="@+id/registerButton"
-                    style="@style/Base.Widget.AppCompat.Button.Borderless"
-                    app:backgroundTint="@android:color/transparent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
+           <TextView
+                   android:layout_marginLeft="16dp"
+                   android:id="@+id/registerButton"
+                   android:textSize="20dp"
+                   android:gravity="start"
+                   android:text="単語帳を登録"
+                   android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"/>
         </LinearLayout>
 
 

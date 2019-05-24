@@ -31,7 +31,7 @@ class DrawerFragment : Fragment() {
 
 
         val headerTextView = layout.findViewById<TextView>(R.id.headerTextView)
-        val registerButton = layout.findViewById<MaterialButton>(R.id.registerButton)
+        val registerButton = layout.findViewById<TextView>(R.id.registerButton)
         val titleList = layout.findViewById<RecyclerView>(R.id.titleList).apply {
             adapter = DrawerRecyclerViewAdapter(activity!!,context!!,drawerViewModel.loadTitleList())
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
