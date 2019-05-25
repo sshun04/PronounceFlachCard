@@ -1,30 +1,33 @@
 package com.shojishunsuke.pronounceflachcard.new_arch.presentation
 
 import android.content.Context
-import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.shojishunsuke.pronounceflachcard.new_arch.data.SharedPrefRepository
+import com.shojishunsuke.pronounceflachcard.new_arch.domain.SharedUseCase
 
 class SharedViewModel(context: Context) : ViewModel() {
-   val liveDataTitle = MutableLiveData<String>()
+    val liveDataTitle = MutableLiveData<String>()
+
 
     private val key_title = "LAST_TITle"
-   private val sharedPreferences:SharedPreferences
+    private val sharedUseCase: SharedUseCase
+
     init {
-        sharedPreferences = context.getSharedPreferences("a",Context.MODE_PRIVATE)
-        liveDataTitle.value = sharedPreferences.getString(key_title,"")
+
+        val sharedPrefRepository = SharedPrefRepository(context)
+        sharedUseCase = SharedUseCase(sharedPrefRepository)
+        liveDataTitle.value = sharedUseCase.getLatestLabel()
     }
 
-    fun select(title:String){
+    fun select(title: String) {
         liveDataTitle.value = title
     }
 
-    val title:String get() = liveDataTitle.value!!
+    val title: String get() = liveDataTitle.value!!
 
 
-    fun saveLastTitle(){
-        val editor = sharedPreferences.edit()
-        editor.putString(key_title,liveDataTitle.value)
-        editor.apply()
+    fun saveLastTitle() {
+        sharedUseCase.updateCurrentLabel(liveDataTitle.value!!)
     }
 }
