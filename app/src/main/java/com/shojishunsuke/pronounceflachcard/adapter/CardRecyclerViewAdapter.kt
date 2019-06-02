@@ -61,6 +61,7 @@ class CardRecyclerViewAdapter(private val context: Context?,private val wordList
 
 
                                     viewModel.editWord(wordCard.id, wordEditText.text.toString(), meaningEditText.text.toString())
+                                    notifyItemChanged(position)
 
                                 })
                                 .setNegativeButton(
