@@ -30,12 +30,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/testPronounceToolBar"
     >
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

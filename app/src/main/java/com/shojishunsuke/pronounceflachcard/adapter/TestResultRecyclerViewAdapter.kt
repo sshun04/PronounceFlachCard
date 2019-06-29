@@ -29,11 +29,9 @@ class TestResultRecyclerViewAdapter(private val context: Context?, val resultWor
             holder.checkeTextView.setTextColor(Color.parseColor("#f44336"))
         }
 
-        if (resultWord.recognizedWord.isNotEmpty())
-
-        {
+        if (resultWord.recognizedWord.isNotEmpty()) {
             holder.recognizedTextView.visibility = View.VISIBLE
-            holder.recognizedTextView.setText(resultWord.recognizedWord)
+            holder.recognizedTextView.text = resultWord.recognizedWord
         }
 
 

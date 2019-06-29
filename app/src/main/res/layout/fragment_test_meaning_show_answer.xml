@@ -1,51 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent" android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <TextView
-            android:background="@android:color/white"
-            android:id="@+id/textView2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_weight="3"
-            android:text="Answer"
-            android:gravity="center"
-            android:textSize="48dp"
-            android:layout_width="0dp"
-            android:layout_height="0dp"/>
-    <Button
-
-            android:foreground="?android:attr/selectableItemBackground"
-            android:id="@+id/trueButton"
-            android:text="✔︎"
-            android:textSize="36dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_width="0dp"
-            android:layout_height="160dp"
-            android:textColor="@android:color/white"
-            app:layout_constraintEnd_toStartOf="@id/falseButton"
-            app:layout_constraintVertical_weight="1"
-            android:background="#4CAF50"
-    />
+        android:id="@+id/textView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:text="Answer"
+        android:textSize="48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="3" />
 
     <Button
-            android:id="@+id/falseButton"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:text="️✖︎"
-            android:textSize="36dp"
-            android:textColor="@android:color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/trueButton"
-            app:layout_constraintTop_toTopOf="@id/trueButton"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="#f44336"
-    />
+
+        android:id="@+id/trueButton"
+        android:layout_width="0dp"
+        android:layout_height="160dp"
+        android:background="#4CAF50"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:text="✔︎"
+        android:textColor="@android:color/white"
+        android:textSize="36dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/falseButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_weight="1" />
+
+    <Button
+        android:id="@+id/falseButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#f44336"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:text="️✖︎"
+        android:textColor="@android:color/white"
+        android:textSize="36dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/trueButton"
+        app:layout_constraintTop_toTopOf="@id/trueButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

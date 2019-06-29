@@ -19,9 +19,8 @@ class SharedPrefRepository(context: Context):DataConfigRepository {
         return sharedPreferences.getBoolean(key_init,false)
     }
 
-    override fun getLatestLabel(): String {
-        return sharedPreferences.getString(key_label,"")
-    }
+    override fun getLatestLabel(): String = sharedPreferences.getString(key_label,"") ?: ""
+
 
     override fun updateInitializationState() {
         val editor = sharedPreferences.edit()

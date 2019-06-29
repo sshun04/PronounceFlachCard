@@ -10,36 +10,37 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.adapter.MyPagerAdapter
+import com.shojishunsuke.pronounceflachcard.new_arch.presentation.SharedViewModel
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var drawerToggle: ActionBarDrawerToggle
-    private lateinit var newTitle: CharSequence
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val sharedViewModel = run {
+            ViewModelProviders.of(this).get(SharedViewModel::class.java)
+        }
 
-
-
-
-
-        newTitle = title
         drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout).apply {
             setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START)
         }
 
         val tabLayout = findViewById<TabLayout>(R.id.tablayout)
         val viewPager = findViewById<ViewPager>(R.id.pager)
-        val toolBar = findViewById<Toolbar>(R.id.toolbar)
+        val toolBar = findViewById<Toolbar>(R.id.toolbar).apply {
+            title = sharedViewModel.title
+        }
         setSupportActionBar(toolBar)
 
         tabLayout.apply {
@@ -52,22 +53,25 @@ class MainActivity : AppCompatActivity() {
         viewPager.adapter = fragmentAdapter
 
         drawerToggle =
-                object : ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.drawer_open, R.string.drawer_close) {
-                    override fun onDrawerClosed(drawerView: View) {
+            object : ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.drawer_open, R.string.drawer_close) {
+                override fun onDrawerClosed(drawerView: View) {
 
-                        invalidateOptionsMenu()
-                    }
-
-                    override fun onDrawerOpened(drawerView: View) {
-
-                        invalidateOptionsMenu()
-                    }
+                    invalidateOptionsMenu()
                 }
+
+                override fun onDrawerOpened(drawerView: View) {
+
+                    invalidateOptionsMenu()
+                }
+            }
         drawerLayout.addDrawerListener(drawerToggle)
         drawerToggle.syncState()
 
-
         tabLayout.setupWithViewPager(viewPager)
+
+        sharedViewModel.liveDataTitle.observe(this, Observer {
+            toolBar.title = it
+        })
 
     }
 
