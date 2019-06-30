@@ -14,18 +14,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shojishunsuke.pronounceflachcard.Model.QuestionWord
 import com.shojishunsuke.pronounceflachcard.R
 
-class TestResultRecyclerViewAdapter(private val context: Context?, val resultWords: ArrayList<QuestionWord>) :
+class TestResultRecyclerViewAdapter(private val context: Context, private val resultWords: ArrayList<QuestionWord>) :
     RecyclerView.Adapter<TestResultRecyclerViewAdapter.TestRecyclerViewHolder>() {
 
     override fun onBindViewHolder(holder: TestRecyclerViewHolder, position: Int) {
         val resultWord = resultWords[position]
-        holder.resultTextView.setText(resultWord.word)
+        holder.resultTextView.text = resultWord.word
 
         if (resultWord.isTrue) {
-            holder.checkeTextView.setText("✔︎")
+            holder.checkeTextView.text = "✔︎"
             holder.checkeTextView.setTextColor(Color.parseColor("#4CAF50"))
         } else {
-            holder.checkeTextView.setText("✖️")
+            holder.checkeTextView.text = "✖️"
             holder.checkeTextView.setTextColor(Color.parseColor("#f44336"))
         }
 
@@ -40,7 +40,7 @@ class TestResultRecyclerViewAdapter(private val context: Context?, val resultWor
             if (holder.detailBox.visibility == View.GONE) {
                 holder.detailBox.visibility = View.VISIBLE
                 startRotate(it, 0f, -180f)
-                holder.maningTextView.setText(resultWord.meaning)
+                holder.maningTextView.text = resultWord.meaning
 
             } else {
 
@@ -73,12 +73,9 @@ class TestResultRecyclerViewAdapter(private val context: Context?, val resultWor
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TestRecyclerViewHolder {
         val inflater = LayoutInflater.from(context)
         val mView = inflater.inflate(R.layout.item_test_result_word, parent, false)
-
-
         return TestRecyclerViewHolder(mView)
 
     }
-
 
     class TestRecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 

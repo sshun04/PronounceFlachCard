@@ -26,15 +26,13 @@ class TestPronounceActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test_pronounce)
 
-
-
         val toolbar = this.findViewById<Toolbar>(R.id.testPronounceToolBar)
         setSupportActionBar(toolbar)
 
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setDisplayShowHomeEnabled(true)
-        supportActionBar!!.setHomeButtonEnabled(true)
-        supportActionBar!!.setTitle("発音テスト")
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.title = "発音テスト"
 
         val questionWords = intent.getSerializableExtra("list")as ArrayList<QuestionWord>
 
@@ -48,7 +46,7 @@ class TestPronounceActivity : AppCompatActivity() {
     }
 
     override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
-        if (event!!.keyCode == KeyEvent.KEYCODE_BACK) {
+        if (event?.keyCode == KeyEvent.KEYCODE_BACK) {
             AlertDialog.Builder(this)
                 .setMessage("テストを終了しますか？")
                 .setPositiveButton("終了", DialogInterface.OnClickListener { _, _ ->

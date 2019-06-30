@@ -16,7 +16,7 @@ class RealmDatabaseRepository(onDataChangedListener: OnDataChangedListener) : Lo
     }
 
     override fun loadWordList(listTitle: String): RealmResults<WordObject> {
-        return realm.where(WordObject::class.java).equalTo("listTitle",listTitle).findAll()
+        return realm.where(WordObject::class.java).equalTo("listTitle", listTitle).findAll()
     }
 
     override fun deleteWord(id: String) {
@@ -54,6 +54,7 @@ class RealmDatabaseRepository(onDataChangedListener: OnDataChangedListener) : Lo
         }
     }
 
+
     override fun switchWhetherChecked(id: String, isChecked: Boolean) {
 
         realm.executeTransaction {
@@ -79,19 +80,35 @@ class RealmDatabaseRepository(onDataChangedListener: OnDataChangedListener) : Lo
 
     }
 
-    override fun loadTitleList(): List<FlashCardTitle> {
-        return realm.where(FlashCardTitle::class.java).findAll().toList()
+    override fun loadTitleList():RealmResults<FlashCardTitle> {
+        return realm.where(FlashCardTitle::class.java).findAll()
     }
 
     override fun deleteList(listTitle: String) {
 
         realm.executeTransaction {
-            val list = it.where(WordObject::class.java).equalTo("listTitle",listTitle).findAll()
+            val list = it.where(WordObject::class.java).equalTo("listTitle", listTitle).findAll()
             list.deleteAllFromRealm()
         }
     }
 
+    override fun editListTitle(lastTitle: String, newTitle: String) {
+        realm.executeTransaction { realm ->
+            val wordList = realm.where(WordObject::class.java).equalTo("listTitle", lastTitle).findAll()
+            wordList.forEach {
+                it.listTitle = newTitle
+            }
+            realm.copyToRealm(wordList)
 
+            val flashCardTitle = realm.where(FlashCardTitle::class.java).equalTo("title", lastTitle).findFirst()
+            flashCardTitle?.let { cardTitle ->
+                cardTitle.title = newTitle
+            }
+            realm.copyToRealm(flashCardTitle)
+        }
+
+
+    }
 
 
 }

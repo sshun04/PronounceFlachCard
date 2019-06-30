@@ -5,28 +5,33 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
+import com.shojishunsuke.pronounceflachcard.Model.FlashCardTitle
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
 import com.shojishunsuke.pronounceflachcard.new_arch.presentation.SharedViewModel
+import io.realm.RealmResults
 
-class DrawerRecyclerViewAdapter(private val fragmentActivity: FragmentActivity,private val context: Context, private val titleList: MutableList<String>) :
+class DrawerRecyclerViewAdapter(
+    private val fragmentActivity: FragmentActivity,
+    private val context: Context,
+    private val titleList: RealmResults<FlashCardTitle>
+) :
     RecyclerView.Adapter<DrawerRecyclerViewAdapter.TitleViewHolder>(), OnDataChangedListener {
 
     override fun onBindViewHolder(holder: TitleViewHolder, position: Int) {
-        holder.titleTextView.text = titleList[position]
+        val title = titleList[position]?.title ?: throw IndexOutOfBoundsException()
+
+        holder.titleTextView.text = title
 
 
-        val sharedViewModel = ViewModelProviders.of(fragmentActivity).get(SharedViewModel::class.java )
+        val sharedViewModel = ViewModelProviders.of(fragmentActivity).get(SharedViewModel::class.java)
 
         holder.titleTextView.setOnClickListener {
-
-            sharedViewModel.select(titleList[position])
+            sharedViewModel.select(title)
             sharedViewModel.saveLastTitle()
-
         }
 
         holder.titleTextView.tag = position
@@ -34,13 +39,8 @@ class DrawerRecyclerViewAdapter(private val fragmentActivity: FragmentActivity,p
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TitleViewHolder {
 
-
-
         val inflater = LayoutInflater.from(context)
         val mView = inflater.inflate(R.layout.item_drawer_list, parent, false)
-
-
-
 
         return TitleViewHolder(mView)
     }
@@ -50,7 +50,6 @@ class DrawerRecyclerViewAdapter(private val fragmentActivity: FragmentActivity,p
     override fun onDataChanged() {
         notifyDataSetChanged()
     }
-
 
     class TitleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val titleTextView = view.findViewById<TextView>(R.id.titleTextView)

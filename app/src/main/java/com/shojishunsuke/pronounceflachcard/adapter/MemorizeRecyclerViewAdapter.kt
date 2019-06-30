@@ -13,16 +13,17 @@ import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
 import com.shojishunsuke.pronounceflachcard.new_arch.presentation.MemorizeRecyclerViewAdapterViewModel
 import io.realm.RealmResults
+import java.lang.IndexOutOfBoundsException
 
-class MemorizeRecyclerViewAdapter(private val context: Context?,private val wordList: RealmResults<WordObject>) :
+class MemorizeRecyclerViewAdapter(private val context: Context,private val wordList: RealmResults<WordObject>) :
     RecyclerView.Adapter<MemorizeRecyclerViewAdapter.MemorizeRecyclerViewHolder>(),OnDataChangedListener {
 
-    private val viewModel = MemorizeRecyclerViewAdapterViewModel(this,context!!)
+    private val viewModel = MemorizeRecyclerViewAdapterViewModel(this,context)
 
 
     override fun onBindViewHolder(holder: MemorizeRecyclerViewHolder, position: Int) {
-        val wordCard = wordList[position]
-        val wordString = wordCard!!.word
+        val wordCard = wordList[position]?:throw IndexOutOfBoundsException()
+        val wordString = wordCard.word
         val meaningString = wordCard.meaning
 
         holder.wordTextView.setText(wordString)

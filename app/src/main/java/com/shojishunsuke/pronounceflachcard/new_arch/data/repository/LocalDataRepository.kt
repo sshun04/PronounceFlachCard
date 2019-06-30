@@ -11,6 +11,7 @@ interface LocalDataRepository {
     fun registerWord(word:String,meaning:String,listName :String)
     fun switchWhetherChecked(id: String,isChecked:Boolean)
     fun registerListTitle(title: String)
-    fun loadTitleList():List<FlashCardTitle>
+    fun loadTitleList():RealmResults<FlashCardTitle>
     fun deleteList(listTitle:String)
+    fun editListTitle(lastTitle: String,newTitle:String)
 }

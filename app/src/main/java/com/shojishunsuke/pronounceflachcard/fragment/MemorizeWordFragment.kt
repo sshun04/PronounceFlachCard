@@ -41,7 +41,7 @@ class MemorizeWordFragment : Fragment(), OnDataChangedListener {
 
         sharedViewModel.liveDataTitle.observe(this, Observer { title ->
             //           リサイクラビューのアイテムを更新
-            recyclerView.adapter = MemorizeRecyclerViewAdapter(context, memorizeViewModel.getWordsList(title))
+            recyclerView.adapter = MemorizeRecyclerViewAdapter(requireContext(), memorizeViewModel.getWordsList(title))
 
         })
 

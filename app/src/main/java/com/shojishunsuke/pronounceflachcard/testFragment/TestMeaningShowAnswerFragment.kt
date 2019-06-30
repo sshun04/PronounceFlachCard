@@ -26,9 +26,9 @@ class TestMeaningShowAnswerFragment : Fragment(), View.OnClickListener, TestShar
         trueButton = layout.findViewById(R.id.trueButton)
         falseButton = layout.findViewById(R.id.falseButton)
 
-        sharedViewModel = activity?.run {
+        sharedViewModel = requireActivity().run{
             ViewModelProviders.of(this).get(TestSharedViewModel::class.java)
-        }?: throw Exception("Invalid Activity")
+        }
 
         textView.setText(sharedViewModel.answer)
 

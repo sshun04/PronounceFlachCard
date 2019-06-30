@@ -1,17 +1,15 @@
 package com.shojishunsuke.pronounceflachcard.new_arch.domain
 
+import com.shojishunsuke.pronounceflachcard.Model.FlashCardTitle
 import com.shojishunsuke.pronounceflachcard.new_arch.data.RealmDatabaseRepository
 import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
+import io.realm.RealmResults
 
 class DrawerUsecase(onDataChangedListener: OnDataChangedListener) {
     private val databaseRepository = RealmDatabaseRepository(onDataChangedListener)
 
-    fun  loadWholeTitleList():MutableList<String>{
-        val titleList  = mutableListOf<String>()
-        databaseRepository.loadTitleList().forEach {
-            titleList.add(it.title)
-        }
-        return titleList
+    fun  loadWholeTitleList():RealmResults<FlashCardTitle>{
+        return databaseRepository.loadTitleList()
     }
 
     fun registerNewListTitle(title:String){

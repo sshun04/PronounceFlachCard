@@ -18,10 +18,6 @@ import com.shojishunsuke.pronounceflachcard.testFragment.TestMeaningShowWordFrag
 class TestMeaningActivity : AppCompatActivity() {
 
 
-
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test_meaning)
@@ -30,14 +26,14 @@ class TestMeaningActivity : AppCompatActivity() {
         val toolbar = this.findViewById<Toolbar>(R.id.testMeaningToolBar)
         setSupportActionBar(toolbar)
 
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setDisplayShowHomeEnabled(true)
-        supportActionBar!!.setHomeButtonEnabled(true)
-        supportActionBar!!.setTitle("意味テスト")
+
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.title = "意味テスト"
 
         val questionWords = intent.getSerializableExtra("list") as ArrayList<QuestionWord>
-
-
 
         val testSharedViewModel = ViewModelProviders.of(this,
             TestSharedViewModelFactory(questionWords)

@@ -17,7 +17,7 @@ import com.shojishunsuke.pronounceflachcard.new_arch.presentation.TestSharedView
 
 class TestResultFragment : Fragment() {
 
-    lateinit  var resultProgress: ProgressBar
+    lateinit var resultProgress: ProgressBar
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val layout = inflater.inflate(R.layout.fragment_test_result, container, false)
@@ -26,13 +26,13 @@ class TestResultFragment : Fragment() {
 
         val recyclerView = layout.findViewById<RecyclerView>(R.id.resultRecyclerView)
 
-        val sharedViewModel = activity?.run {
+        val sharedViewModel = requireActivity().run {
             ViewModelProviders.of(this).get(TestSharedViewModel::class.java)
-        }?: throw Exception("Invalid Activity")
+        }
         val resultWords = sharedViewModel.getTotalResult()
 
-        recyclerView.adapter = TestResultRecyclerViewAdapter(context, resultWords)
-        recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        recyclerView.adapter = TestResultRecyclerViewAdapter(requireContext(), resultWords)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
 
 
         var trueWordsNumber = 0
@@ -44,28 +44,23 @@ class TestResultFragment : Fragment() {
         }
 
         resultProgress = layout.findViewById<ProgressBar>(R.id.progressCircle).apply {
-
-            max = resultWords.size*100
-
+            max = resultWords.size * 100
         }
-        onSetProgress(trueWordsNumber*100)
 
-       textView.setText("$trueWordsNumber/${resultWords.size}")
-
-
+        onSetProgress(trueWordsNumber * 100)
+        textView.setText("$trueWordsNumber/${resultWords.size}")
         return layout
     }
 
-    private fun onSetProgress(progress :Int){
+    private fun onSetProgress(progress: Int) {
 
-       val handler =Handler()
-        handler.postDelayed(Runnable{
+        val handler = Handler()
+        handler.postDelayed(Runnable {
 
-           resultProgress.setProgress(progress,true)
-        },300)
+            resultProgress.setProgress(progress, true)
+        }, 300)
 
     }
-
 
 
 }

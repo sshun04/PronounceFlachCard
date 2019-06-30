@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
@@ -17,7 +16,6 @@ import com.shojishunsuke.pronounceflachcard.new_arch.presentation.RegisterWordDi
 import com.shojishunsuke.pronounceflachcard.new_arch.presentation.SharedViewModel
 
 class RegisterWordDialogFragment : DialogFragment() {
-
 
 
     lateinit var registerWordDialogViewModel: RegisterWordDialogViewModel
@@ -34,10 +32,13 @@ class RegisterWordDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
-        val dialog = Dialog(context!!)
+        val dialog = Dialog(requireContext())
 
-        dialog.window!!.requestFeature(Window.FEATURE_NO_TITLE)
-        dialog.window!!.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN)
+        dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
+        dialog.window?.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+        )
 
         try {
 
@@ -47,29 +48,30 @@ class RegisterWordDialogFragment : DialogFragment() {
             e.stackTrace
         }
 
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-       val wordEditText = dialog.findViewById<EditText>(R.id.wordEditText)
-       val meaningEditText = dialog.findViewById<EditText>(R.id.meaningEditText)
+        val wordEditText = dialog.findViewById<EditText>(R.id.wordEditText)
+        val meaningEditText = dialog.findViewById<EditText>(R.id.meaningEditText)
 
 
-        dialog.findViewById<Button>(R.id.positiveButton).setOnClickListener(View.OnClickListener {
+        dialog.findViewById<Button>(R.id.positiveButton).setOnClickListener {
 
-            val sharedViewModel = activity?.run {
+            val sharedViewModel = requireActivity().run {
                 ViewModelProviders.of(this).get(SharedViewModel::class.java)
-            }?: throw Exception("Invalid Activity")
-
-            registerWordDialogViewModel.registerWord(wordEditText.text.toString(), meaningEditText.text.toString(),sharedViewModel.title)
-
-            dismiss()
-
-        })
-
-        dialog.findViewById<Button>(R.id.negativeButton).setOnClickListener(View.OnClickListener {
+            }
+            registerWordDialogViewModel.registerWord(
+                wordEditText.text.toString(),
+                meaningEditText.text.toString(),
+                sharedViewModel.title
+            )
 
             dismiss()
 
-        })
+        }
+
+        dialog.findViewById<Button>(R.id.negativeButton).setOnClickListener {
+            dismiss()
+        }
 
         return dialog
 

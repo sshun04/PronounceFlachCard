@@ -71,7 +71,7 @@
             android:id="@+id/allWords"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="  全ての単語"
+            android:text="  全ての単語から"
             android:textSize="24dp" />
 
         <RadioButton
@@ -79,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="  チェックした単語"
+            android:text="  チェックした単語から"
             android:textSize="24dp" />
 
 

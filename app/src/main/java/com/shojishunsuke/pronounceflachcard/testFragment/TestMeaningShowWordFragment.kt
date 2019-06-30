@@ -7,10 +7,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import com.shojishunsuke.pronounceflachcard.Model.QuestionWord
 import com.shojishunsuke.pronounceflachcard.R
-import com.shojishunsuke.pronounceflachcard.new_arch.presentation.SharedViewModel
 import com.shojishunsuke.pronounceflachcard.new_arch.presentation.TestSharedViewModel
+import java.lang.IllegalArgumentException
 
 
 class TestMeaningShowWordFragment:Fragment() {
@@ -20,15 +19,15 @@ class TestMeaningShowWordFragment:Fragment() {
 
         val textView = layout.findViewById<TextView>(R.id.meaningTextView3)
 
-        val sharedViewModel = activity?.run {
+        val testSharedViewModel = requireActivity().run {
             ViewModelProviders.of(this).get(TestSharedViewModel::class.java)
-        }?: throw Exception("Invalid Activity")
+        }
 
-        textView.setText(sharedViewModel.question)
+        textView.text = testSharedViewModel.question
 
         textView.setOnClickListener {
             val showAnswerFragment = TestMeaningShowAnswerFragment()
-            val fragmentTransAction = fragmentManager!!.beginTransaction()
+            val fragmentTransAction = fragmentManager?.beginTransaction()?:throw IllegalArgumentException()
             fragmentTransAction.replace(R.id.testMeaningBackGround,showAnswerFragment)
             fragmentTransAction.commit()
 

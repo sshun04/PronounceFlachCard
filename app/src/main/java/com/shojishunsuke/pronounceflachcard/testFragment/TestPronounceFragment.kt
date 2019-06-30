@@ -28,9 +28,9 @@ class TestPronounceFragment : Fragment(),TestSharedViewModel.TestCompletionListe
         confirmTextView = layout.findViewById(R.id.textView1)
 
         fragmentViewModel = ViewModelProviders.of(this).get(TestPronounceFragmentViewModel::class.java)
-        sharedViewModel = activity?.run {
+        sharedViewModel = requireActivity().run {
             ViewModelProviders.of(this).get(TestSharedViewModel::class.java)
-        }?: throw Exception("Invalid Activity")
+        }
 
         nextButton.setOnClickListener {
             setupQuestion()
@@ -43,12 +43,12 @@ class TestPronounceFragment : Fragment(),TestSharedViewModel.TestCompletionListe
 
     private fun setupQuestion() {
 
-        questionTextView.setText(sharedViewModel.question)
+        questionTextView.text = sharedViewModel.question
         confirmTextView.visibility = View.VISIBLE
         nextButton.visibility = View.GONE
 
         fragmentViewModel.setupSpeechRecognizer(
-            context!!,
+           requireContext(),
             object : TestPronounceFragmentViewModel.JudgeListener {
                 override fun onRecognized(recognitionResult: String) {
 
@@ -64,6 +64,6 @@ class TestPronounceFragment : Fragment(),TestSharedViewModel.TestCompletionListe
     override fun onCompleteTest() {
 
         nextButton.text = "結果を見る"
-        nextButton.setOnClickListener {   sharedViewModel.setupResultFragment(fragmentManager!!,R.id.testPronounceBackground) }
+        nextButton.setOnClickListener {   sharedViewModel.setupResultFragment(childFragmentManager,R.id.testPronounceBackground) }
     }
 }

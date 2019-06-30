@@ -32,9 +32,9 @@ class TestReadyFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
         val viewModel = ViewModelProviders.of(this).get(TestReadyViewModel::class.java)
       
-       val sharedViewModel = activity?.run {
+       val sharedViewModel = requireActivity().run {
             ViewModelProviders.of(this).get(SharedViewModel::class.java)
-        }?: throw Exception("Invalid Activity")
+        }
 
         randomSwitch.setOnCheckedChangeListener { _, boolean -> isRandom = boolean }
 
@@ -52,7 +52,7 @@ class TestReadyFragment : Fragment(), AdapterView.OnItemSelectedListener {
             }
 
 
-            val spinnerAdapter = ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item, testList)
+            val spinnerAdapter = ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, testList)
             numberSpinner.adapter = spinnerAdapter
 
         }
@@ -67,7 +67,7 @@ class TestReadyFragment : Fragment(), AdapterView.OnItemSelectedListener {
             if (testRange != -1 && testFormat != -1 && listSize != 0) {
 
                 viewModel.setupTestActivity(
-                    context!!,
+                    requireContext(),
                     listSize = listSize,
                     testFormat = testFormat,
                     testRange = testRange,
@@ -76,7 +76,7 @@ class TestReadyFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 )
 
             } else {
-                Toast.makeText(context, "指定していない項目があります", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "指定していない項目があります", Toast.LENGTH_SHORT).show()
 
             }
         }

@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
 import com.shojishunsuke.pronounceflachcard.new_arch.domain.CardRecyclerViewAdapterUsecase
 
-class CardRecyclerAdapterViewModel(private val onDataChangedListener: OnDataChangedListener):ViewModel() {
+class CardRecyclerAdapterViewModel(onDataChangedListener: OnDataChangedListener):ViewModel() {
 
 
    private val cardRecyclerAdapterUsecase   = CardRecyclerViewAdapterUsecase (onDataChangedListener)

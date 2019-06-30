@@ -32,8 +32,8 @@ class FlashCardFragment : Fragment(), OnDataChangedListener {
         } ?: throw Exception("Invalid Activity")
 
         recyclerView = layout.findViewById<RecyclerView>(R.id.recyclerview).apply {
-            adapter = CardRecyclerViewAdapter(context, flashCardViewModel.getWordsList(sharedViewModel.title))
-            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            adapter = CardRecyclerViewAdapter(requireContext(), flashCardViewModel.getWordsList(sharedViewModel.title))
+            layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         }
 
         val addButton = layout.findViewById<FloatingActionButton>(R.id.addwordbutton)
@@ -48,7 +48,7 @@ class FlashCardFragment : Fragment(), OnDataChangedListener {
 
         sharedViewModel.liveDataTitle.observe(this, Observer { title ->
             //           リサイクラビューのアイテムを更新
-            recyclerView.adapter = CardRecyclerViewAdapter(context, flashCardViewModel.getWordsList(title))
+            recyclerView.adapter = CardRecyclerViewAdapter(requireContext(), flashCardViewModel.getWordsList(title))
 
         })
 

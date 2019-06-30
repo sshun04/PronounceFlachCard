@@ -17,58 +17,59 @@ import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
 import com.shojishunsuke.pronounceflachcard.new_arch.presentation.CardRecyclerAdapterViewModel
-import com.shojishunsuke.pronounceflachcard.new_arch.presentation.SharedViewModel
 import io.realm.RealmResults
+import java.lang.IndexOutOfBoundsException
 
-class CardRecyclerViewAdapter(private val context: Context?,private val wordList: RealmResults<WordObject>) :
-        RecyclerView.Adapter<CardRecyclerViewAdapter.RecyclerViewHolder>(), OnDataChangedListener {
+class CardRecyclerViewAdapter(private val context: Context, private val wordList: RealmResults<WordObject>) :
+    RecyclerView.Adapter<CardRecyclerViewAdapter.RecyclerViewHolder>(), OnDataChangedListener {
 
 
-
-   private val viewModel = CardRecyclerAdapterViewModel(this)
+    private val viewModel = CardRecyclerAdapterViewModel(this)
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
 
-        val wordCard = wordList[position]
-       val wordString = wordCard!!.word
-       val meaningString = wordCard.meaning
+        val wordCard = wordList[position] ?: throw IndexOutOfBoundsException()
+        val wordString = wordCard.word
+        val meaningString = wordCard.meaning
 
-        holder.wordTextView.setText(wordString)
-        holder.wordTextView.setTag(wordCard)
+        holder.wordTextView.text = wordString
+        holder.wordTextView.tag = wordCard
 
-        holder.meaningTextView.setText(meaningString)
-        holder.meaningTextView.setTag(wordCard)
+        holder.meaningTextView.text = meaningString
+        holder.meaningTextView.tag = wordCard
 
         holder.optionButton.setImageResource(R.drawable.outline_more_vert_black_24)
 
-        holder.optionButton.setTag(wordCard)
+        holder.optionButton.tag = wordCard
 
 
         holder.optionButton.setOnClickListener {
 
-
             lateinit var wordEditText: EditText
             lateinit var meaningEditText: EditText
 
-
-            val popupMenu = PopupMenu(context!!, holder.optionButton, Gravity.END)
+            val popupMenu = PopupMenu(context, holder.optionButton, Gravity.END)
             popupMenu.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.editPop -> {
 
                         val detailDialog = AlertDialog.Builder(context)
-                                .setPositiveButton("保存", DialogInterface.OnClickListener { _, _ ->
+                            .setPositiveButton("保存", DialogInterface.OnClickListener { _, _ ->
 
 
-                                    viewModel.editWord(wordCard.id, wordEditText.text.toString(), meaningEditText.text.toString())
-                                    notifyItemChanged(position)
-
-                                })
-                                .setNegativeButton(
-                                        "キャンセル",
-                                        null
+                                viewModel.editWord(
+                                    wordCard.id,
+                                    wordEditText.text.toString(),
+                                    meaningEditText.text.toString()
                                 )
-                                .create()
+                                notifyItemChanged(position)
+
+                            })
+                            .setNegativeButton(
+                                "キャンセル",
+                                null
+                            )
+                            .create()
 
                         val parentView = detailDialog.layoutInflater.inflate(R.layout.fragment_word_edit, null)
 
@@ -82,22 +83,21 @@ class CardRecyclerViewAdapter(private val context: Context?,private val wordList
                         detailDialog.show()
 
 
-
                     }
                     R.id.deletePop -> {
 
 
                         AlertDialog.Builder(context)
-                                .setTitle(wordCard.word)
-                                .setMessage("本当に削除しますか？")
-                                .setPositiveButton("OK", DialogInterface.OnClickListener { _, _ ->
+                            .setTitle(wordCard.word)
+                            .setMessage("本当に削除しますか？")
+                            .setPositiveButton("OK", DialogInterface.OnClickListener { _, _ ->
 
-                                    viewModel.deleteWord(wordCard.id)
-                                    notifyItemRemoved(position)
+                                viewModel.deleteWord(wordCard.id)
+                                notifyItemRemoved(position)
 
-                                }
-                                ).setNegativeButton("CANCEL", null)
-                                .show()
+                            }
+                            ).setNegativeButton("CANCEL", null)
+                            .show()
 
                     }
                 }
@@ -114,10 +114,10 @@ class CardRecyclerViewAdapter(private val context: Context?,private val wordList
 
 
             val detailDialog = AlertDialog.Builder(context)
-                    .setPositiveButton("OK", DialogInterface.OnClickListener { dialogInterface, _ ->
-                        dialogInterface.dismiss()
-                    })
-                    .create()
+                .setPositiveButton("OK", DialogInterface.OnClickListener { dialogInterface, _ ->
+                    dialogInterface.dismiss()
+                })
+                .create()
 
             val parentView = detailDialog.getLayoutInflater().inflate(R.layout.dialog_fragment_word_detail, null)
 
@@ -144,7 +144,6 @@ class CardRecyclerViewAdapter(private val context: Context?,private val wordList
 
         return RecyclerViewHolder(mView)
     }
-
 
 
     override fun onDataChanged() {}
