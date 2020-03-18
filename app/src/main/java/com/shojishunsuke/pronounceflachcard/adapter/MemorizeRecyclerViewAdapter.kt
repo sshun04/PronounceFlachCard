@@ -1,33 +1,30 @@
 package com.shojishunsuke.pronounceflachcard.adapter
 
 import android.content.Context
-import android.speech.tts.TextToSpeech
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.Model.WordObject
-import io.realm.*
-import java.util.*
+import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
+import com.shojishunsuke.pronounceflachcard.new_arch.presentation.MemorizeRecyclerViewAdapterViewModel
+import io.realm.RealmResults
+import java.lang.IndexOutOfBoundsException
 
-class MemorizeRecyclerViewAdapter(private val context: Context?, val realmResults: RealmResults<WordObject>) :
-    RecyclerView.Adapter<MemorizeRecyclerViewAdapter.MemorizeRecyclerViewHolder>(), TextToSpeech.OnInitListener {
+class MemorizeRecyclerViewAdapter(private val context: Context,private val wordList: RealmResults<WordObject>) :
+    RecyclerView.Adapter<MemorizeRecyclerViewAdapter.MemorizeRecyclerViewHolder>(),OnDataChangedListener {
 
-    val realm = Realm.getDefaultInstance()
+    private val viewModel = MemorizeRecyclerViewAdapterViewModel(this,context)
 
-    var wordString: String = ""
-    var meaningString: String = ""
-    val textToSpeach = TextToSpeech(context,this)
 
     override fun onBindViewHolder(holder: MemorizeRecyclerViewHolder, position: Int) {
-        val wordCard = realmResults[position]
-        wordString = wordCard!!.word
-        meaningString = wordCard.meaning
+        val wordCard = wordList[position]?:throw IndexOutOfBoundsException()
+        val wordString = wordCard.word
+        val meaningString = wordCard.meaning
 
         holder.wordTextView.setText(wordString)
         holder.meaningTextView.setText(meaningString)
@@ -35,16 +32,14 @@ class MemorizeRecyclerViewAdapter(private val context: Context?, val realmResult
         holder.checkBox.isChecked = wordCard.isDone
 
         holder.checkBox.setOnClickListener{
-            realm.executeTransaction{
-                wordCard.isDone = holder.checkBox.isChecked
-                realm.copyToRealm(wordCard)
-            }
+
+            viewModel.switchCheckedState(wordCard.id,holder.checkBox.isChecked)
         }
 
 
         holder.pronounceButton.setOnClickListener {
-            textToSpeach.speak(wordCard.word,TextToSpeech.QUEUE_FLUSH,null,null)
-        }
+            viewModel.readOut(wordString)
+           }
 
         holder.wordTextView.setTag(wordCard)
         holder.meaningTextView.setTag(wordCard)
@@ -56,10 +51,13 @@ class MemorizeRecyclerViewAdapter(private val context: Context?, val realmResult
 
     }
 
+    override fun onDataChanged() {
+        notifyDataSetChanged()
+    }
 
     override fun getItemCount(): Int {
 
-        return realmResults.count()
+        return wordList.count()
 
     }
 
@@ -112,21 +110,10 @@ class MemorizeRecyclerViewAdapter(private val context: Context?, val realmResult
 
     }
 
-    override fun onInit(p0: Int) {
-        if (p0 == TextToSpeech.SUCCESS){
-            if (textToSpeach.isLanguageAvailable(Locale.ENGLISH)>= TextToSpeech.LANG_AVAILABLE) {
-                textToSpeach.setLanguage(Locale.ENGLISH)
-                textToSpeach.setSpeechRate(1.0f)
-                textToSpeach.setPitch(1.0f)
 
 
 
-            }else{
-                Toast.makeText(context,"language not supported",Toast.LENGTH_SHORT).show()
-            }
-        }
 
-    }
 
     override fun onViewRecycled(holder: MemorizeRecyclerViewHolder) {
         holder.meaningTextView.visibility = View.GONE

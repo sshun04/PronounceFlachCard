@@ -7,32 +7,17 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.shojishunsuke.pronounceflachcard.Model.QuestionWord
-import com.shojishunsuke.pronounceflachcard.Model.WordObject
+import androidx.lifecycle.ViewModelProviders
 import com.shojishunsuke.pronounceflachcard.R
-import io.realm.Realm
-import io.realm.RealmResults
+import com.shojishunsuke.pronounceflachcard.new_arch.presentation.TestSharedViewModel
 
-class TestMeaningShowAnswerFragment : Fragment(), View.OnClickListener {
-
-    val realm = Realm.getDefaultInstance()
-
-
+class TestMeaningShowAnswerFragment : Fragment(), View.OnClickListener, TestSharedViewModel.TestCompletionListener {
 
     lateinit var textView: TextView
     lateinit var trueButton: Button
     lateinit var falseButton: Button
 
-    lateinit var key_question_number: String
-    lateinit var key_quesiton_words: String
-
-    lateinit var questionWord :QuestionWord
-
-    lateinit var questionWordsList: ArrayList<QuestionWord>
-
-
-     private var questionNumber:Int = 0
-
+    lateinit var sharedViewModel: TestSharedViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val layout = inflater.inflate(R.layout.fragment_test_meaning_show_answer, container, false)
@@ -41,66 +26,41 @@ class TestMeaningShowAnswerFragment : Fragment(), View.OnClickListener {
         trueButton = layout.findViewById(R.id.trueButton)
         falseButton = layout.findViewById(R.id.falseButton)
 
-        key_question_number = resources.getString(R.string.key_question_number)
-        key_quesiton_words = resources.getString(R.string.key_question_words)
+        sharedViewModel = requireActivity().run{
+            ViewModelProviders.of(this).get(TestSharedViewModel::class.java)
+        }
 
-
-        questionNumber = arguments!!.getInt(key_question_number)
-
-        questionWordsList = arguments!!.getSerializable(key_quesiton_words) as ArrayList<QuestionWord>
-
-
-        questionWord =questionWordsList[questionNumber]
-
-        textView.setText(questionWord.meaning)
-
+        textView.setText(sharedViewModel.answer)
 
         trueButton.setOnClickListener(this)
         falseButton.setOnClickListener(this)
 
-
         return layout
     }
 
-
-
-
     override fun onClick(clickedButton: View?) {
-        when(clickedButton){
-            trueButton -> {questionWord.isTrue = true}
-            falseButton ->{questionWord.isTrue = false }
-
+        when (clickedButton) {
+            trueButton -> {
+                sharedViewModel.onAnswered(true, this)
+            }
+            falseButton -> {
+                sharedViewModel.onAnswered(false, this)
+            }
         }
 
-        if (questionWordsList.size == questionNumber+1 ) {
+        if (sharedViewModel.hasNextQuestion) {
 
-
-            showFragment(fragment =  TestResultFragment(),isResult = true)
-
-        } else {
-
-
-            showFragment(fragment = TestMeaningShowWordFragment(),isResult = false)
+            val testMeaningShowWordFragment = TestMeaningShowWordFragment()
+            val fragmentTransAction = fragmentManager!!.beginTransaction()
+            fragmentTransAction.addToBackStack(null)
+            fragmentTransAction.replace(R.id.testMeaningBackGround, testMeaningShowWordFragment)
+            fragmentTransAction.commit()
         }
 
 
     }
-    private fun showFragment(fragment: Fragment, isResult: Boolean) {
-        val bundle = Bundle()
 
-        bundle.putSerializable(key_quesiton_words, questionWordsList)
-
-        if (!isResult) {
-            questionNumber++
-            bundle.putInt(key_question_number, questionNumber)
-        }
-
-        fragment.arguments = bundle
-        val fragmentTransAction = fragmentManager!!.beginTransaction()
-        fragmentTransAction.replace(R.id.testMeaningBackGround,fragment)
-        fragmentTransAction.commit()
-
-
-
+    override fun onCompleteTest() {
+        sharedViewModel.setupResultFragment(fragmentManager!!,R.id.testMeaningBackGround)
     }
 }

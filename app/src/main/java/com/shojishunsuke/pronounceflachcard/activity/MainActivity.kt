@@ -1,46 +1,57 @@
 package com.shojishunsuke.pronounceflachcard.activity
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.EditText
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.recyclerview.widget.RecyclerView
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.adapter.MyPagerAdapter
+import com.shojishunsuke.pronounceflachcard.new_arch.presentation.SharedViewModel
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var drawerToggle: ActionBarDrawerToggle
-    private lateinit var newTitle: CharSequence
+    lateinit var sharedViewModel: SharedViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        newTitle = title
+        sharedViewModel = run {
+            ViewModelProviders.of(this).get(SharedViewModel::class.java)
+        }
+
         drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout).apply {
             setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START)
         }
 
-
-        val tabLayout: TabLayout = this.findViewById(R.id.tablayout)
-        val viewPager: ViewPager = this.findViewById(R.id.pager)
-        val toolBar: androidx.appcompat.widget.Toolbar = this.findViewById(R.id.toolabar)
+        val tabLayout = findViewById<TabLayout>(R.id.tablayout)
+        val viewPager = findViewById<ViewPager>(R.id.pager)
+        val toolBar = findViewById<Toolbar>(R.id.toolbar).apply {
+            title = sharedViewModel.title
+        }
         setSupportActionBar(toolBar)
 
-
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_word_list))
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_memorization))
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_test))
+        tabLayout.apply {
+            addTab(tabLayout.newTab().setText(R.string.tab_word_list))
+            addTab(tabLayout.newTab().setText(R.string.tab_memorization))
+            addTab(tabLayout.newTab().setText(R.string.tab_test))
+        }
 
         val fragmentAdapter = MyPagerAdapter(supportFragmentManager)
         viewPager.adapter = fragmentAdapter
@@ -60,8 +71,11 @@ class MainActivity : AppCompatActivity() {
         drawerLayout.addDrawerListener(drawerToggle)
         drawerToggle.syncState()
 
-
         tabLayout.setupWithViewPager(viewPager)
+
+        sharedViewModel.liveDataTitle.observe(this, Observer {
+            toolBar.title = it
+        })
 
     }
 
@@ -71,8 +85,30 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (drawerToggle.onOptionsItemSelected(item)) {
-            return true
+        when (item?.itemId) {
+            R.id.actionEditListTitle -> {
+                val parentView = layoutInflater.inflate(R.layout.dialog_fragment_register_title, null)
+                val editText = parentView.findViewById<EditText>(R.id.registerEditText)
+
+                val registerDialog = AlertDialog.Builder(this)
+                    .setPositiveButton("登録", DialogInterface.OnClickListener { _, _ ->
+                        sharedViewModel.editListTitle(editText.text.toString())
+
+                    })
+                    .setNegativeButton(
+                        "キャンセル",
+                        null
+                    )
+                    .create()
+
+
+                registerDialog.setView(parentView)
+                registerDialog.show()
+            }
+
+            R.id.actionDeleteList -> {
+
+            }
         }
 
         return super.onOptionsItemSelected(item)

@@ -3,80 +3,66 @@ package com.shojishunsuke.pronounceflachcard.adapter
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.RippleDrawable
-import android.util.TypedValue
-import android.view.*
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
-import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.shape.CornerTreatment
-import com.google.android.material.shape.CutCornerTreatment
-import com.google.android.material.shape.MaterialShapeDrawable
-import com.google.android.material.shape.ShapePathModel
 import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import com.shojishunsuke.pronounceflachcard.R
-import io.realm.Realm
+import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
+import com.shojishunsuke.pronounceflachcard.new_arch.presentation.CardRecyclerAdapterViewModel
 import io.realm.RealmResults
+import java.lang.IndexOutOfBoundsException
 
-class CardRecyclerViewAdapter(private val context: Context?, val realmResults: RealmResults<WordObject>) :
-    RecyclerView.Adapter<CardRecyclerViewAdapter.RecyclerViewHolder>() {
+class CardRecyclerViewAdapter(private val context: Context, private val wordList: RealmResults<WordObject>) :
+    RecyclerView.Adapter<CardRecyclerViewAdapter.RecyclerViewHolder>(), OnDataChangedListener {
 
-    val realm = Realm.getDefaultInstance()
 
-    var wordString: String = ""
-    var meaningString: String = ""
+    private val viewModel = CardRecyclerAdapterViewModel(this)
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
 
-        val wordCard = realmResults[position]
-        wordString = wordCard!!.word
-        meaningString = wordCard.meaning
+        val wordCard = wordList[position] ?: throw IndexOutOfBoundsException()
+        val wordString = wordCard.word
+        val meaningString = wordCard.meaning
 
-        holder.wordTextView.setText(wordString)
-        holder.wordTextView.setTag(wordCard)
+        holder.wordTextView.text = wordString
+        holder.wordTextView.tag = wordCard
 
-        holder.meaningTextView.setText(meaningString)
-        holder.meaningTextView.setTag(wordCard)
+        holder.meaningTextView.text = meaningString
+        holder.meaningTextView.tag = wordCard
 
         holder.optionButton.setImageResource(R.drawable.outline_more_vert_black_24)
 
-        holder.optionButton.setTag(wordCard)
+        holder.optionButton.tag = wordCard
 
 
         holder.optionButton.setOnClickListener {
 
-
             lateinit var wordEditText: EditText
             lateinit var meaningEditText: EditText
 
-
-            val popupMenu = PopupMenu(context!!, holder.optionButton,Gravity.END)
+            val popupMenu = PopupMenu(context, holder.optionButton, Gravity.END)
             popupMenu.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.editPop -> {
 
-
                         val detailDialog = AlertDialog.Builder(context)
                             .setPositiveButton("保存", DialogInterface.OnClickListener { _, _ ->
 
-                                realm.executeTransaction {
 
-
-                                    wordCard.word = wordEditText.text.toString()
-                                    wordCard.meaning = meaningEditText.text.toString()
-
-                                    it.copyToRealm(wordCard)
-
-
-                                }
+                                viewModel.editWord(
+                                    wordCard.id,
+                                    wordEditText.text.toString(),
+                                    meaningEditText.text.toString()
+                                )
+                                notifyItemChanged(position)
 
                             })
                             .setNegativeButton(
@@ -85,26 +71,29 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
                             )
                             .create()
 
-                        val parentView = detailDialog.getLayoutInflater().inflate(R.layout.fragment_word_edit, null)
+                        val parentView = detailDialog.layoutInflater.inflate(R.layout.fragment_word_edit, null)
 
                         wordEditText = parentView.findViewById(R.id.wordEditText)
-                        wordEditText.setText(realmResults.get(position)?.word)
+                        wordEditText.setText(wordCard.word)
 
                         meaningEditText = parentView.findViewById(R.id.meaningEditText)
-                        meaningEditText.setText(realmResults.get(position)?.meaning)
+                        meaningEditText.setText(wordCard.meaning)
 
                         detailDialog.setView(parentView)
                         detailDialog.show()
+
+
                     }
                     R.id.deletePop -> {
 
 
                         AlertDialog.Builder(context)
-                            .setTitle(realmResults.get(position)?.word)
+                            .setTitle(wordCard.word)
                             .setMessage("本当に削除しますか？")
                             .setPositiveButton("OK", DialogInterface.OnClickListener { _, _ ->
 
-                                deleteWordFromRealm(position)
+                                viewModel.deleteWord(wordCard.id)
+                                notifyItemRemoved(position)
 
                             }
                             ).setNegativeButton("CANCEL", null)
@@ -115,9 +104,9 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
 
                 return@setOnMenuItemClickListener true
             }
+
             popupMenu.inflate(R.menu.popup_menu)
             popupMenu.show()
-
 
         }
 
@@ -133,10 +122,10 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
             val parentView = detailDialog.getLayoutInflater().inflate(R.layout.dialog_fragment_word_detail, null)
 
             val detailWord = parentView.findViewById<TextView>(R.id.wordEditText)
-            detailWord.setText(realmResults[position]?.word)
+            detailWord.setText(wordCard.word)
 
             val detailMeaning = parentView.findViewById<TextView>(R.id.meaningEditText)
-            detailMeaning.setText(realmResults[position]?.meaning)
+            detailMeaning.setText(wordCard.meaning)
 
             detailDialog.setView(parentView)
             detailDialog.show()
@@ -146,33 +135,18 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
     }
 
 
-    override fun getItemCount(): Int = realmResults.count()
+    override fun getItemCount(): Int = wordList.count()
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
         val inflater = LayoutInflater.from(context)
         val mView = inflater.inflate(R.layout.item_card, parent, false)
 
-
-        realm.addChangeListener {
-            notifyDataSetChanged()
-        }
-
         return RecyclerViewHolder(mView)
     }
 
 
-    private fun deleteWordFromRealm(position: Int) {
-
-        realm.executeTransaction {
-
-            realmResults[position]!!.deleteFromRealm()
-
-        }
-
-        notifyItemRemoved(position)
-
-    }
+    override fun onDataChanged() {}
 
     class RecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -182,7 +156,6 @@ class CardRecyclerViewAdapter(private val context: Context?, val realmResults: R
         val wordBox = view.findViewById<ConstraintLayout>(R.id.selectablecard)
 
     }
-
 
 
 }

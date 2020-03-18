@@ -14,47 +14,49 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shojishunsuke.pronounceflachcard.Model.QuestionWord
 import com.shojishunsuke.pronounceflachcard.R
 
-class TestRecyclerViewAdapter(private val context: Context?, val resultWords: ArrayList<QuestionWord>) :
-    RecyclerView.Adapter<TestRecyclerViewAdapter.TestRecyclerViewHolder>() {
+class TestResultRecyclerViewAdapter(private val context: Context, private val resultWords: ArrayList<QuestionWord>) :
+    RecyclerView.Adapter<TestResultRecyclerViewAdapter.TestRecyclerViewHolder>() {
 
     override fun onBindViewHolder(holder: TestRecyclerViewHolder, position: Int) {
-        val resultWord = resultWords.get(position)
-        holder.resultTextView.setText(resultWord.word)
+        val resultWord = resultWords[position]
+        holder.resultTextView.text = resultWord.word
 
         if (resultWord.isTrue) {
-            holder.checkeTextView.setText("✔︎")
+            holder.checkeTextView.text = "✔︎"
             holder.checkeTextView.setTextColor(Color.parseColor("#4CAF50"))
         } else {
-            holder.checkeTextView.setText("✖️")
+            holder.checkeTextView.text = "✖️"
             holder.checkeTextView.setTextColor(Color.parseColor("#f44336"))
         }
 
-        if (resultWord.isPronounce){
-            holder.recognizedTextView.visibility =View.VISIBLE
-            holder.recognizedTextView.setText(resultWord.recognizedWord)}
+        if (resultWord.recognizedWord.isNotEmpty()) {
+            holder.recognizedTextView.visibility = View.VISIBLE
+            holder.recognizedTextView.text = resultWord.recognizedWord
+        }
 
 
-            holder.expandButton.setOnClickListener {
+        holder.expandButton.setOnClickListener {
 
-                if (holder.detailBox.visibility == View.GONE) {
-                    holder.detailBox.visibility = View.VISIBLE
-                    startRotate(it,0f,-180f)
-                    holder.maningTextView.setText(resultWord.meaning)
+            if (holder.detailBox.visibility == View.GONE) {
+                holder.detailBox.visibility = View.VISIBLE
+                startRotate(it, 0f, -180f)
+                holder.maningTextView.text = resultWord.meaning
 
-                } else {
+            } else {
 
 
-                    startRotate(it,-180f,0f)
-                    holder.detailBox.visibility  =View.GONE
+                startRotate(it, -180f, 0f)
+                holder.detailBox.visibility = View.GONE
 
-                }
             }
-
+        }
 
 
     }
-    private fun startRotate(view: View,startRotate:Float,endRotate:Float){
-        val rotateAnimation = RotateAnimation(startRotate,endRotate,Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f)
+
+    private fun startRotate(view: View, startRotate: Float, endRotate: Float) {
+        val rotateAnimation =
+            RotateAnimation(startRotate, endRotate, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
         rotateAnimation.duration = 300
         rotateAnimation.fillAfter = true
         view.startAnimation(rotateAnimation)
@@ -71,12 +73,9 @@ class TestRecyclerViewAdapter(private val context: Context?, val resultWords: Ar
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TestRecyclerViewHolder {
         val inflater = LayoutInflater.from(context)
         val mView = inflater.inflate(R.layout.item_test_result_word, parent, false)
-
-
         return TestRecyclerViewHolder(mView)
 
     }
-
 
     class TestRecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -84,7 +83,7 @@ class TestRecyclerViewAdapter(private val context: Context?, val resultWords: Ar
         val checkeTextView = view.findViewById<TextView>(R.id.checkView)
         val recognizedTextView = view.findViewById<TextView>(R.id.detailTextView)
         val expandButton = view.findViewById<ImageView>(R.id.expandArrow)
-        val maningTextView  = view.findViewById<TextView>(R.id.meaningTextView)
+        val maningTextView = view.findViewById<TextView>(R.id.meaningTextView)
         val detailBox = view.findViewById<LinearLayout>(R.id.detailView)
 
     }

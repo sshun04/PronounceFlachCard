@@ -7,9 +7,12 @@ import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModelProviders
 import com.shojishunsuke.pronounceflachcard.Model.QuestionWord
 import com.shojishunsuke.pronounceflachcard.R
-import com.shojishunsuke.pronounceflachcard.testFragment.TestPronounceFragment
+import com.shojishunsuke.pronounceflachcard.new_arch.factory.TestSharedViewModelFactory
+import com.shojishunsuke.pronounceflachcard.new_arch.presentation.TestPronounceActivityViewModel
+import com.shojishunsuke.pronounceflachcard.new_arch.presentation.TestSharedViewModel
 
 
 class TestPronounceActivity : AppCompatActivity() {
@@ -23,40 +26,27 @@ class TestPronounceActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test_pronounce)
 
-       val key_question_words = resources.getString(R.string.key_question_words)
-        val key_question_number = resources.getString(R.string.key_question_number)
-
         val toolbar = this.findViewById<Toolbar>(R.id.testPronounceToolBar)
         setSupportActionBar(toolbar)
 
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setDisplayShowHomeEnabled(true)
-        supportActionBar!!.setHomeButtonEnabled(true)
-        supportActionBar!!.setTitle("発音テスト")
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.title = "発音テスト"
 
-        val questionWords = intent.getSerializableExtra(key_question_words)as ArrayList<QuestionWord>
-
-
+        val questionWords = intent.getSerializableExtra("list")as ArrayList<QuestionWord>
 
 
+        val testSharedViewModel = ViewModelProviders.of(this,TestSharedViewModelFactory(questionWords)).get(TestSharedViewModel::class.java)
 
-        val bundle = Bundle()
+        val testPronounceViewModel = ViewModelProviders.of(this).get(TestPronounceActivityViewModel::class.java)
+        testPronounceViewModel.setupFragment(supportFragmentManager)
 
-        bundle.putInt(key_question_number,questionNumber)
-        bundle.putSerializable(key_question_words,questionWords)
-
-        val testPronounceFragment = TestPronounceFragment()
-        testPronounceFragment.arguments = bundle
-
-        val fragmentTransAction = supportFragmentManager.beginTransaction()
-        fragmentTransAction.addToBackStack(null)
-        fragmentTransAction.replace(R.id.testPronounceBackground, testPronounceFragment)
-        fragmentTransAction.commit()
 
     }
 
     override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
-        if (event!!.keyCode == KeyEvent.KEYCODE_BACK) {
+        if (event?.keyCode == KeyEvent.KEYCODE_BACK) {
             AlertDialog.Builder(this)
                 .setMessage("テストを終了しますか？")
                 .setPositiveButton("終了", DialogInterface.OnClickListener { _, _ ->

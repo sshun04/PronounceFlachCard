@@ -10,7 +10,6 @@ import com.shojishunsuke.pronounceflachcard.testFragment.TestReadyFragment
 
 class MyPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
 
-
     override fun getItem(position: Int): Fragment {
         return when (position) {
             0 -> FlashCardFragment()

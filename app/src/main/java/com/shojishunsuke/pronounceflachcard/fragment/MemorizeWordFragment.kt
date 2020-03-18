@@ -5,41 +5,53 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.shojishunsuke.pronounceflachcard.Model.WordObject
 import com.shojishunsuke.pronounceflachcard.R
 import com.shojishunsuke.pronounceflachcard.adapter.MemorizeRecyclerViewAdapter
-import io.realm.Realm
-import io.realm.RealmResults
+import com.shojishunsuke.pronounceflachcard.new_arch.data.repository.OnDataChangedListener
+import com.shojishunsuke.pronounceflachcard.new_arch.presentation.MemorizeFragmentViewModel
+import com.shojishunsuke.pronounceflachcard.new_arch.presentation.SharedViewModel
 
 
-class MemorizeWordFragment : Fragment() {
+class MemorizeWordFragment : Fragment(), OnDataChangedListener {
 
-    val realm = Realm.getDefaultInstance()
+
+    private val memorizeViewModel = MemorizeFragmentViewModel(this)
+
+    lateinit var recyclerView: RecyclerView
+    lateinit var sharedViewModel: SharedViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val layout = inflater.inflate(R.layout.fragment_memorize_word_tab, container, false)
 
-        val recyclerView = layout.findViewById<RecyclerView>(R.id.memorizeRecyclerView)
 
-        val adapter = MemorizeRecyclerViewAdapter(context, read())
+        sharedViewModel = activity?.run {
+            ViewModelProviders.of(this).get(SharedViewModel::class.java)
+        }?: throw Exception("Invalid Activity")
 
-        realm.addChangeListener {
+        recyclerView = layout.findViewById<RecyclerView>(R.id.memorizeRecyclerView).apply {
 
-            adapter.notifyDataSetChanged()
+            adapter = MemorizeRecyclerViewAdapter(context, memorizeViewModel.getWordsList(sharedViewModel.title))
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
         }
 
-        recyclerView.adapter = adapter
+        sharedViewModel.liveDataTitle.observe(this, Observer { title ->
+            //           リサイクラビューのアイテムを更新
+            recyclerView.adapter = MemorizeRecyclerViewAdapter(requireContext(), memorizeViewModel.getWordsList(title))
 
-        recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-
+        })
 
         return layout
     }
 
- private   fun read(): RealmResults<WordObject> = realm.where(WordObject::class.java).findAll()
+
+    override fun onDataChanged() {
+//        recyclerView.adapter = MemorizeRecyclerViewAdapter(context, memorizeViewModel.getWordsList(sharedViewModel.title))
+    }
 
 
 }

@@ -1,98 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/cardView"
-        android:orientation="vertical"
-        android:layout_marginHorizontal="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="72dp"
-        app:cardElevation="2dp"
-        app:cardCornerRadius="8dp"
-        android:layout_marginTop="8dp"
->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginTop="8dp"
+    android:orientation="vertical"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="2dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/selectablecard"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:id="@+id/selectablecard"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:foreground="?android:attr/selectableItemBackground">
+
         <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/wordBox"
+            android:id="@+id/wordBox"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/editButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/wordTextView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_marginVertical="4dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:gravity="center|right"
+                android:singleLine="true"
+                android:text="Word"
+                android:textColor="@android:color/black"
+                android:textSize="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/divideline"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+
+                />
+
+            <TextView
+                android:id="@+id/divideline"
+                android:layout_width="12dp"
+                android:layout_height="0dp"
+                android:layout_marginVertical="8dp"
+                android:gravity="center"
+                android:text=":"
+                android:textSize="24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/editButton">
-
-            <TextView
-                    android:layout_marginLeft="12dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:textColor="@android:color/black"
-                    android:id="@+id/wordTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/divideline"
-                    android:layout_marginVertical="4dp"
-                    android:gravity="center|right"
-                    android:textSize="24dp"
-                    android:text="Word"
-                    android:layout_marginRight="12dp"
-                    android:singleLine="true"
-
-            />
-            <TextView
-                    android:textSize="24dp"
-                    android:gravity="center"
-                    android:layout_marginVertical="8dp"
-                    android:id="@+id/divideline"
-                    android:layout_width="12dp"
-                    android:text=":"
-                    android:layout_height="0dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
             <TextView
-                    android:layout_marginLeft="12dp"
-                    android:ellipsize="marquee"
-                    android:singleLine="true"
-                    android:textColor="@android:color/black"
-                    android:text="meaning"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:scrollHorizontally="true"
-                    android:gravity="center|left"
-                    android:id="@+id/meaningTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintStart_toEndOf="@id/divideline"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:textSize="24dp"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                android:id="@+id/meaningTextView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginLeft="12dp"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center|left"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:text="meaning"
+                android:textColor="@android:color/black"
+                android:textSize="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/divideline"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <ImageView
 
-                app:layout_constraintStart_toEndOf="@id/wordBox"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:id="@+id/editButton"
-                android:layout_width="28dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginHorizontal="4dp"
+            android:id="@+id/editButton"
+            android:layout_width="28dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/wordBox"
+            app:layout_constraintTop_toTopOf="parent"
 
-        />
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

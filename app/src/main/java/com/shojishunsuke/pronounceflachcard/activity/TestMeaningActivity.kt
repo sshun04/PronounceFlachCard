@@ -7,59 +7,60 @@ import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModelProviders
 import com.shojishunsuke.pronounceflachcard.Model.QuestionWord
 import com.shojishunsuke.pronounceflachcard.R
+import com.shojishunsuke.pronounceflachcard.new_arch.factory.TestSharedViewModelFactory
+import com.shojishunsuke.pronounceflachcard.new_arch.presentation.TestSharedViewModel
 import com.shojishunsuke.pronounceflachcard.testFragment.TestMeaningShowWordFragment
 
 
 class TestMeaningActivity : AppCompatActivity() {
 
 
-    private var questionNumber = 0
-
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test_meaning)
-        val key_question_number = resources.getString(R.string.key_question_number)
-        val key_quesiton_words = resources.getString(R.string.key_question_words)
+
 
         val toolbar = this.findViewById<Toolbar>(R.id.testMeaningToolBar)
         setSupportActionBar(toolbar)
 
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setDisplayShowHomeEnabled(true)
-        supportActionBar!!.setHomeButtonEnabled(true)
-        supportActionBar!!.setTitle("意味テスト")
 
 
-      val questionWordsList = intent.getSerializableExtra(key_quesiton_words)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.title = "意味テスト"
+
+        val questionWords = intent.getSerializableExtra("list") as ArrayList<QuestionWord>
+
+        val testSharedViewModel = ViewModelProviders.of(this,
+            TestSharedViewModelFactory(questionWords)
+        ).get(TestSharedViewModel::class.java)
+
+        val testMeaningShowWordFragment = TestMeaningShowWordFragment()
+
+        val fragmentTransAction = supportFragmentManager.beginTransaction()
+        fragmentTransAction.addToBackStack(null)
+        fragmentTransAction.replace(R.id.testMeaningBackGround,testMeaningShowWordFragment)
+        fragmentTransAction.commit()
 
 
-        var bundle = Bundle()
-        bundle.putInt(key_question_number, questionNumber)
-        bundle.putSerializable(key_quesiton_words, questionWordsList)
 
 
-        if (savedInstanceState == null) {
-
-            val showWordFragment = TestMeaningShowWordFragment()
-            showWordFragment.arguments = bundle
-
-
-            val fragmentTransaction = supportFragmentManager.beginTransaction()
-            fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.replace(
-                R.id.testMeaningBackGround,
-                showWordFragment
-            )
-            fragmentTransaction.commit()
-        }
     }
 
-  private fun showConfirmDialog() {
+
+
+    override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
+        if (event!!.keyCode == KeyEvent.KEYCODE_BACK) {
+            showConfirmDialog()
+        }
+        return super.dispatchKeyEvent(event)
+    }
+
+    private fun showConfirmDialog() {
 
         AlertDialog.Builder(this)
             .setMessage("テストを終了しますか？")
@@ -72,14 +73,6 @@ class TestMeaningActivity : AppCompatActivity() {
             .show()
 
     }
-
-    override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
-        if (event!!.keyCode == KeyEvent.KEYCODE_BACK) {
-            showConfirmDialog()
-        }
-        return super.dispatchKeyEvent(event)
-    }
-
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when (item?.itemId) {
             android.R.id.home -> {

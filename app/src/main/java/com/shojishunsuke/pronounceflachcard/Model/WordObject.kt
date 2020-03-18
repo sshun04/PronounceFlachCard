@@ -6,10 +6,11 @@ import io.realm.annotations.RealmClass
 import io.realm.annotations.Required
 import java.util.*
 @RealmClass
-open class WordObject(
+open class WordObject(@Required open  var id  :String = "",
                       @Required open var word :String = "word",
                       @Required open var meaning : String = "meaning",
-                       open var isDone: Boolean = false
+                      @Required open var listTitle :String = "",
+                      open var isDone: Boolean = false
 ):RealmObject() {
 
 }

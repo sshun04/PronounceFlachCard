@@ -1,27 +1,25 @@
 package com.shojishunsuke.pronounceflachcard.testFragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.RadioGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.button.MaterialButton
 import com.shojishunsuke.pronounceflachcard.R
-import com.shojishunsuke.pronounceflachcard.TestListProvider
-import com.shojishunsuke.pronounceflachcard.activity.TestMeaningActivity
-import com.shojishunsuke.pronounceflachcard.activity.TestPronounceActivity
+import com.shojishunsuke.pronounceflachcard.new_arch.presentation.SharedViewModel
+import com.shojishunsuke.pronounceflachcard.new_arch.presentation.TestReadyViewModel
 
 class TestReadyFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private var testFormat = -1
     private var testRange = -1
-
-    lateinit var arrayAdapter: ArrayAdapter<Int>
-    lateinit var testList: ArrayList<Int>
-    var listSize = 0
-
+    private var listSize = 0
     private var isRandom = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -30,66 +28,55 @@ class TestReadyFragment : Fragment(), AdapterView.OnItemSelectedListener {
         val rangeGroup = layout.findViewById<RadioGroup>(R.id.radioGroupRange)
         val numberSpinner = layout.findViewById<androidx.appcompat.widget.AppCompatSpinner>(R.id.numberDropDown)
         val startButton = layout.findViewById<MaterialButton>(R.id.testStartButton)
-        val numberpicker = layout.findViewById<NumberPicker>(R.id.numberPicker)
         val randomSwitch = layout.findViewById<androidx.appcompat.widget.SwitchCompat>(R.id.randomSwitch)
 
-
+        val viewModel = ViewModelProviders.of(this).get(TestReadyViewModel::class.java)
+      
+       val sharedViewModel = requireActivity().run {
+            ViewModelProviders.of(this).get(SharedViewModel::class.java)
+        }
 
         randomSwitch.setOnCheckedChangeListener { _, boolean -> isRandom = boolean }
-
-
-        val key_quesiton_words = resources.getString(R.string.key_question_words)
-
-        val testManager = TestListProvider()
 
         formatGroup.setOnCheckedChangeListener { _, i -> testFormat = i }
         rangeGroup.setOnCheckedChangeListener { _, i ->
 
             testRange = i
 
-            val sizeLimit = testManager.getCurrentListSize(testRange)
+            val sizeLimit = viewModel.getCurrentListSize(sharedViewModel.title,testRange)
 
-            testList = ArrayList()
+            val testList = ArrayList<Int>()
 
-            for (i in 1..sizeLimit) {
+            for (i in 1 .. sizeLimit) {
                 testList.add(i)
             }
 
-            arrayAdapter = ArrayAdapter(context, R.layout.support_simple_spinner_dropdown_item, testList)
-            numberSpinner.adapter = arrayAdapter
 
+            val spinnerAdapter = ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, testList)
+            numberSpinner.adapter = spinnerAdapter
 
         }
 
         numberSpinner.onItemSelectedListener = this
 
 
-
-
-
-
         startButton.setOnClickListener {
 
-            if (testRange != -1 && testFormat != -1) {
 
 
-                val testList = testManager.createTestList(testFormat, testRange, isRandom, listSize)
+            if (testRange != -1 && testFormat != -1 && listSize != 0) {
 
-                if (testFormat == R.id.pronounce) {
-                    val intent = Intent(context, TestPronounceActivity::class.java)
-                    intent.putExtra(key_quesiton_words, testList)
-
-                    context!!.startActivity(intent)
-
-                } else {
-                    val intent = Intent(context, TestMeaningActivity::class.java)
-                    intent.putExtra(key_quesiton_words, testList)
-
-                    context!!.startActivity(intent)
-                }
+                viewModel.setupTestActivity(
+                    requireContext(),
+                    listSize = listSize,
+                    testFormat = testFormat,
+                    testRange = testRange,
+                    isRandom = isRandom,
+                    listTitle = sharedViewModel.title
+                )
 
             } else {
-                Toast.makeText(context, "指定していない項目があります", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "指定していない項目があります", Toast.LENGTH_SHORT).show()
 
             }
         }
@@ -100,7 +87,7 @@ class TestReadyFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     }
 
-    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, positio: Int, p3: Long) {
-        listSize = positio + 1
+    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+        listSize = position + 1
     }
 }

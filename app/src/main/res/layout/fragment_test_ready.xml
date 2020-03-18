@@ -1,206 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                   android:orientation="vertical"
-                                                   android:layout_width="match_parent"
-                                                   android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
-            android:id="@+id/textView1"
-            android:textSize="12dp"
-            android:text="テスト形式"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintVertical_bias="0.075"
-            app:layout_constraintHorizontal_bias="0.117"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="テスト形式"
+        android:textSize="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.117"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.075" />
 
     <RadioGroup
-            android:id="@+id/radioGroupFormat"
-            android:layout_marginTop="28dp"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="@id/guideline6"
-            app:layout_constraintTop_toBottomOf="@id/textView1"
+        android:id="@+id/radioGroupFormat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@id/guideline6"
+        app:layout_constraintTop_toBottomOf="@id/textView1">
+
+        <RadioButton
+            android:id="@+id/pronounce"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp">
+            android:layout_marginEnd="30dp"
+            android:text="  発音"
+            android:textSize="24dp" />
 
         <RadioButton
-                android:id="@+id/pronounce"
-                android:text="  発音"
-                android:textSize="24dp"
-                android:layout_marginEnd="30dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-        />
-
-        <RadioButton
-                android:id="@+id/meaning"
-                android:text="  意味"
-                android:textSize="24dp"
-                android:layout_marginStart="30dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            android:id="@+id/meaning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:text="  意味"
+            android:textSize="24dp" />
 
     </RadioGroup>
 
 
     <TextView
-            android:id="@+id/textView2"
-            android:text="出題範囲"
-            android:layout_marginTop="28dp"
-            app:layout_constraintStart_toStartOf="@id/textView1"
-            app:layout_constraintTop_toBottomOf="@id/radioGroupFormat"
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="出題範囲"
 
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        app:layout_constraintStart_toStartOf="@id/textView1"
+        app:layout_constraintTop_toBottomOf="@id/radioGroupFormat" />
 
     <RadioGroup
-            android:id="@+id/radioGroupRange"
-            android:layout_marginTop="28dp"
-            android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="@id/guideline6"
-            app:layout_constraintTop_toBottomOf="@id/textView2"
+        android:id="@+id/radioGroupRange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="@id/guideline6"
+        app:layout_constraintTop_toBottomOf="@id/textView2">
+
+        <RadioButton
+            android:id="@+id/allWords"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:text="  全ての単語から"
+            android:textSize="24dp" />
 
         <RadioButton
-                android:id="@+id/allWords"
-                android:text="  全ての単語"
-                android:textSize="24dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        <RadioButton
-                android:id="@+id/checkedWord"
-                android:textSize="24dp"
-                android:layout_marginTop="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="  チェックした単語"
-        />
+            android:id="@+id/checkedWord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="  チェックした単語から"
+            android:textSize="24dp" />
 
 
     </RadioGroup>
 
     <TextView
-            android:id="@+id/textView4"
-            android:layout_marginTop="36dp"
-            app:layout_constraintStart_toStartOf="@id/textView1"
-            app:layout_constraintTop_toBottomOf="@id/radioGroupRange"
-            android:text="問題数  :"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="問題数  :"
+        app:layout_constraintStart_toStartOf="@id/textView1"
+        app:layout_constraintTop_toBottomOf="@id/radioGroupRange" />
 
 
     <NumberPicker
-            android:layout_marginStart="12dp"
-            android:visibility="gone"
-            android:gravity="center"
-            android:id="@+id/numberPicker"
-            app:layout_constraintStart_toEndOf="@id/textView4"
-            app:layout_constraintTop_toTopOf="@id/textView4"
-            app:layout_constraintBottom_toBottomOf="@id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        android:id="@+id/numberPicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:gravity="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/textView4"
+        app:layout_constraintStart_toEndOf="@id/textView4"
+        app:layout_constraintTop_toTopOf="@id/textView4">
 
     </NumberPicker>
 
     <TextView
 
-            android:layout_marginTop="48dp"
-            android:id="@+id/textView3"
-            app:layout_constraintStart_toStartOf="@id/textView1"
-            app:layout_constraintTop_toBottomOf="@id/textView4"
-            android:text="出題順序"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-    />
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="出題順序"
+        app:layout_constraintStart_toStartOf="@id/textView1"
+        app:layout_constraintTop_toBottomOf="@id/textView4" />
 
     <androidx.appcompat.widget.AppCompatSpinner
-            android:dropDownWidth="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_marginStart="8dp"
-            android:spinnerMode="dropdown"
-            android:id="@+id/numberDropDown"
-            app:layout_constraintBottom_toBottomOf="@id/textView4"
-            app:layout_constraintStart_toEndOf="@id/textView4"
-            app:layout_constraintTop_toTopOf="@id/textView4"
-            android:layout_height="wrap_content"/>
-
-
-
-    <RadioGroup
-            android:id="@+id/radioGroupOrder"
-            app:layout_constraintTop_toBottomOf="@id/textView3"
-            app:layout_constraintStart_toStartOf="@id/guideline6"
-            android:visibility="gone"
-            android:layout_marginTop="24dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-        <RadioButton
-                android:id="@+id/random"
-                android:text="  ランダム"
-                android:textSize="24dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        <RadioButton
-                android:id="@+id/following"
-                android:text="  順番通り"
-                android:textSize="24dp"
-                android:layout_marginTop="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-    </RadioGroup>
+        android:id="@+id/numberDropDown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:dropDownWidth="wrap_content"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toBottomOf="@id/textView4"
+        app:layout_constraintStart_toEndOf="@id/textView4"
+        app:layout_constraintTop_toTopOf="@id/textView4" />
 
     <TextView
-            android:id="@+id/switchLabel"
-            android:textColor="@android:color/black"
-            app:layout_constraintStart_toEndOf="@id/textView3"
-            android:textSize="24dp"
-            android:layout_marginTop="20dp"
-            android:text="ランダムに出題"
-            app:layout_constraintTop_toBottomOf="@id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        android:id="@+id/switchLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="ランダムに出題"
+        android:textColor="@android:color/black"
+        android:textSize="24dp"
+        app:layout_constraintStart_toEndOf="@id/textView3"
+        app:layout_constraintTop_toBottomOf="@id/textView3" />
 
     <androidx.appcompat.widget.SwitchCompat
-            android:textSize="24dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/switchLabel"
-            app:layout_constraintBottom_toBottomOf="@id/switchLabel"
-            android:layout_width="wrap_content"
-            android:id="@+id/randomSwitch"
-            android:layout_height="wrap_content"/>
+        android:id="@+id/randomSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:textSize="24dp"
+        app:layout_constraintBottom_toBottomOf="@id/switchLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/switchLabel" />
 
 
     <com.google.android.material.button.MaterialButton
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/switchLabel"
-            android:textSize="48dp"
-            android:text="テスト開始"
-            android:id="@+id/testStartButton"
-            android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        android:id="@+id/testStartButton"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="テスト開始"
+        android:textColor="@android:color/white"
+        android:textSize="48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/switchLabel" />
 
 
     <androidx.constraintlayout.widget.Guideline
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:id="@+id/guideline6" app:layout_constraintGuide_begin="88dp"
-            android:orientation="vertical"/>
+        android:id="@+id/guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="88dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
